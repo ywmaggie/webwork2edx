@@ -1,0 +1,68 @@
+<problem>
+    <script>
+        from math import factorial as f
+        
+        def C(n,m):
+        return f(n)/f(m)/f(n-m)
+        
+        answer1 = C(5,2)
+        answer2 = 12
+        answer3 = 6
+        answer4 = 3
+        answer5 = (C(5,2)+2*6+3*2+3)/C(52-5,2)
+        
+    </script>
+    <text>
+        <p>
+            <b>Like the previous question, suppose you have been dealt "\(4\heartsuit, 5\heartsuit\)".</b>
+            <br/>
+            <b>What is the conditional probability that you will get a hand at least as high as a full house, given that you have been dealt these two cards, and that the flop is "\(3\heartsuit, 4\spadesuit, K\diamondsuit\)"?</b>
+            Note that ranks that are higher than full house are four-of-a-kind, straight flush and royal flush.
+        </p>
+        
+        <p>
+            <p>To make a full house or four of a kind, need to get two cards out of the remaining cards whose ranks are 4 or 5. The number of such card pairs, ignoring order, is </p>
+            <numericalresponse answer="$answer1">
+                <responseparam type="tolerance" default="0.0001" />
+                <formulaequationinput />
+            </numericalresponse>
+            
+        </p>
+        
+        <p>
+            <p>We can also get a 4 and either 3 or K to make a full house. The number of such card pairs, ignoring order, is</p>
+            <numericalresponse answer="$answer2">
+                <responseparam type="tolerance" default="0.0001" />
+                <formulaequationinput />
+            </numericalresponse>
+        </p>
+        
+        <p>
+            <p>A third possibility is to draw two K's or two 3's. The number of such card pairs, ignoring order,  is</p>
+            <numericalresponse answer="$answer3">
+                <responseparam type="tolerance" default="0.0001" />
+                <formulaequationinput />
+            </numericalresponse>
+        </p>
+        
+        <p>
+            <p>The final possibility is a straight flush. The number of such card pairs, ignoring order, is </p>
+            <numericalresponse answer="$answer4">
+                <responseparam type="tolerance" default="0.0001" />
+                <formulaequationinput />
+            </numericalresponse>
+        </p>
+        
+        <p>
+            <p>he conditional probability is</p>
+            <numericalresponse answer="$answer5">
+                <responseparam type="tolerance" default="0.0001" />
+                <formulaequationinput />
+            </numericalresponse>
+        </p>
+        
+    </text>
+    
+    
+    
+</problem>
