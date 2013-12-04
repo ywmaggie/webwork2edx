@@ -1,0 +1,42 @@
+<problem>
+
+<script>
+from math import factorial as f
+
+import random
+
+def C(n,m):
+	return f(n)/f(m)/f(n-m)
+
+
+x = random.randrange(1,3,1);
+y = random.randrange(1,2,1);
+z = random.randrange(5,9,1);
+
+answer1 = 1.0*C(4*(z-2),y)*C(12,x)*C(40-4*(z-2),5-y-x)
+answer2 = 1.0*C(4*(z-2),y)*C(52-4*(z-2),5-y)
+answer3 = 1.0*C(12,x)*C(40-4*(z-2),5-y-x)/C(52-4*(z-2),5-y)
+
+</script>
+<text>
+<p>
+<b>Find the probability that a poker hand of 5 cards from a standard deck will contain exactly $x face cards (i.e. J,Q,K) (event \(A\)), given that it contains exactly $y cards smaller than $z (i.e. 2,...,$z-1)(event \(B\))"?</b></p>
+<p>    - \(|A \cap B| = \) <numericalresponse answer="$answer1">
+                <responseparam type="tolerance" default="1%" />
+                <formulaequationinput />
+            </numericalresponse>
+</p>
+<p>    - \(|B| = \) <numericalresponse answer="$answer2">
+                <responseparam type="tolerance" default="1%" />
+                <formulaequationinput />
+            </numericalresponse>
+</p>
+<p>    - The conditional probability \(P(A|B) = \) <numericalresponse answer="$answer3">
+                <responseparam type="tolerance" default="1%" />
+                <formulaequationinput />
+            </numericalresponse>
+</p>
+<p>
+</p>
+</text>
+</problem>
