@@ -1,0 +1,91 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+In Texas Hold'Em, a standard 52-card deck is used. Each player is dealt two cards from the deck face down so that only the player that got the two cards can see them. After checking his two cards, a player places a bet. The dealer then puts 5 cards from the deck face up on the table, this is called the "board" or the "communal cards" because all players can see and used them. The board is layed down in 3 steps: first, the dealer puts 3 cards down (that is called "the flop") followed by two single cards, the first is called "the turn" and the second is called "the river". After the flop, the turn and the river each player can update their bet.  The winner  of the game is the person that can form the strongest 5-card hand from the 2 hand in their hand and the 5 cards in the board.
+
+In previous homework you calculated the probability of getting each 5-card hand.
+Here we are interested in something a bit more complex: what is the probability of a particular hand given the cards that are currently available to the player.
+
+The outcome space in this kind of problem is the set of 7 cards the user has at her disposal after all 5 board cards have been dealt. The size of this space is [`|\Omega|=C(52,7)`]
+
+Suppose that [`A,B`] are events, i.e. subsets of [`\Omega`]. We will want to calculate conditional probabilities of the type [`P(A|B)`]. given that the probability of each set of seven cards  is equal to [`1/C(52,7)`] we get that the conditional probability can be expressed as:
+
+[``P(A|B) = \frac{P(A \cap B)}{P(B)} = 
+\frac{\frac{|A \cap B|}{|\Omega|}}{\frac{|B|}{|\Omega|}}
+=\frac{|A \cap B|}{|B|}``]
+
+Therefor the calculation of conditional probability (for finite sample spaces with uniform distribution) boils down to calculating the ratio between the sizes of two sets.
+
+Lets give this a try!  
+
+1. *What is the probability that you will get a straight (including straight flush)?*
+
+    According to the rule of this game, you get a straight as long as 5 cards among the 7 cards that are shown to you (2 in hand, 5 for the board) is a straight. Remember that both (A,2,3,4,5) and (10,J,Q,K,A) are counted as straight.
+Suppose the cards are drawn from a standard deck of 52 cards.  
+Let [`A`] be the set 7-card hands that contain a straight or a straight flush.
+    - What is the size of the set [`A`]? [`|A|=`] [__________]{Compute("(13-3)*4^5*C(52-5,2)")}
+    - What is the probability of the set [`A`]?  [`P(A)=`] [__________]{Compute("(13-3)*4^5*C(52-5,2)/C(52,7)")}
+
+2. *What is the probability that you get a straight given that you have been dealt "4[`\heartsuit`], 5[`\heartsuit`]"?*
+
+We define the set [`A`] as above and the set [`B`] to the the set of all 7-card hands that . Our goal is to calculate 
+
+[``P(A|B)=\frac{|A \cap B|}{|B|} ``]
+
+Our goal is therefor to count the number of elements in these two sets.
+
+We start with [`|B|`]. How many 7 hands are there that w? That is simple. The remaining 5 cards can be chosen in any way from the remaning cards. From this we get 
+
+[`|B|`] = [________]{Compute("C(50,5)")}
+
+---
+
+Calculating the size of the set [`A \cap B`] is more complex, it is the set of all 7 card hands such that both conditions hold:
+   - The hand contains the cards 4[`\heartsuit`], 5[`\heartsuit`].  *and*
+   - The hand contains a straight (either simple or flush)
+
+There are two ways that the 7-card hand can include a 5 card straight.
+S1. The 5 card flush includes both 4[`\heartsuit`] and 5[`\heartsuit`]
+S2. The 5 card flush does not include the ranks 3,4,5,6
+
+It might seem that there are other possibilities. However, it is not hard to convince yourself that if one of the ranks 3,4,5,6 is a part of the straight then the hand also includes a straight that includes both 4[`\heartsuit`] and 5[`\heartsuit`].
+
+We therefor have the equation [`|A\cap B| = |S1|+|S2|`]
+
+We start with the set S1.
+
+    In this case the ranks of the straight must be one of the four sequences: (A,2,3,4,5), (2,3,4,5,6), (3,4,5,6,7), (4,5,6,7,8).  How many 5-card boards would be consistent with each of these rank orders? In each case we need the board to include three cards with three specified ranks and arbitrary suit and the remaining two cards can be anything. We thus get that the size of S1 is  
+[`|S1|=`] [__________]{Compute("4*4^3*C(52-5,2)")}
+
+We now compute the size of S2.
+
+    In this case the ranks must be one of (7,8,9,10,J),(8,9,10,J,Q),(9,10,J,Q,K),(10,J,Q,K,A). These 5 cards have to come from the board. So the size of this set
+is  
+[`|S2|=`] [___________]{Compute("4*4^5")}
+
+Taking the sum of the sizes of S1 and S2 and dividing by the size of B we get:
+
+[`P(A|B)=\frac{|A \cap B|}{|B|} = \frac{|S1|+|S2|}{|B|} = `] 
+[___________________________]{Compute("(4*4^3*C(52-5,2)+4*4^5)/C(50,5)")}
+
+END_PGML
+
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem. 

@@ -1,0 +1,29 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+*Find the probability that a poker hand of 5 cards from a standard deck will contain no card smaller than 7 (i.e. 2,3...6) (call this event [`A`]), given that it contains at least a face card (i.e. J, Q, K) (call this event [`B`])"?*
+    - [`|A \cap B| = `] [____________]{Compute("C(32,5)-C(20,5)")}
+    - [`|B| = `] [____________]{Compute("C(52,5)-C(40,5)")}
+    - The conditional probability [`P(A|B) = `] [____________]{Compute("(C(32,5)-C(20,5))/(C(52,5)-C(40,5))")}
+
+END_PGML
+
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem. 

@@ -1,0 +1,29 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+*Suppose you are dealt the same cards as the previous question. What is the probability that you will get a straight given that you have been dealt these two cards, and that the board is "3[`\clubsuit`], Q[`\spadesuit`], K[`\diamondsuit`]"?*
+    With this flop we can make a straight with the set {6,7}, {2,6} or {A,2} on the turn and river.
+    - The number of such card pairs, ignoring order, is [____________]{Compute("3*4^2")}
+    - The conditional probability is [____________]{Compute("(3*4^2)/C(52-5,2)")}
+
+END_PGML
+
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem. 
