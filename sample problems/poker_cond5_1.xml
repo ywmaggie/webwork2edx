@@ -1,0 +1,35 @@
+
+<problem>
+    <script>
+from math import factorial as f
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+        
+
+
+
+
+answer1 = 1.0*C(32,5)-C(20,5)
+answer2 = 1.0*C(52,5)-C(40,5)
+answer3 = 1.0*(C(32,5)-C(20,5))/(C(52,5)-C(40,5))
+</script>
+<p></p>
+<p><b>Find the probability that a poker hand of 5 cards from a standard deck will contain no card smaller than 7 (i.e. 2,3...6) (call this event \(A\)), given that it contains at least a face card (i.e. J, Q, K) (call this event \(B\))"?</b></p>
+<p>    - \(|A \cap B| = \) <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - \(|B| = \) <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - The conditional probability \(P(A|B) = \) <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

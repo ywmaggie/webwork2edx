@@ -1,59 +1,54 @@
 import ply.lex as lex
 import ply.yacc as yacc
 
-class MyCodeLexer:
-    # List of token names.   This is always required
-    tokens = (
-              'NUMBER',
-              'COMMA',
-              'C_FUNCTION',
-              'LPAREN',
-              'RPAREN',
-              'EXPONENT',
-              'DOLLAR',
-              'WORD',
-              'EQUAL',
-              'SEMICOLON',
-              'PLUS',
-              'MINUS',
-              'TIMES',
-              'DIVIDE',
-              'SPACE',
-              'NEWLINE',
-              'RANDOM',
-              )
+class MyCode:
+     
+    # First part : lexer
+      
+    # Literals are tokens that remain the same as they are 
+    literals = [',','(',')','+','-','*','/','=']
+
+    #reserverd names used in code
+    reserved = {
+        'C' : 'C_FUNCTION',
+    }
+
+    # List of token names
+    tokens = [
+                'RANDOM',
+                'EXPONENT',
+                'NUMBER',
+                'ID',
+                'SPACE',
+                'NEWLINE',
+              ] + list(reserved.values())
 
     # Regular expression rules for simple tokens
-    t_EXPONENT= r'\^'
-    t_COMMA   = r'\,'
-    t_LPAREN  = r'\('
-    t_RPAREN  = r'\)'
-    #t_C_FUNCTION = r'C'
     t_NUMBER  = r'\d+(\.\d+)?'
-    t_WORD    = r'[a-zA-Z][a-zA-Z_0-9]*'
     t_NEWLINE = r'\n+'
     t_SPACE   = r'[ \t]'
-    #t_RANDOM  = r'random'
-    #t_OPERATOIN = r'[\+\-\*\/]'
-    t_EQUAL   = r'\='
-    t_SEMICOLON = r';'
-    t_PLUS    = r'\+'
-    t_MINUS   = r'-'
-    t_TIMES   = r'\*'
-    t_DIVIDE  = r'/'
-    t_DOLLAR  = r'\$'
+    t_ignore_semicolon = r';'
+    t_ignore_dollar = r'\$'
+    t_ignore_comment = r'\#\#.*'
 
-    # Error handling rule
-
+    #change 'random' in Perl to 'random.range' in Python
     def t_RANDOM(self,t):
         r'random'
+        t.value = 'random.randrange'
         return t
 
-    def t_C_FUNCTION(self,t):
-        r'C'
+    #change '^' to '**'
+    def t_EXPONENT(self,t):
+        r'\^'
+        t.value = '**'
         return t
 
-        
+    def t_ID(self,t):
+        r'[a-zA-Z][a-zA-Z_0-9]*'
+        t.type = self.reserved.get(t.value,'ID')    # Check for reserved words
+        return t
+
+    # Error handling rule   
     def t_error(self,t):
         print "Illegal character '%s'" % t.value[0]
         t.lexer.skip(1)
@@ -73,6 +68,9 @@ class MyCodeLexer:
 
 
     
+    # Second part : parser
+
+    # The code itself is a segment 
     def p_segment(self,p):
         '''
         segment : segment element
@@ -83,32 +81,21 @@ class MyCodeLexer:
         else: 
             p[0] = p[1] + p[2]
 
+    # Every 
     def p_element(self,p):
         '''
-        element : SEMICOLON
-                | expression
-                | EQUAL
+        element : expression
+                | '='
                 | SPACE
                 | NEWLINE
-                | random
         '''
-        if p[1] == ';':
-            p[0] = ''
-        else:
-            p[0] = p[1]
-
-
-    def p_random(self,p):
-        '''
-        random : RANDOM
-        '''
-        p[0] = 'random.randrange'
+        p[0] = p[1]
 
 
     def p_expression(self,p):
         '''
-        expression : expression PLUS term 
-                   | expression MINUS term
+        expression : expression '+' term 
+                   | expression '-' term
                    | term 
         '''
         if len(p) == 2:
@@ -119,8 +106,8 @@ class MyCodeLexer:
 
     def p_term(self,p):
         '''
-        term : term TIMES factor
-             | term DIVIDE factor
+        term : term '*' factor
+             | term '/' factor
              | term EXPONENT factor
              | term factor
              | factor
@@ -128,21 +115,18 @@ class MyCodeLexer:
         if len(p) == 2:
             p[0] = p[1]
         elif len(p) == 4:
-            if p[2] == '^':
-                p[0] = p[1] + '**' + p[3]
-            else:
-                p[0] = p[1] + p[2] + p[3]
+            p[0] = p[1] + p[2] + p[3]
         else:
             p[0] = p[1] + '*' + p[2]
 
-
+    # A factor is the basic element in a equation  
     def p_factor(self,p):
         '''
         factor : NUMBER
-               | variable
-               | LPAREN expression RPAREN
-               | C_FUNCTION LPAREN expression COMMA expression RPAREN
-               | random LPAREN expression COMMA expression COMMA expression RPAREN
+               | ID
+               | '(' expression ')'
+               | C_FUNCTION '(' expression ',' expression ')'
+               | RANDOM '(' expression ',' expression ',' expression ')'
         '''
         if len(p) == 2:
             p[0] = p[1]
@@ -154,21 +138,11 @@ class MyCodeLexer:
             p[0] = p[1] + p[2] + p[3] + p[4] + p[5] + p[6] + p[7] + p[8]
             
 
-    def p_variable(self,p):
-        '''
-        variable : DOLLAR WORD
-                 | WORD
-        '''
-        if len(p) == 2:
-            p[0] = p[1]
-        else: 
-            p[0] = p[2]
-
 
 
     # Error rule for syntax errors
     def p_error(self,p):
-        raise TypeError("parse error : unknown text at %r" % (p.value,))
+        raise TypeError("parse error : unknown text at %r %r" % (p.value,p.lineno))
 
 
     # Build the parser
@@ -178,4 +152,15 @@ class MyCodeLexer:
     #Test the parser
     def test_parser(self,data):
         result = self.parser.parse(data,lexer = self.lexer)
-        print result
+        s = '''
+<problem>
+    <script>
+from math import factorial as f
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+        '''
+        return s+result + '</script>\n'
+
+
+

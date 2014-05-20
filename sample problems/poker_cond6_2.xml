@@ -1,0 +1,51 @@
+
+<problem>
+    <script>
+from math import factorial as f
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+        
+
+n = random.randrange(13,16,1)
+x = random.randrange(2,9,1)
+y = random.randrange(x+2,13,1)
+
+
+
+
+
+answer1 = 1.0*(n-1)*(n-2)
+answer2 = 1.0*(y-x-1)
+answer3 = 1.0*(n-x)*(n-x-1)/2
+answer4 = 1.0*(n-x)*(n-x-1)/2/((n-1)*(n-2))
+</script>
+<p></p>
+<p><b>Three cards are drawn sequentially from a deck that contains $n cards numbered 1 to $n in an arbitrary order. Suppose the first card drawn is a $x, what is the probability that the three cards form an increasing sequence?</b></p>
+<p>    Note that unlike the previous question, we are considering a sequence instead of a set of cards, so the order matters. Define the event of interest, A, as the set of all increasing 3-card sequences, i.e. \( A = \{(x_1,x_2,x_3) | x_1 &lt; x_2 &lt; x_3\} \), where \(x_1, x_2, x_3 \in \{1, \cdots, $n\}\). Define event \(B\) as the set of 3-card sequence that starts with $x, i.e. \( B = \{(x_1,x_2,x_3) | x_1=$x\} \) or simply \( B = \{($x,x_2,x_3) \} \).</p>
+<p>    - \(|B| = \) <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+   </p>
+<p>    It follows that \( A \cap B = \{($x,x_2,x_3) | $x &lt; x_2 &lt; x_3\} \). This set can be partitioned into subsets according to \(x_3\), where in each subset \(x_3\) is a constant: \( A \cap B = \cup_{x_3 = $x+2}^{$n} \{($x,x_2,x_3)|$x &lt; x_2 &lt; x_3\} \).   </p>
+<p>    Let \(S_{x_3=t}\) represent the subset \(\{($x,x_2,t)|$x &lt; x_2 &lt; t\}\), then \( |A \cap B| = \sum_{t = $x+2}^{$n} \left|S_{x_3=t}\right| \).   </p>
+<p>    - To compute each \(\left|S_{x_3=t}\right|\), let's start with a specific case, say,  \(t=$y\),   </p>
+<p>        \(\left|S_{x_3=$y}\right| = \left| \{($x,x_2,$y)|$x &lt; x_2 &lt; $y\} \right| = \) <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - Generalize this computation, it should be straightforward to compute \(|A \cap B|\) as the sum of \(S_{x_3=t}\) over all valid \(t\).   </p>
+<p>        \(|A \cap B|=\)<numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - Now we are ready to compute the conditional probability \(P(A|B) = \) <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

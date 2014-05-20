@@ -1,0 +1,30 @@
+
+<problem>
+    <script>
+from math import factorial as f
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+        
+
+
+
+
+answer1 = 1.0*3*4**2
+answer2 = 1.0*(3*4**2)/C(52-5,2)
+</script>
+<p></p>
+<p><b>Suppose you are dealt the same cards as the previous question. What is the probability that you will get a straight given that you have been dealt these two cards, and that the board is "3\(\clubsuit\), Q\(\spadesuit\), K\(\diamondsuit\)"?</b></p>
+<p>    With this flop we can make a straight with the set {6,7}, {2,6} or {A,2} on the turn and river.</p>
+<p>    - The number of such card pairs, ignoring order, is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - The conditional probability is <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

@@ -1,0 +1,55 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+*Find the probability that a poker hand of 5 cards from a standard deck will contain exactly [`X`] suits (event [`A`]), given that it contains exactly one [`Q`] (event [`B`])"?*
+    - [`|B| = `] [____________]{Compute("4*C(48,4)")}
+
+If [`X=1`],
+    - [`|A \cap B| = `] [_________________________]{Compute("4*C(12,4)")}
+    - The conditional probability [`P(A|B) = `][_________________________]{Compute("(4*C(12,4))/(4*C(48,4))")}
+
+If [`X=4`], there are two cases for choosing the rest four cards: 
+    - *Case 1*: (event [`S_1`]) They all have different suits  (one of them has the same suit as the queen, or 
+    - *Case 2*:  (event [`S_2`]) They have three suits different from that of the queen. In this case there are two cards that have the same suit and the two other cards have different suits each. 
+
+    Remember also to consider the choices for the suit of the Queen,
+    - [`|S_1| = `] [_________________________]{Compute("4*12^4")}
+    - [`|S_2| = `] [_________________________]{Compute("4*3*C(12,2)*12^2")}
+    - [`|A \cap B| = |S_1| + |S_2| = `] [_________________________]{Compute("4*(12^4+3*C(12,2)*12^2)")}
+    - The conditional probability [`P(A|B) = `] [_________________________]{Compute("(4*(12^4+3*C(12,2)*12^2))/(4*C(48,4))")}
+
+If [`X=2`], there are some more cases for the suits of the remaining four cards we need to consider. For example, let's say the Queen is [`\heartsuit`], and the other suit in the hand is [`\diamondsuit`], then the cases are:
+    - *Case 1*: all have [`\diamondsuit`].
+    - *Case 2*: one [`\diamondsuit`], three [`\heartsuit`]
+    - *Case 3*: two [`\diamondsuit`], two [`\heartsuit`]
+    - *Case 4*: three [`\diamondsuit`], one [`\heartsuit`]
+
+    Now generalize the above example, allow the Queen and the other suit in the hand to be any suit. Let sets [`S_1`] to [`S_4`] represent the above four cases respectively, then
+    - [`|S_1| = `][_________________________]{Compute("4*3*C(12,4)")}
+    - [`|S_2| = `][_________________________]{Compute("4*3*C(12,3)*12")}
+    - [`|S_3| = `][_________________________]{Compute("4*3*C(12,2)^2")}
+    - [`|S_4| = `][_________________________]{Compute("4*3*C(12,3)*12")}
+    - [`|A \cap B| = |S_1|+|S_2|+|S_3|+|S_4| = `] [_________________________]{Compute("4*(3*C(12,4)+2*3*C(12,3)*12+3*C(12,2)^2)")}
+    - The conditional probability [`P(A|B) = `] [_________________________]{Compute("(4*(3*C(12,4)+2*3*C(12,3)*12+3*C(12,2)^2))/(4*C(48,4))")}
+
+END_PGML
+
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem. 

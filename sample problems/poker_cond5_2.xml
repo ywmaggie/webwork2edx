@@ -1,0 +1,106 @@
+
+<problem>
+    <script>
+from math import factorial as f
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+        
+
+
+
+
+answer1 = 1.0*4*C(48,4)
+answer2 = 1.0*4*C(12,4)
+answer3 = 1.0*(4*C(12,4))/(4*C(48,4))
+answer4 = 1.0*4*12**4
+answer5 = 1.0*4*3*C(12,2)*12**2
+answer6 = 1.0*4*(12**4+3*C(12,2)*12**2)
+answer7 = 1.0*(4*(12**4+3*C(12,2)*12**2))/(4*C(48,4))
+answer8 = 1.0*4*3*C(12,4)
+answer9 = 1.0*4*3*C(12,3)*12
+answer10 = 1.0*4*3*C(12,2)**2
+answer11 = 1.0*4*3*C(12,3)*12
+answer12 = 1.0*4*(3*C(12,4)+2*3*C(12,3)*12+3*C(12,2)**2)
+answer13 = 1.0*(4*(3*C(12,4)+2*3*C(12,3)*12+3*C(12,2)**2))/(4*C(48,4))
+</script>
+<p></p>
+<p><b>Find the probability that a poker hand of 5 cards from a standard deck will contain exactly \(X\) suits (event \(A\)), given that it contains exactly one \(Q\) (event \(B\))"?</b></p>
+<p>    - \(|B| = \) <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>If \(X=1\),</p>
+<p>    - \(|A \cap B| = \) <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - The conditional probability \(P(A|B) = \)<numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>If \(X=4\), there are two cases for choosing the rest four cards: </p>
+<p>    - <b>Case 1</b>: (event \(S_1\)) They all have different suits  (one of them has the same suit as the queen, or </p>
+<p>    - <b>Case 2</b>:  (event \(S_2\)) They have three suits different from that of the queen. In this case there are two cards that have the same suit and the two other cards have different suits each. </p>
+<p>    Remember also to consider the choices for the suit of the Queen,</p>
+<p>    - \(|S_1| = \) <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - \(|S_2| = \) <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - \(|A \cap B| = |S_1| + |S_2| = \) <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - The conditional probability \(P(A|B) = \) <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>If \(X=2\), there are some more cases for the suits of the remaining four cards we need to consider. For example, let's say the Queen is \(\heartsuit\), and the other suit in the hand is \(\diamondsuit\), then the cases are:</p>
+<p>    - <b>Case 1</b>: all have \(\diamondsuit\).</p>
+<p>    - <b>Case 2</b>: one \(\diamondsuit\), three \(\heartsuit\)</p>
+<p>    - <b>Case 3</b>: two \(\diamondsuit\), two \(\heartsuit\)</p>
+<p>    - <b>Case 4</b>: three \(\diamondsuit\), one \(\heartsuit\)</p>
+<p>    Now generalize the above example, allow the Queen and the other suit in the hand to be any suit. Let sets \(S_1\) to \(S_4\) represent the above four cases respectively, then</p>
+<p>    - \(|S_1| = \)<numericalresponse answer="$answer8">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - \(|S_2| = \)<numericalresponse answer="$answer9">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - \(|S_3| = \)<numericalresponse answer="$answer10">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - \(|S_4| = \)<numericalresponse answer="$answer11">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - \(|A \cap B| = |S_1|+|S_2|+|S_3|+|S_4| = \) <numericalresponse answer="$answer12">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>    - The conditional probability \(P(A|B) = \) <numericalresponse answer="$answer13">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>
