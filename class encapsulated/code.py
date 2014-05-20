@@ -30,6 +30,8 @@ class MyCode:
     t_ignore_semicolon = r';'
     t_ignore_dollar = r'\$'
     t_ignore_comment = r'\#\#.*'
+    t_ignore_compute = r'compute'
+    t_ignore_quotation = r'\"'
 
     #change 'random' in Perl to 'random.range' in Python
     def t_RANDOM(self,t):
