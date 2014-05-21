@@ -5,6 +5,10 @@ Aim to translate PG format problems to edX/XML problems
 
 This is a partially completed translator from webwork PG format to edX XML format.
 
-To run the translator, use python yacc_v4.py to run nonrandomized problems. Run yacc_random.py and then run yacc_combine in the same folder for randomized problems.
+Folder 'class encapsulated' contains the most recent translator. Put all three files in the same folder. To run the translator, run 'python translate.py' and when you see '>     ', input the name of file that you want to transalte. Then you will get a XML file of the same name as the original file in the same folder.
 
-If you want to test the result, copy the output in output.XML and paste to the edX studio and you can see the result.
+Folder 'sample examples' contains all original PG files and the output XML files. You can see for reference.
+
+Folder 'lex' and 'yacc' are old versions of the translator.
+
+If you want to test the result, copy the output and paste to the edX studio and you can see the result.
