@@ -1,0 +1,73 @@
+
+<problem>
+    <script>
+from math import factorial as f
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+k=myrandom(6,10,1)
+t1=myrandom(2,5,1)
+t2=myrandom(2,5,1)
+r=myrandom(0.1,0.6,0.1)
+
+ans1=k*(k+1)/(2*k)
+ans2=2*k/(k+1)+(k*(k-1))/(2*(k+1))
+ans3=t1*ans1+t2*ans2
+ans4=ans3/r
+
+
+
+
+answer1=1.0*ans1
+answer2=1.0*ans2
+answer3=1.0*ans3
+answer4=1.0*ans4
+answer5=1.0*ans1
+answer6=1.0*ans2
+answer7=1.0*ans3
+answer8=1.0*ans4
+</script>
+<p>
+
+
+
+We have 2 $k-sided dice. The first die is a normal fair die where each face has a probability of showing of \(1/$k\). However, the second die is rigged so that the probability of showing the largest face ($k) is twice as high as of the other faces and all of the other faces have equal probabilities.
+
+o What is the expected value of the outcome from tossing the fair die? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ 
+
+o What is the expected value of the outcome from tossingthe rigged die? <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+
+
+We throw the fair die $t1 times, then the rigged die $t2 times consecutively and sum up all the outcomes:
+
+o What is the expected value of the sum? <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+
+
+Let \(Y\) denote the sum from the previous part. If we know that
+
+\(P(Y &gt; k) \le $r\)
+
+o According to Markov's inequality, what is \(k\)? <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+
+
+</p>
+</problem>

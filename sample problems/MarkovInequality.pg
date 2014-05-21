@@ -1,0 +1,55 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$r = random(0.4,0.6,0.1);
+$k = random(100,200,1);
+$p = random($r+0.1,0.9,0.1);
+$n2 = random(300,500,1);
+$k2 = random(251,299,1);
+
+$ans1 = ceil($p*$k/$r);
+
+Context("Numeric");
+######################################################################
+
+BEGIN_PGML
+
+### Markov's Inequality 
+
+Markov's inequality relate probabilities to expectations, and provide bounds for the cumulative distribution function of a random variable.
+
+The Markov's inequality is stated as follow:
+
+If X is any nonnegative random variable and a > 0, then  [`\mathbb{P}(X \geq a) \leq \frac{\mathbb{E}(X)}{a}`]
+
+---
+
+John has a biased coin with [`P(\mathrm{heads}) = [$r]`]. 
+He tosses this coin [`N`] times and, out of the [`N`] times, 
+the coin lands on heads [$k] times. 
+Using Markov's inequality that he learned from CSE103, 
+he says that the probabality of seeing at least this many 
+heads is at most [$p]. 
+
+o How many times did he toss the coin? 
+[`N`] = [____________]{$ans1}
+(If [`N`] is a fraction, please round it up to the next integer)
+
+Suppose John lends you this coin. If you flip the coin [$n2] times, 
+what is the upper bound of the probability of seeing at least [$k2] heads 
+using Markov's inequality?
+
+o [`P(\mbox{Number of heads} > [$k2])`] [`\le`] [____________]{Compute("$n2*$r/$k2")->with(tolType=>'absolute', tolerance=>'0.01')}
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

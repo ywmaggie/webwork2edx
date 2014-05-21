@@ -1,0 +1,59 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+r=myrandom(0.4,0.6,0.1)
+k=myrandom(100,200,1)
+p=myrandom(r+0.1,0.9,0.1)
+n2=myrandom(300,500,1)
+k2=myrandom(251,299,1)
+
+ans1=ceil(p*k/r)
+
+
+
+
+
+answer1=1.0*ans1
+answer2=1.0*n2*r/k2
+answer3=1.0*ans1
+answer4=1.0*n2*r/k2
+</script>
+<p></p>
+<p></p>
+<p>Markov's inequality relate probabilities to expectations, and provide bounds for the cumulative distribution function of a random variable.</p>
+<p>The Markov's inequality is stated as follow:</p>
+<p>If X is any nonnegative random variable and a &gt; 0, then  \(\mathbb{P}(X \geq a) \leq \frac{\mathbb{E}(X)}{a}\)</p>
+<p>---</p>
+<p>John has a biased coin with \(P(\mathrm{heads}) = $r\). </p>
+<p>He tosses this coin \(N\) times and, out of the \(N\) times, </p>
+<p>the coin lands on heads $k times. </p>
+<p>Using Markov's inequality that he learned from CSE103, </p>
+<p>he says that the probabality of seeing at least this many </p>
+<p>heads is at most $p. </p>
+<p>o How many times did he toss the coin? <br/>\(N\) = <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>(If \(N\) is a fraction, please round it up to the next integer)</p>
+<p>Suppose John lends you this coin. If you flip the coin $n2 times, </p>
+<p>what is the upper bound of the probability of seeing at least $k2 heads </p>
+<p>using Markov's inequality?</p>
+<p>o \(P(\mbox{Number of heads} &gt; $k2)\) \(\le\) <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

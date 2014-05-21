@@ -1,0 +1,31 @@
+
+<problem>
+    <script>
+from math import factorial as f
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+        
+
+
+n=random.randrange(20,25,1)
+
+
+answer1=1.0*1+2+3+4+5
+answer2=1.0*n*(n+1)/2
+</script>
+<p></p>
+<p></p>
+<p>Let \(X\) be a discrete random variable with the density function \(P(X=x) = x/z\), that is defined when \(x \in \{1, 2, ... , $n\}\), and \(z\) is a normalization constant. Let \(F\)\((X)\) be the CDF of \(X\).  What are the values of the following expressions?</p>
+<p>o \(F(5) = \frac{1}{z} (\)<numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+\()\)</p>
+<p>o \(F($n) =  \frac{1}{z} (\)<numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+\()\)</p>
+<p></p>
+</problem>

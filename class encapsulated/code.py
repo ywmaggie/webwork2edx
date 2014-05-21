@@ -1,3 +1,5 @@
+# This file contains a class definatoin for 'code' translation
+
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -11,6 +13,7 @@ class MyCode:
     #reserverd names used in code
     reserved = {
         'C' : 'C_FUNCTION',
+        'ceil' : 'CEIL',
     }
 
     # List of token names
@@ -26,17 +29,17 @@ class MyCode:
     # Regular expression rules for simple tokens
     t_NUMBER  = r'\d+(\.\d+)?'
     t_NEWLINE = r'\n+'
-    t_SPACE   = r'[ \t]'
+    t_SPACE   = r'[\t]'
     t_ignore_semicolon = r';'
     t_ignore_dollar = r'\$'
     t_ignore_comment = r'\#\#.*'
-    t_ignore_compute = r'compute'
-    t_ignore_quotation = r'\"'
+    t_ignore_quotation = r'\"\)'
+    t_ignore_space = r'[ ]'
 
-    #change 'random' in Perl to 'random.range' in Python
+    # Change the name of function 'random' to a new defined function 'myrandom'
     def t_RANDOM(self,t):
         r'random'
-        t.value = 'random.randrange'
+        t.value = 'myrandom'
         return t
 
     #change '^' to '**'
@@ -44,6 +47,19 @@ class MyCode:
         r'\^'
         t.value = '**'
         return t
+
+    # Ignore the beginning part of caculating a math expression
+    # like Compute("1+2+3")
+    def t_compute(self,t):
+        r'Compute\(\"'
+        pass
+
+    # Ignore the distinct webwork declaration
+    # like Context("Numeric"); or Context()->variables->add(p => 'Real'); 
+    # as the use of such declarations are already included in the translation system
+    def t_context(self,t):
+        r'Context.*'
+        pass
 
     def t_ID(self,t):
         r'[a-zA-Z][a-zA-Z_0-9]*'
@@ -83,7 +99,7 @@ class MyCode:
         else: 
             p[0] = p[1] + p[2]
 
-    # Every 
+    # Single elements construct the the whole segment
     def p_element(self,p):
         '''
         element : expression
@@ -93,7 +109,7 @@ class MyCode:
         '''
         p[0] = p[1]
 
-
+    # Math expression 
     def p_expression(self,p):
         '''
         expression : expression '+' term 
@@ -105,7 +121,7 @@ class MyCode:
         elif len(p) == 4:
             p[0] = p[1] + p[2] + p[3]
 
-
+    # Terms construct math expression
     def p_term(self,p):
         '''
         term : term '*' factor
@@ -121,7 +137,8 @@ class MyCode:
         else:
             p[0] = p[1] + '*' + p[2]
 
-    # A factor is the basic element in a equation  
+    # A factor is the basic element in a equation
+    # A factor is a encapsulated element in a math expression  
     def p_factor(self,p):
         '''
         factor : NUMBER
@@ -129,11 +146,15 @@ class MyCode:
                | '(' expression ')'
                | C_FUNCTION '(' expression ',' expression ')'
                | RANDOM '(' expression ',' expression ',' expression ')'
+               | RANDOM '(' expression ',' expression ')'
+               | CEIL '(' expression ')'
         '''
         if len(p) == 2:
             p[0] = p[1]
         elif len(p) == 4:
             p[0] = p[1] + p[2] + p[3]
+        elif len(p) == 5:
+            p[0] = p[1] + p[2] + p[3] + p[4]
         elif len(p) == 7:
             p[0] = p[1] + p[2] + p[3] + p[4] + p[5] + p[6]
         else: 
@@ -151,17 +172,23 @@ class MyCode:
     def build_parser(self):
         self.parser = yacc.yacc(module = self)
 
-    #Test the parser
+    # Test the parser and output the script
+    # Add several functions useful for script interpretion
     def test_parser(self,data):
         result = self.parser.parse(data,lexer = self.lexer)
         s = '''
 <problem>
     <script>
 from math import factorial as f
+from math import ceil
+import random
 
 def C(n,m):
     return f(n)/f(m)/f(n-m)
-        '''
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+'''
         return s+result + '</script>\n'
 
 
