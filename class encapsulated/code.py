@@ -44,7 +44,7 @@ class MyCode:
 
     #change '^' to '**'
     def t_EXPONENT(self,t):
-        r'\^'
+        r'\^|\*\*'
         t.value = '**'
         return t
 
@@ -68,7 +68,7 @@ class MyCode:
 
     # Error handling rule   
     def t_error(self,t):
-        print "Illegal character '%s'" % t.value[0]
+        print "Illegal character %r %r" % (t.value[0],t.lineno)
         t.lexer.skip(1)
 
     # Build the lexer

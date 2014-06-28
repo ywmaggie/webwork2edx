@@ -9,8 +9,13 @@ import code
 while 1:
 
 	# Enter a file name to choose to translate
-	filename = raw_input('>')	
-	file = open(filename)
+	filename = raw_input('file name>')	
+	try:
+		file = open(filename)
+	except IOError:
+		print 'IOError: No file \'' + filename + '\''
+		continue
+
 	data = file.read()
 	file.close()
 

@@ -49,14 +49,14 @@ class MyText:
     # Where the expected answer begins. A sample answer is {Compute("C(4($z-2),$y)C(52-4($z-2),5-$y)")}
     # The lexer enters a specail state 'answer' to fetch to entire answer 
     def t_answer(self,t):
-        r"\[_+\]\{(Compute\(\")?"
+        r"\[_+\]\{(Compute\(\"|\")?"
         t.lexer.code_start = t.lexer.lexpos
         t.lexer.begin('answer')
         self.answer_count += 1
 
     # Where the expected answer ends
     def t_answer_end(self,t):
-        r"\}\.?"
+        r"\"?\}\.?"
         value = t.lexer.lexdata[t.lexer.code_start:t.lexer.lexpos-len(t.value)]
         t.type = "ANSWER"
         #t.lexer.lineno += t.value.count('\n')
@@ -72,7 +72,7 @@ class MyText:
     # While some are like {Compute("1+2+3")} 
     # So we need to ignore the extra words and punctuations except the real answer
     def t_answer_quotation_mark(self,t):
-        r'\"\)([^\}])*\}'
+        r'\"\)([^\}])*\}\.?'
         value = t.lexer.lexdata[t.lexer.code_start:t.lexer.lexpos-len(t.value)]
         t.type = "ANSWER"
         #t.lexer.lineno += t.value.count('\n')
@@ -117,7 +117,7 @@ class MyText:
 
     # Define all punctuations
     def t_PUNCTUATION(self,t):
-        r"[().,?:|!\\\"\']"
+        r"[().,?:\|!\\\"\']"
         return t
 
     # Special characters in XML that cannot behave themselves
