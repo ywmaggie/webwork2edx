@@ -1,0 +1,135 @@
+## DESCRIPTION
+##   Apply the Central Limit Theorem
+## ENDDESCRIPTION
+
+## KEYWORDS('Probability', 'Central Limit Theorem')
+## Tagged by nhamblet
+
+## DBsubject('Probability')
+## DBchapter('Theory')
+## DBsection('The Central Limit Theorem')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+
+sub Qinv {
+   shift; my $x = shift;
+   $xx = (1-2*$x)/2;
+   $b = main::normal_distr($xx, mean=>0, deviation=>1);
+   return $b; 
+}
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1},
+Qinv =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.001);
+
+Context()->texStrings;
+
+
+Context()->variables->are(
+      p => ['Real', limits=>[0.01,0.99], resolution=>0.01],
+      n => ['Real', limits=>[1,100], resolution=>1],
+    );
+
+$p2 = random(0.87,0.93,0.01);
+$diff = $p2 - 0.8;
+$significance = random(0.01,0.05,0.01);
+
+BEGIN_PGML
+# Min-Hashing Accuracy #
+You encountered a technique for approximating the Jaccard similarity between documents in problem 7 of Assignment 19.  This technique is called min-hashing.  
+
+To refresh your memory:
+- We represent documents by the set of vocabulary indices contained in those documents.  If we had an English dictionary indexed by a=0, aah=1, ...the=97124,apple=4337,...zyzzyvas=109581, the sentence "The apple on the tree is red" would be transformed into \{4377, 47647, 50764, 78524, 97124, 99593\} since "the"=97124, "apple"=4337, ...  Notice "the"=97124 is only counted once, even though it appears twice in the sentence.  Henceforth call the set of vocabulary indices [`V`].  
+- The Jaccard similarity between two documents represented by sets [`A \subseteq V`] and [`B \subseteq V`] is [`|A \cap B|/|A \cup B|`].  
+- A minhash [`h`] hashes documents to elements of [`V`].  For documents A,B, [`Pr(h(A) = h(B)) = |A \cap B|/|A \cup B| = J(A,B)`], the Jaccard similarity between A and B.  
+
+--------------------------------------------------------------------------
+
+Thus, we can use a number of independent min-hashes [`h_1, ...h_n`] to compute an approximation [`H = \frac {\sum_{1}^{n}{\mathbb{1}\{h_i(A)=h_i(B)\}} }{n}`] of [`J(A,B)`] 
+
+We will bound the accuracy of this sampling approximation to the Jaccard similarity in terms of [`n`].  
+
+Let [`p`] be the jaccard similarity between some documents A,B. In terms of [`p`] and [`n`]:
+* [`\mathbb{E}(H) = `][_______]{"p"}
+* [`var(H) = `][_______]{"p*(1-p)/n"}
+
+What is the smallest upper bound on [`var(H)`] in terms of [`n`]?  Hint: you've computed this result before by taking the derivative with respect to [`p`], setting to [`0`], and solving.  [_________]{"1/(4*n)"}
+
+----------------------------------------------------------------------------
+Assume [`n`] is large enough that [`H`] is approximately normal.  If p > [$p2], what is an upper bound on [`P(H < 0.8)`] in terms of the Q function and n?  [_______]{"Q(2*$diff*sqrt(n))"} 
+
+Let's say we define two documents A,B with J(A,B) > [$p2] as similar, and those with J(A,B) < 0.8 as dissimilar.  
+
+Let's say we use the following algorithm to guess whether documents are similar:
+- Compute H using [`n`] independent has functions.  
+- If H > [$p2], we guess the documents are similar.  
+- If H < 0.8, we guess the documents are dissimilar.  
+- Else, we output "I don't know"
+
+---------------------------------------------------------------------------
+
+If [`0.8 \leq p \leq [$p2]`], the algorithm is judged correct, no matter what it outputs.  
+
+Hint: You should be able to quickly answer the following questions using the work above:
+- If p > [$p2] for two documents A,B, in terms of [`n`], what is an upper bound on the probability our algorithm incorrectly says these documents are dissimilar?  [_______]{"Q(2*$diff*sqrt(n))"} 
+- If p < 0.8, what is an upper bound on the probability our algorithm incorrectly says these documents are similar?  [_______]{"Q(2*$diff*sqrt(n))"} 
+
+What is a simple lower bound on the accuracy of our similarity algorithm, that will hold for any fixed [`p`]?  [_______]{"Q(2*$diff*sqrt(n))"}  
+
+How many min-hash functions [`n`] are needed (as an expression, don't round) to ensure the probability of an error is < [$significance]?  You can use Qinv.  [______]{"(Qinv($significance)/(2*$diff))**2"}
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

@@ -1,0 +1,118 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "unionTables.pl"
+);
+
+Context("Numeric");
+Context()->variables->are(
+      p => ['Real', limits=>[0,1]],
+      n => ['Real', limits=>[1,10], resolution=>1],
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$bins = random(5,10,1);
+
+######################################################################
+
+BEGIN_PGML
+### Examples of Variances ###
+
+1\. Suppose you toss a coin with bias [`p`], and let [`X`] be [`1`] if the outcome is heads, or 
+[`0`] if the outcome is tails.
+
+Let's look at the distribution of [`X`] and of [`X^2`].
+
+
+[$BCENTER]*
+ 
+END_PGML
+
+$bHTML="";
+$eHTML="";
+
+TEXT(
+BeginTable(),
+$PAR,
+Row([Prob,PGML::Format2("[``X``]"),PGML::Format2("[``X^2``]")],separation=>10),
+Row([PGML::Format2("[``p``]"),1,1],separation=>10),
+Row([PGML::Format2("[``1-p``]"),0,0],separation=>10),
+EndTable()
+);
+
+BEGIN_PGML
+
+
+
+[$ECENTER]*
+
+
+
+From this table, [`\mathbb{E}(X) = p`] and [`\mathbb{E}(X^2) = p`]. Thus the variance is 
+[`\mbox{var}(X) = \mathbb{E}(X^2) - (\mathbb{E}(X))^2 = `][___________]{p(1-p)}.
+
+---
+ 
+2\. Roll a 4-sided die (a tetrahedron) in which each face is equally likely to come
+up, and let the outcome be [`X \in \{1,2,3,4\}`].
+
+We have two formulas for the variance: 
+
+[$BCENTER]*
+[``
+\begin{eqnarray*}
+\mbox{var}(X) & = & \mathbb{E} \left( (X - \mu)^2 \right) \\
+\mbox{var}(X) & = & \mathbb{E}(X^2) - \mu^2 
+\end{eqnarray*}
+``]
+[$ECENTER]*
+
+where [`\mu = \mathbb{E}(X)`].
+Let's try both and make sure we get the same answer.
+First of all, [`\mu = \mathbb{E}(X) =`][____________]{"(1 + 2 + 3 + 4)/4"}. Now, let's tabulate the
+distribution of [`X^2`] and [`(X-\mu)^2`].
+
+
+[$BCENTER]*
+ 
+END_PGML
+
+$bHTML="";
+$eHTML="";
+
+TEXT(
+BeginTable(),
+$PAR,
+Row([Prob,PGML::Format2("[``X``]"),PGML::Format2("[``X^2``]"),PGML::Format2("[``(X-\mu)^2``]")],separation=>10),
+Row([PGML::Format2("[``1/4``]"),1,1,2.25],separation=>10),
+Row([PGML::Format2("[``1/4``]"),2,4,0.25],separation=>10),
+Row([PGML::Format2("[``1/4``]"),3,9,0.25],separation=>10),
+Row([PGML::Format2("[``1/4``]"),4,16,2.25],separation=>10),
+EndTable()
+);
+
+BEGIN_PGML
+
+
+
+[$ECENTER]*
+
+
+
+Reading from this table, 
+
+[`\mathbb{E}(X^2) = `][____________________]{"(1+4+9+16)/4"}. Using the second formula for variance we have  [`\mbox{var}(X) = \mathbb{E}(X^2) - \mu^2 = `][_____]{1.25}
+
+[`\mathbb{E}\left((X-\mu)^2\right) = `][______________________]{"(2.25 + 0.25 + 0.25 + 2.25)/4"}. Using the first formula for variance we have [`\mbox{var}(X) = \mathbb{E}\left((X-\mu)^2\right)`]. Notice that both formulae give the same answer.
+
+
+END_PGML
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

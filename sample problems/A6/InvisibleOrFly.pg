@@ -1,0 +1,43 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+## To be invisible or to fly? ##
+A few years ago, the question was going round: ''which super power would you rather possess: the ability to make yourself invisible or to fly?'' It was perhaps an urban legend that men usually wanted to fly while women usually wanted to be invisible; and there was much speculation about the psychological reasons for this. But suppose the following statistics were obtained (warning: these numbers are fabricated!):
+[`` P(\mbox{fly} | \mbox{male}) = 0.8, \ \ \ P(\mbox{invisible} | \mbox{female}) = 0.6 .``]
+Then what is the overall fraction of people who would choose the ability to fly?
+
+This cannot be answered unless it is known what fraction of the population is male and what fraction is female. Suppose it is 60-40. Then
+
+[`P(fly) 
+= P(fly\ \mbox{AND}\ male) + P(fly\ \mbox{AND}\ female)
+= P(fly | male) P(male) + P(fly | female) P(female)
+= (0.8)(0.6) + (0.4)(0.4) \ = \ 0.64
+`]
+
+o  [_____]{64}% of people would like to fly.
+o  [_____]{80}% of males would like to fly.
+o  [_____]{40}% of people are females (in this contrived example).
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+### Solution ###
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,46 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+## Pregnancy Test ##
+
+How accurate is a pregnancy test? Here we make up some numbers and compute the relevant conditional probabilities.
+
+The sample space in this case consists of women who use the test; call this [`\Omega`]  There are two events on this space that we care about: [`P = \{\mbox{actually pregnant}\}`] and [`T = \{\mbox{test says pregnant}\}`]  
+Suppose that the following are determined (warning: these are fabricated!):
+[`` T \subset P, \ \ \ P(P) = 0.4, \ \ \ P(T) = 0.3 .``]
+There are two conditional probabilities we'd like to compute.  
+
+### What is the chance of pregnancy if the test comes out positive? ###
+
+Well, since [`T \subset P`]  we have [`P(P|T) = 1.0`]  Algebraically, [`P(P \cap T) = P(T)`]  so [`P(P|T) = P(P \cap T)/P(T) =`] [______]{1} 
+
+### What is the chance of pregnancy if the test comes out negative? ###
+
+Let [`T^c = \Omega - T`] be the event that the test is negative. Then [`P(T^c) = 1 - P(T) = 0.7`] and [`P(P \cap T^c) = P(P) - P(P \cap T) = `] [____]{0.1}  These are the two probabilities we need.
+[`` P(P | T^c)  \ = \ \frac{P(P \cap T^c)}{P(T^c)} \ = \ \frac{0.1}{0.7} \ \approx \ 0.14 .``]
+
+What is [`P(P|T)P(T)`]? [____]{0.3}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+### Solution ###
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

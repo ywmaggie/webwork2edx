@@ -1,0 +1,61 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+</script>
+<p><br/>
+<br/>
+We want to prove that seat-belts save a significant number of lives.<br/>
+Suppose first that we know that, in general, the probability of a fatality<br/>
+in a car accident is q=1%.<br/>
+We examine n=1000 randomy selected records of accidents where the driver<br/>
+wore a seat velt. We find that k=7 of these accidents were fatal.<br/>
+With what confidence can we conclude that claim is<br/>
+correct?<br/>
+\(X_i\) = \(i\)'th accident was fatal.<br/>
+The null hypothesis is that seat belts make no difference. <br/>
+\(Pr(X_i=1)=q=0.01\)<br/>
+Alternative hypothesis, \(Pr(X_i=1)&lt;q\)<br/>
+\(S=\sum_i X_i\)<br/>
+\(E(S)=nq=10\)<br/>
+\(var(S)=nq(1-q) = 9.9 \approx 10\)<br/>
+\(std(S) = \sqrt(10) \approx 3.1\)<br/>
+Therefore \(z\)-value =1 , and the probability of getting 5 or higher is \(&lt; Q(1) = \){0.16}<br/>
+The p-value is 16%.  the p value is a <b>random variable</b><br/>
+is 16% small enough? probably not, but what is small enough?<br/>
+Suppose that an important decision needs to be made, for example, to<br/>
+increase the fine for not wearing a seat-belt. We need to choose<br/>
+a significance level (alpha). And this choice has to be made before<br/>
+looking at the data. It should <b>NOT</b> be a random variable.<br/>
+If \(p \leq \alpha\) we say that the test rejected the null hypothesis<br/>
+If \(p &gt; alpha\) we say that the test failed to reject the null<br/>
+hypothesis.<br/>
+In other words, if we chose alpha=0.05, then the test failed. We<br/>
+did not show that seatbelt save lives. However, we did <b>NOT</b> gain<br/>
+evidence that seat-belts are useless. A test cannot provide evidence<br/>
+towards the null hypothesis.<br/>
+We did not disprove that belts save lives.<br/>
+</p>
+</problem>

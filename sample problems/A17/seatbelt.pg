@@ -1,0 +1,69 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+Context()->flags->set(tolerance=>0.01);
+
+BEGIN_PGML
+## Hypothesis testing ##
+
+We want to prove that seat-belts save a significant number of lives. In other words, we want to see if we can reject the null hypothesis that seat-belts do not help.
+
+Suppose first that we know that, in general, the probability of a fatality
+in a car accident is [`q=1%`].
+
+We examine [`n=1000`] randomly selected records of accidents where the driver
+wore a seat velt. We find that [`k=7`] of these accidents were fatal.
+
+With what confidence can we conclude that claim is
+correct?
+---
+[`X_i`] = [`i^{th}`] accident was fatal.
+
+The null hypothesis is that seat belts make no difference. 
+[`Pr(X_i=1)=q=0.01`]. Alternative hypothesis, [`Pr(X_i=1)<q`].
+
+The total number of fatal accident under the null hypothesis [`S=\sum_i X_i`].
+
+[`E(S)=`][_________]{10}
+
+[`var(S)=`][______]{9.9}
+[`std(S) = `][________]{sqrt(10)}
+
+[`k=7`] is approximately one standard deviation smaller than the mean, in other words, the [`z`]-score is roughly -1. Using this approximation, the *[`p`]-value* associated with [`k=7`] is [`\Phi(-1) = Q(1) = `][________]{0.16}. (You  can use www.wolframalpha.com to get the numerical result.) 
+
+
+Note that [`p`]-value (answer "is" or "is not") [________]{"is"} a *random variable*.
+
+Is this [`p`]-value small enough? Probably not, but what is small enough?
+---
+Suppose that an important decision needs to be made, for example, to
+increase the fine for not wearing a seat-belt. We need to choose
+a *significance level* [`\alpha`]. And this choice has to be made before
+looking at the data. It should *NOT* be a random variable.
+
+If [`p \leq \alpha`] we say that the test rejected the null hypothesis
+
+If [`p > \alpha`] we say that the test failed to reject the null
+hypothesis.
+
+If we chose [`\alpha=0.2`], should we reject the null hypothesis (answer "yes" or "no")? [_______]{"yes"}
+
+If we chose [`\alpha=0.05`], should we reject the null hypothesis ? [________]{"no"}
+
+If we have chosen [`\alpha=0.05`], we did not show that seat-belts save lives. 
+
+It is tempting to say that we gained evidence that seat-belts do *not* save lives. However, that is incorrect. A test cannot provide evidence towards the null hypothesis. We did not disprove that belts save lives.
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

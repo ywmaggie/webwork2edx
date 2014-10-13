@@ -1,0 +1,73 @@
+<problem>
+    <script>
+        from math import factorial as f
+        from math import ceil
+        import random
+        
+        def C(n,m):
+        return f(n)/f(m)/f(n-m)
+        
+        def myrandom(start,stop,step=1):
+        return random.randint(0, int((stop - start) / step)) * step + start
+        
+        
+        answer1 = 1.0*1/3
+        answer2 = 1.0*2/3
+        answer3 = "n!/(3!*(n-3)!)*(1/6)^3*(5/6)^(n-3)"
+        answer4 = "x^2"
+    </script>
+    <p></p>
+    <p>---</p>
+    <p><b>IMPORTANT: For correct rendering of equations, please choose "MathJax" from the "Display Options" on the left panel.</b></p>
+    <p>---</p>
+    <p></p>
+    <p>A <b> random variable </b> (r.v.) is defined on a probability space \((\Omega, \mbox{Pr})\) and </p>
+    <p>is a mapping from \(\Omega\) to \(\mathbb{R}\). </p>
+    <p>The value of the random variable is fully determined by the outcome \(\omega \in \Omega\).</p>
+    <p>Thus the underlying probability space (probabilities \(\mbox{Pr}(\omega)\)) induces a probability</p>
+    <p>distribution over the random variable. Let's look at some examples.</p>
+    <p>---</p>
+    <p>1.</p>
+    <p>Suppose the outcome space \(\Omega\) is a finite set of cats and the distribution is uniform. In other words, each outcome \(\omega \in \Omega\) is a particular cat, in all it's glorious complexity. One random variable \(W\) is the _weight_ of the cat. In math-speak \(W\) is a mapping (or a function) from \(\Omega\), the set of cats to \(\mathbb{R}^+\) the positive real numbers, a fact which is expressed as \(W:\Omega \to \mathbb{R}^+\). The weight of the cat \(\omega\) is denoted \(W(\omega)\) and often we shorten this notation to \(W\) as \(\omega\) is assumed from the context.</p>
+    <p> </p>
+    <p>---</p>
+    <p>2.</p>
+    <p>Suppose you roll a fair die. The sample space is \(\Omega = \{1,2,3,4,5,6\}\), all outcomes </p>
+    <p>being equally likely. On this space we can then define a random variable</p>
+    <p><b><br/>\( X = \left\{ \begin{array}{ll}<br/>               1  \mbox{if die is \geq 3} \\<br/>               0  \mbox{otherwise}<br/>               \end{array} \right.\)</b></p>
+    <p>In other words, the outcomes \(\omega = 1,2\) map to \(X = 0\), while the outcomes <br/>\(\omega = 3,4,5,6\) map to \(X = 1\). The r.v. \(X\) takes on values \(\{0,1\}\), with </p>
+    <p>probabilities \(\mbox{Pr}(X = 0) = \)<numericalresponse answer="$answer1">
+        <responseparam type="tolerance" default="1%" />
+        <formulaequationinput />
+    </numericalresponse>
+    and \(\mbox{Pr}(X=1) = \)<numericalresponse answer="$answer2">
+        <responseparam type="tolerance" default="1%" />
+        <formulaequationinput />
+    </numericalresponse>
+    </p>
+    <p>---</p>
+    <p>3.</p>
+    <p>Or say you roll this same die \(n\) times, so that the sample space is <br/>\(\Omega = \{1,2,3,4,5,6\}^n\). Examples of random variables on this larger space are</p>
+    <p><b><br/>\( \begin{eqnarray<b>}<br/>X  =  \mbox{the number of 6's rolled,} \\<br/>Y  =  \mbox{the number of 1's seen before the first 6.}<br/>\end{eqnarray</b>} \)</b></p>
+    <p>The sample point \(\omega = (1,1,1,1,\ldots,1,6)\), for instance, would map to <br/>\(X = 1, Y = n-1\). The variable \(X\) takes values in \(\{0,1,2,\ldots,n\}\),</p>
+    <p>with probabilities</p>
+    <p><b><br/>\( \mbox{Pr}(X = k) <br/>\ = \ <br/>{n \choose k} \left(\frac{1}{6} \right)^k \left( \frac{5}{6} \right)^{n-k} \)</b></p>
+    <p>(do you see why?).</p>
+    <p>Answer \(\textbf{Pr}(X=3) =\)<formularesponse type="ci" samples="n@1:10#10" answer="$answer3">
+        <responseparam type="tolerance" default="0.00001"/>
+        <formulaequationinput />
+    </formularesponse>
+    </p>
+    <p>---</p>
+    <p>4.</p>
+    <p>As a fourth example, suppose you throw a dart at a dartboard of radius \(1\), and that it</p>
+    <p>lands at a random location on the board. Define random variable \(X\) to be the distance</p>
+    <p>of the dart from the center of the board. Now \(X\) takes values in \(0,1\), and for </p>
+    <p>any \(x\) in this range, \(\mbox{Pr}(X \leq x) = \)<formularesponse type="ci" samples="n@1:10#10" answer="$answer4">
+        <responseparam type="tolerance" default="0.00001"/>
+        <formulaequationinput />
+    </formularesponse>
+    (write an expression in \(x\)).</p>
+    <p>Henceforth, we'll follow the convention of using capital letters for r.v.'s.</p>
+    <p></p>
+</problem>

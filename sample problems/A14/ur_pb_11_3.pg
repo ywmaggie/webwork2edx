@@ -1,0 +1,59 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"parserFunction.pl",
+"PGstandard.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+"parserPopUp.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+
+
+$n = random(10,20,1);
+$score = random(570,589,0.5);
+
+$ans1 = Compute("Q(($score-509)/112)");
+
+$newdev = 112/sqrt($n);
+$ans2 = Compute("Q(($score-509)/$newdev)");
+
+$radio = PopUp(["Just the Law of Large Number is sufficient", "LLN is not enough, we also need Central Limit Theorem to justify this behavior"],"Just the Law of Large Number is sufficient");    
+
+
+BEGIN_PGML
+
+Scores for men on the verbal portion of the SAT-I test are normally distributed with a mean of 509 and a standard deviation of 112.
+
+(a) If 1 man is randomly selected, find the probability that his score is at least [$score].
+
+[____________________]{"$ans1"}
+
+(b) If [$n] men are randomly selected, find the probability that their mean score is at least [$score].
+
+[____________________]{"$ans2"}
+
+(c) As more and more men are randomly selected, the probability that their mean score is at least [$score] approaches [______________]{0}
+
+(d) Two students are debating this diminishing tail probability is a consequence of which statistics law. 
+
+Student A argues that the *Law of Large Number (LLN)* explains this behavior because this is basically what the weak LLN states.
+
+Student B argues that *Central Limit Theorem (CLT)* explains this behavior because as [`n`] gets larger the Gaussian gets more concentrated and the tail gets smaller. 
+
+Having heard both arguments, which of the following statements do you think is correct ?
+[____________]{$radio}
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

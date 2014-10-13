@@ -1,0 +1,31 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+answer1 = "2"
+answer2 = "1/p"
+</script>
+<p><br/><br/>---<br/><br/>Let \(X\) be the number of \(6\)'s. We've already analyzed the distribution of \(X\), so<br/><b><br/>\( E(X) <br/>\ = \ <br/>\sum_{k = 0}^n k \, \mbox{Pr}(X = k)<br/>\ = \ <br/>\sum_{k = 0}^n k {n \choose k} \left(\frac{1}{6} \right)^k \left( \frac{5}{6} \right)^{n-k}<br/>\ = \ <br/>\frac{n}{6}.<br/>\)<br/></b><br/>The last step is somewhat mysterious just take our word for it, and we'll get back to it later!<br/>---<br/><br/>Let \(X \in \{1,2,\ldots\}\) be the number of tosses until you first see heads. Then<br/><b><br/>\( \mbox{Pr}(X = k)<br/>\ = \ <br/>\mbox{Pr}((T,T,T,\ldots,T,H))<br/>\ = \ <br/>\frac{1}{2^k}.<br/>\)<br/></b><br/>It follows that <br/><b><br/>\( \mathbb{E}(X) <br/>\ = \ <br/>\sum_{k=1}^\infty \frac{k}{2^k} <br/>\ = \ \)<formularesponse type="ci" samples="p@1:20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/></b><br/>To answer this question we need the following formulas for the infinite geometric series: for any  \(0 &lt; r &lt; 1\)<br/><b><br/>\( r + r^2 + \cdots \ = \ \frac{r}{1-r}.\)<br/></b><br/>and<br/><b><br/>\( r + 2r^2 + 3r^3+\cdots \ = \ \frac{r}{(1-r)^2}.\)<br/></b><br/>You can find these and other useful sums here:<br/>http://en.wikipedia.org/wiki/List_of_mathematical_series<br/>---<br/><br/>Once again, \(X \in \{1,2,\ldots\}\), but this time the distribution is different:<br/><b><br/>\( \mbox{Pr}(X = k)<br/>\ = \ <br/>\mbox{Pr}((T,T,T,\ldots,T,H))<br/>\ = \ <br/>(1-p)^{k-1}p.<br/>\)<br/></b><br/>Using the same technique as before, we get \(\mathbb{E}(X) =\)<formularesponse type="ci" samples="p@1:20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>There's another way to derive this expectation. We always need at least one coin toss.<br/>If we're lucky (with probability \(p\)), we're done otherwise (with probability \(1-p\)),<br/>we start again from scratch. Therefore \(\mathbb{E}(X) = 1 + (1-p) \mathbb{E}(X)\), and we have the same result.<br/></p>
+</problem>

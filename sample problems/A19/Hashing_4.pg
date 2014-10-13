@@ -1,0 +1,140 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+  "contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.01);
+
+$a = Compute("0.05/sqrt(0.16/200)");
+$q = Compute("Q($a)");
+
+Context("ArbitraryString");
+
+
+BEGIN_PGML
+
+
+
+## Information retrieval ##
+
+When you go to Google and enter a query, like
+
+what are treatment options for pneumonia
+
+or
+
+new song by radiohead
+
+you immediately get back a list of highly suitable pages. It's as if the search engine
+were instantaneously able to look through the tens of billions of pages on the web and
+find the relevant ones. How does it pull this off? The answer is, by a combination of
+clever preprocessing, statistics, hashing, and clustering.
+
+In fact, these basic techniques apply not just to web search but to any system for
+_information retrieval_: answering unstructured queries about a large collection
+of documents.
+
+#### Preprocessing ####
+
+There are at five crucial preprocessing steps for a search engine.
+
+1\. Give each webpage a _reliability score_.
+
+Most of the "information" on the web is grossly unreliable: spam, ignorant ravings, unfounded conjectures, and idle gossip. But we'll see (a bit later in the course) that it is possible to assess the reliability or authoritativeness of individual webpages --- by analyzing the statistics of linkage patterns.
+
+
+
+2\. Ignore _near-duplicates_ of webpages.
+
+More on this very shortly.
+
+
+
+3\. Discover the set of _terms_.
+
+A _term_ is an individual word, or a sequence of words that should be considered together, such as Katy Perry or Rage Against the Machine. Terms can be discovered by analyzing co-occurrence patterns. If a sequence of [`k`] words keeps occurring together, they should be designated a term.
+
+
+
+4\. Create the _postings list_.
+
+This is a hash table in which each term is associated with a linked list of the pages containing it.
+
+
+image("postings_list.png", width=>860, height=>400)
+
+
+Each linked list is arranged in decreasing order of "priority" (some notion that takes into account reliability scores), and is usually truncated at a certain point.
+
+
+
+5\. Compute _term frequencies_.
+
+How common is each term?
+
+---
+
+For an example, consider the following two documents:
+
+A: Thanksgiving may be the perfect day to give thanks, but what about giving thanks to a delicious and flawless turkey?
+
+B: Pick the perfect centerpiece for your Thanksgiving or holiday meal from our ultimate collection of roast turkey recipes.
+
+After removing the stop words (http://en.wikipedia.org/wiki/Stop_words) and stemming (unify reflections and singular/plural forms of the same word), 
+
+document A becomes the *list* Thanksgiving, perfect, day, give, thank, give, thank, delicious, flawless, turkey, and
+
+document B becomes the *list* pick, perfect, centerpiece, Thanksgiving, holiday, meal, ultimate, collection, roast, turkey, recipe 
+
+Complete the postings list entries below:
+
+\["Thanksgiving", [___]{2}\] [`\rightarrow`] \[A, [___]{1}, 10\]  [`\rightarrow`]  \[B, [___]{1}, 11\]
+
+\["thank", [___]{1}\]  [`\rightarrow`] \[[___]{"A"} (A or B), [___]{2}, 10\]
+
+
+END_PGML
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

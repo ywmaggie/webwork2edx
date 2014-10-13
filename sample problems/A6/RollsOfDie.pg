@@ -1,0 +1,60 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+## Rolls of a die ##
+You roll a die twice. What is the probability that the sum of the two rolls is [`\geq 10`] if:
+o  The first roll is 6?
+
+We could use the conditional probability formula, but that seems like overkill in so straightforward a situation.
+[`` P(\mbox{sum} \geq 10 | \mbox{first} = 6) 
+\ = \ P(\mbox{second} \geq 4) \ = \ \frac{1}{2} .
+``]
+
+o  The first roll is [`\geq 3`] 
+
+Okay, this is not so trivial anymore. The sample space is [`\Omega = \{1,2,3,4,5,6\}^2`]  with each of the 36 outcomes equally likely.
+[`P(\mbox{sum} \geq 10  \ | \ \mbox{first} \geq 3) `]
+[` = \frac{P(\mbox{sum} \geq 10 \ \mbox{AND} \ \mbox{first} \geq 3}
+{P(\mbox{first} \geq 3)}`]
+[`
+= \frac{P(\{(4,6), (5,5), (5,6), (6,4), (6,5), (6,6)\})}{4/6}
+= \frac{6/36}{4/6} \ = \ \frac{1}{4}
+`]
+
+What is the size of the event set corresponding to [`\mbox{sum} \geq 10 \ \mbox{AND} \ \mbox{first} \geq 3`]?
+[______]{6}
+
+o  The first roll is [`< 6`] 
+
+[`
+P( \mbox{sum} \geq 10  \ | \ \mbox{first} < 6) 
+= \frac{P(\mbox{sum} \geq 10 \ \mbox{AND}\ first < 6 )}{P(\mbox{first} < 6)} = \frac{P(\{(5,5), (5,6), (4,6)\})}{5/6}
+= \frac{3/36}{5/6} \ = \ \frac{1}{10}
+`]
+
+What is the size of the event set corresponding to [`\mbox{sum} \geq 10 \ \mbox{AND}\ first < 6`]?
+[______]{3}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+### Solution ###
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

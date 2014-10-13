@@ -1,0 +1,54 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+people = myrandom(7,9,1)
+floors = myrandom(3,5,1)
+
+
+answer1 = 1.0*(1 / floors) * (1 - (1 / floors))**(people - 1)
+answer2 = 1.0*people * (1 / floors) * (1 - (1 / floors))**(people - 1)
+answer3 = 1.0*people * (1 / floors) * (1 - (1 / floors))**(people - 1)
+answer4 = 1.0*people * (1 - (1 / floors))**(people - 1)
+answer5 = 1.0*(1 / floors) * (1 - (1 / floors))**(people - 1)
+answer6 = 1.0*people * (1 / floors) * (1 - (1 / floors))**(people - 1)
+answer7 = 1.0*people * (1 / floors) * (1 - (1 / floors))**(people - 1)
+answer8 = 1.0*people * (1 - (1 / floors))**(people - 1)
+</script>
+<p><br/>
+An elevator operates in a building with \($floors\) floors. One day, $people people get into the<br/>
+elevator, and each of them chooses to go to a floor selected uniformly at random from <br/>
+\(1\) to \($floors\). <br/>
+1. Fix some particular person \(j\). What is the probability that person \(j\) gets out at the \(i\)th floor, and every other person does not get out on the \(i\)th floor?  <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+2. What is the probability that for _any_ \(j\), person \(j\) gets out at the \(i\)th floor and every other person does not get out at the \(i\)th floor?  <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+3. * Let \(X_i\) be \(1\) if exactly one person gets out on floor \(i\), and \(0\) otherwise. What is \(\mathbb{E}(X_i)\)?  <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+4. What is the expected number of floors in which exactly one person gets out?  <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+</p>
+</problem>

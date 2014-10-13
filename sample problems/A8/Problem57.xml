@@ -1,0 +1,74 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+x_min = myrandom(3,5,1)
+
+
+
+answer1 = "36"
+answer2 = "1"
+answer3 = "5"
+answer4 = "5"
+answer5 = "2*5-1"
+answer6 = 1.0*(2*5-1)/36
+answer7 = 1.0*(2*(6 - x_min + 1) - 1)/36
+answer8 = "36"
+answer9 = "1"
+answer10 = "5"
+answer11 = "5"
+answer12 = "2*5-1"
+answer13 = 1.0*(2*5-1)/36
+answer14 = 1.0*(2*(6 - x_min + 1) - 1)/36
+</script>
+<p><br/>
+A die is thrown twice. Let \(X_1\) and \(X_2\) denote the outcomes, and define<br/>
+random variable \(X\) to be the minimum of \(X_1\) and \(X_2\). We will examine the distribution of \(X\).<br/>
+How large is the outcome space corresponding to tossing a sequence of two die?  <formularesponse type="ci" samples="k@8:10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+How many of these outcomes satisfy \(X_1 = 2\) and \(X_2 = 2\)?  <formularesponse type="ci" samples="k@8:10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+How many of these outcomes satisfy \(X_1 = 2\) and \(X_2 &gt;= 2\)?  <formularesponse type="ci" samples="k@8:10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+How many of these outcomes satisfy \(X_1 &gt;= 2\) and \(X_2 = 2\)?  <formularesponse type="ci" samples="k@8:10#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+How many of these outcomes satisfy \(min(X_1,X_2) = 2\)?  <formularesponse type="ci" samples="k@8:10#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+What is the probability \(X = 2\)?  <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+What is the probability \(X = $x_min\)?  <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+</p>
+</problem>

@@ -1,0 +1,332 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+answer1=1.0*C(52,5)
+answer2=1.0*13
+answer3=1.0*C(4,2)
+answer4=1.0*C(12,3)
+answer5=1.0*4**3
+answer6=1.0*13*C(4,2)*C(12,3)*(4**3)
+answer7=1.0*13*C(4,2)*C(12,3)*(4**3)/C(52,5)
+answer8=1.0*C(13,2)
+answer9=1.0*11
+answer10=1.0*C(4,2)**2
+answer11=1.0*4
+answer12=1.0*C(13,2)*11*C(4,2)**2*4
+answer13=1.0*C(13,2)*11*C(4,2)**2*4/C(52,5)
+answer14=1.0*13
+answer15=1.0*C(12,2)
+answer16=1.0*C(4,3)
+answer17=1.0*4**2
+answer18=1.0*13*C(12,2)*C(4,3)*4**2
+answer19=1.0*13*C(12,2)*C(4,3)*4**2/C(52,5)
+answer20=1.0*10
+answer21=1.0*4**5-4
+answer22=1.0*10*(4**5-4)
+answer23=1.0*10*(4**5-4)/C(52,5)
+answer24=1.0*4
+answer25=1.0*C(13,5)
+answer26=1.0*10
+answer27=1.0*C(13,5)-10
+answer28=1.0*4*(C(13,5)-10)
+answer29=1.0*4*(C(13,5)-10)/C(52,5)
+answer30=1.0*13
+answer31=1.0*12
+answer32=1.0*C(4,3)
+answer33=1.0*C(4,2)
+answer34=1.0*13*12*C(4,3)*C(4,2)
+answer35=1.0*13*12*C(4,3)*C(4,2)/C(52,5)
+answer36=1.0*13
+answer37=1.0*12
+answer38=1.0*1
+answer39=1.0*4
+answer40=1.0*13*12*1*4
+answer41=1.0*13*12*1*4/C(52,5)
+answer42=1.0*4
+answer43=1.0*10
+answer44=1.0*40
+answer45=1.0*40/C(52,5)
+answer46=1.0*4
+answer47=1.0*1
+answer48=1.0*4
+answer49=1.0*4/C(52,5)
+</script>
+<p></p>
+<p></p>
+<p>A hand in Texas Hold'em consists of 5 cards from a deck of 52 cards. A hand may fall into one of the following categories. We are going to compute the probability of each category.</p>
+<p>First, the number of all possible hands is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p></p>
+<p>1. The number of possibilities for the ranks of the pair is <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the suits of the pair is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>3. The three other cards have three ranks different from the pair, the number of possibilities for their ranks is <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>4. And they can have any suit, thus the number of possibilities of their suites is <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. Thus the number of hands with exactly one pair is <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>6. The ratio of this number to the number of all hands <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>----</p>
+<p></p>
+<p>1. The number of possibilities for the ranks of the two pairs is <numericalresponse answer="$answer8">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>2. The number of possibilities for the rank of the single is <numericalresponse answer="$answer9">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the suites of the two pairs is <numericalresponse answer="$answer10">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>3. The number of possibilities for the suite of the single is <numericalresponse answer="$answer11">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>4. Thus the number of hands with exactly two pairs is <numericalresponse answer="$answer12">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer13">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>----</p>
+<p></p>
+<p>1. The number of possibilities for the rank of the triple is <numericalresponse answer="$answer14">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the ranks of the other two singles is <numericalresponse answer="$answer15">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>2. The number of possibilities for the suites of the triple is <numericalresponse answer="$answer16">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>3. The number of possibilities for the suite of the two singles is <numericalresponse answer="$answer17">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>4. Thus the number of hands with three of a kind is <numericalresponse answer="$answer18">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer19">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>----</p>
+<p></p>
+<p>1. The ranks of a straight is one of (Ace,2,3,4,5) ... (10,J,Q,K,Ace), so the number of possibilities for the ranks of a straight is <numericalresponse answer="$answer20">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The suits can be anything other than all equal, so the number of possibilities for the suits of a straight is <numericalresponse answer="$answer21">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>4. Thus the number of hands that is a straight is <numericalresponse answer="$answer22">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer23">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>----</p>
+<p></p>
+<p>1. The number of possibilities for the suit is <numericalresponse answer="$answer24">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The ranks can be anything except those that are in order. The number of all possible ranks for a hand of the same suit is <numericalresponse answer="$answer25">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+. Among these, the number of hands whose ranks are in order is <numericalresponse answer="$answer26">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ So the number of possible ranks of a flush is <numericalresponse answer="$answer27">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>4. Thus the number of hands that is a flush is <numericalresponse answer="$answer28">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer29">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>----</p>
+<p></p>
+<p>1. The number of possibilities for the rank of the triple is <numericalresponse answer="$answer30">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. Given the rank of the triple, the number of possibilities for the rank of the pair is <numericalresponse answer="$answer31">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the suite of the triple is <numericalresponse answer="$answer32">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>3. The number of possibilities for the suite of the pair is <numericalresponse answer="$answer33">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>4. Thus the number of hands that is a full house is <numericalresponse answer="$answer34">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer35">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>----</p>
+<p></p>
+<p>1. The number of possibilities for the rank of the quadruple is <numericalresponse answer="$answer36">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. Given the rank of the quadruple, the number of possibilities for the rank of the single is <numericalresponse answer="$answer37">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the suite of the quadruple is <numericalresponse answer="$answer38">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>3. The number of possibilities for the suite of the single is <numericalresponse answer="$answer39">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>4. Thus the number of hands that is a four-of-a-kind is <numericalresponse answer="$answer40">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer41">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>----</p>
+<p></p>
+<p>1. The number of possibilities for the suites of a straight flush is <numericalresponse answer="$answer42">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the ranks of a straight flush is <numericalresponse answer="$answer43">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>4. Thus the number of hands that is a four-of-a-kind is <numericalresponse answer="$answer44">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer45">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>----</p>
+<p></p>
+<p>1. The number of possibilities for the suites of a royal flush is <numericalresponse answer="$answer46">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the ranks of a royal flush is <numericalresponse answer="$answer47">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>4. Thus the number of hands that is a four-of-a-kind is <numericalresponse answer="$answer48">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer49">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p></p>
+</problem>

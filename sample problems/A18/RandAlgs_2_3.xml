@@ -1,0 +1,97 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+answer1 = 1.0*1
+answer2 = 1.0*(1+2+3)/3
+answer3 = "(n+1)/2"
+answer4 = "i/k"
+answer5 = "k/2"
+answer6 = "i/k+k/2"
+answer7 = "(n+1)/(2*k) + k/2"
+answer8 = "sqrt(n+1)"
+
+</script>
+<p><br/>
+Suppose you have a linked list of \(n\) elements in sorted order. Heres the obvious way to look up an element \(x\), given \(L\), a pointer to the first node in the list.<br/>
+---<br/>
+<b>function</b> lookup(L, x)<br/>
+- if L is NULL: <b>return</b> _NULL_<br/>
+- if value(L) = x: <b>return</b> L<br/>
+- if value(L) &gt; x: <b>return</b> _NULL_<br/>
+- <b>return</b> lookup(next(L), x)   <br/>
+---<br/>
+<b>Notation</b>: given the pointer P to a node, value(P) and next(P) are the value in the node and the pointer to the next node.<br/>
+Suppose an element of \(L\) is chosen uniformly at random. Suppose the time taken to look up an element is equal to how far that element is into the list (e.g. it takes time 1 to look up element \(1\)).  <br/>
+- For a list of length \(1\), what is the expected time to look up the only element?  <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- For a list of length \(3\), what is the expected time to look up an element?  <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- For a list of length \(n\), what is the expected time to look up an element?  <formularesponse type="ci" samples="k,i,n@1,1,1:100,100,100#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+This is order \(n\), right?  <br/>
+---<br/>
+One way to get faster lookups is to add a second pointer jump(P) that points to the node \(k\) steps down the list from P (that is, following a jump pointer is like following \(k\) next pointers). The procedure above is then altered by adding the following line just before the final return statement:<br/>
+1. if \(\text{value}(\text{jump}(L)) \leq x\): return \(\text{lookup}(\text{jump}(L), x)\)<br/>
+With this addition, the data structure is called a _skip list_. Now suppose an element of L is chosen uniformly at random. <br/>
+1. We want to find, roughly, the expected time to look it up, as a function of \(n\) and \(k\). <br/>
+1. The process of looking up the value \(x\) in the list will proceed as follows:<br/>
+    a. Jump in \(k\)-size steps until getting to the last location whose value is smaller than \(x\).<br/>
+    b. From here, step one-by-one over the \(k\) locations prior to the next \(k\)-size step. This is repeated until either finding a location with the value \(x\) or finding out that the value does not exist.<br/>
+1. Roughly how many k-size jumps are needed to reach location \(i\) in the sorted list (this should be a quick  easy answer)?  <formularesponse type="ci" samples="k,i,n@1,1,1:100,100,100#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+1. After jumping, what is roughly the expected number of single steps that will be needed to reach location \(i\)?  Eg, if your answer were \(\lceil k/3 \rceil\), put \(k/3\).  <formularesponse type="ci" samples="k,i,n@1,1,1:100,100,100#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+1. Using what you just computed, what is the rough cost to look up the element which is in location \(i\)?  <formularesponse type="ci" samples="k,i,n@1,1,1:100,100,100#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+1. Now that you have the cost per index \(i\), and, assuming we are looking for an element that is in the list, the distribution of of lookups over locations is uniform, what is the expected cost of a lookup in a list of length \(n\)?  <formularesponse type="ci" samples="k,i,n@1,1,1:100,100,100#10" answer="$answer7">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+1. What is the best choice of \(k\) (ignoring the fact that \(k\) has to be integer?  <formularesponse type="ci" samples="k,i,n@1,1,1:100,100,100#10" answer="$answer8">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+</p>
+</problem>

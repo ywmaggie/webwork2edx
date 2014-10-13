@@ -1,0 +1,54 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "64"
+answer2 = "80"
+answer3 = "40"
+answer4 = "64"
+answer5 = "80"
+answer6 = "40"
+</script>
+<p><br/>
+<br/>
+A few years ago, the question was going round: ''which super power would you rather possess: the ability to make yourself invisible or to fly?'' It was perhaps an urban legend that men usually wanted to fly while women usually wanted to be invisible and there was much speculation about the psychological reasons for this. But suppose the following statistics were obtained (warning: these numbers are fabricated!):<br/>
+\( P(\mbox{fly} | \mbox{male}) = 0.8, \ \ \ P(\mbox{invisible} | \mbox{female}) = 0.6 .\)<br/>
+Then what is the overall fraction of people who would choose the ability to fly?<br/>
+This cannot be answered unless it is known what fraction of the population is male and what fraction is female. Suppose it is 60-40. Then<br/>
+\(P(fly) <br/>
+= P(fly\ \mbox{AND}\ male) + P(fly\ \mbox{AND}\ female)<br/>
+= P(fly | male) P(male) + P(fly | female) P(female)<br/>
+= (0.8)(0.6) + (0.4)(0.4) \ = \ 0.64<br/>
+\)<br/>
+o  <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+% of people would like to fly.<br/>
+o  <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+% of males would like to fly.<br/>
+o  <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+% of people are females (in this contrived example).<br/>
+</p>
+</problem>

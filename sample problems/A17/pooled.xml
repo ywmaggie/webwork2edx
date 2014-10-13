@@ -1,0 +1,31 @@
+<problem>
+<p>Cholesterol levels are measured for 28 heart attack patients (2 days after their attacks) and 30 other hospital patients who did not have a heart attack. We test if the means are no difference for the two groups. Sample standard deviation for the heart attack group is 9.0, and that for the control group is 4.1. Which test should we use?</p>
+<multiplechoiceresponse>
+  <choicegroup type="MultipleChoice">
+    <choice correct="true">two sample t-test, un-pooled variance</choice>
+    <choice correct="false">two sample t-test, pooled variance</choice>
+    <choice correct="false">paired t-test</choice>
+  </choicegroup>
+</multiplechoiceresponse>
+
+<p>     </p>
+<p>Hours spent studying per week are reported by students in a class survey. Students who say they usually sit in the front are compared to students who say they usually sit in the back. The sample std for the front group is 1.09, and that for the back group is 0.89. Which test should we use?</p>
+<multiplechoiceresponse>
+  <choicegroup type="MultipleChoice">
+    <choice correct="false">two sample t-test, un-pooled variance</choice>
+    <choice correct="true">two sample t-test, pooled variance</choice>
+    <choice correct="false">paired t-test</choice>
+  </choicegroup>
+</multiplechoiceresponse>
+
+<p>     </p>
+<p>Which test will yield more significant results (lower p-value for the same observation)?</p>
+<multiplechoiceresponse>
+  <choicegroup type="MultipleChoice">
+    <choice correct="false">two sample t-test, un-pooled variance</choice>
+    <choice correct="true">two sample t-test, pooled variance</choice>
+  </choicegroup>
+</multiplechoiceresponse>
+
+
+</problem>

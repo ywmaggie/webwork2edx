@@ -1,0 +1,61 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "6"
+answer2 = "3"
+answer3 = "6"
+answer4 = "3"
+</script>
+<p><br/>
+<br/>
+You roll a die twice. What is the probability that the sum of the two rolls is \(\geq 10\) if:<br/>
+o  The first roll is 6?<br/>
+We could use the conditional probability formula, but that seems like overkill in so straightforward a situation.<br/>
+\( P(\mbox{sum} \geq 10 | \mbox{first} = 6) <br/>
+\ = \ P(\mbox{second} \geq 4) \ = \ \frac{1}{2} .<br/>
+\)<br/>
+o  The first roll is \(\geq 3\) <br/>
+Okay, this is not so trivial anymore. The sample space is \(\Omega = \{1,2,3,4,5,6\}^2\)  with each of the 36 outcomes equally likely.<br/>
+\(P(\mbox{sum} \geq 10  \ | \ \mbox{first} \geq 3) \)<br/>
+\( = \frac{P(\mbox{sum} \geq 10 \ \mbox{AND} \ \mbox{first} \geq 3}<br/>
+{P(\mbox{first} \geq 3)}\)<br/>
+\(<br/>
+= \frac{P(\{(4,6), (5,5), (5,6), (6,4), (6,5), (6,6)\})}{4/6}<br/>
+= \frac{6/36}{4/6} \ = \ \frac{1}{4}<br/>
+\)<br/>
+What is the size of the event set corresponding to \(\mbox{sum} \geq 10 \ \mbox{AND} \ \mbox{first} \geq 3\)?<br/>
+<formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+o  The first roll is \(&lt; 6\) <br/>
+\(<br/>
+P( \mbox{sum} \geq 10  \ | \ \mbox{first} &lt; 6) <br/>
+= \frac{P(\mbox{sum} \geq 10 \ \mbox{AND}\ first &lt; 6 )}{P(\mbox{first} &lt; 6)} = \frac{P(\{(5,5), (5,6), (4,6)\})}{5/6}<br/>
+= \frac{3/36}{5/6} \ = \ \frac{1}{10}<br/>
+\)<br/>
+What is the size of the event set corresponding to \(\mbox{sum} \geq 10 \ \mbox{AND}\ first &lt; 6\)?<br/>
+<formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

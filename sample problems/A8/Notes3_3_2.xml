@@ -1,0 +1,77 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+k = myrandom(8,10,1)
+
+
+
+answer1 = "ln(k)"
+answer2 = "(k-3)/k"
+answer3 = "k/(k-3)"
+answer4 = "k*log(k)"
+answer5 = "ln(k)"
+answer6 = "(k-3)/k"
+answer7 = "k/(k-3)"
+answer8 = "k*log(k)"
+</script>
+<p><br/>
+<br/>
+You can enter natural logarithms as you would imagine: ln(...).  <br/>
+Enter \(ln($k)\): <formularesponse type="ci" samples="k@8:10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+Recall the setting: each cereal box holds one of \(k\) action figures (chosen at random), and<br/>
+you want to collect all the figures. What is the expected number of cereal boxes you need<br/>
+to buy?<br/>
+Suppose you keep buying boxes until you get all the figures. Let \(X_i\) be the number of <br/>
+boxes you buy to get from \(i-1\) distinct figures to \(i\) distinct figures. Therefore<br/>
+\(X = X_1 + X_2 + \cdots + X_k\), and of course \(X_1 = 1\).<br/>
+What is \(\mathbb{E}(X_i)\)? Well, you already have \(i-1\) of the figures, so the chance of getting<br/>
+a new figure in a cereal box is \((k-(i-1))/k\). Call this \(p\). Therefore, the expected amount <br/>
+of time you have to wait to get a new figure is \(1/p\): just like waiting for a coin with<br/>
+bias \(p\) to turn up heads. That is,<br/>
+<b><br/>
+\( \mathbb{E}(X_i) \ = \ \frac{k}{k-i+1} .\)<br/>
+</b><br/>
+Invoking linearity of expectation,<br/>
+<b><br/>
+\( \begin{eqnarray<b>}<br/>
+\mathbb{E}(X)  =  \mathbb{E}(X_1) + \cdots + \mathbb{E}(X_k) \\<br/>
+       =  \frac{k}{k} + \frac{k}{k-1} + \frac{k}{k-2} + \cdots + \frac{k}{1} \\<br/>
+       =  k \left( 1 + \frac{1}{2} + \cdots + \frac{1}{k} \right) \\<br/>
+       \approx  k \ln k.<br/>
+\end{eqnarray</b>} \)<br/>
+</b><br/>
+This confirms our earlier observations about the coupon collector problem: you need<br/>
+to buy about \(k \ln k\) boxes.<br/>
+After collecting 3 action figures out of $k:<br/>
+1. What is the probability your next cereal box will contain a new action figure? <formularesponse type="ci" samples="k@8:10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+2. In expectation, how many more cereal boxes would you need to collect to get the next action figure?  <formularesponse type="ci" samples="k@8:10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+What is the expected number of cereal boxes you would have to collect (starting without any action figures) to collect every action figure?  <formularesponse type="ci" samples="k@8:10#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

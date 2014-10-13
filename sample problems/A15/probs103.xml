@@ -1,0 +1,82 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+p_100 = myrandom(3,5,1)
+p = p_100/100
+n = myrandom(100,110,1)
+n_min = ( (33*sqrt(p*(1-p))+sqrt(p*(1089-1089*p+1600*p_100)) ) / (40*p) )**2
+n_min_trial = n_min + myrandom(1,2,1)
+
+
+answer1 = 1.0*p
+answer2 = 1.0*p*(1-p)
+answer3 = 1.0*n*p
+answer4 = 1.0*n*p*(1-p)
+answer5 = 1.0*-1.65
+answer6 = "n*p - 1.65*sqrt(n*p*(1-p))"
+answer7 = 1.0*n_min
+
+</script>
+<p><br/>
+Suppose colorblindness appears in $p of people. How large must a sample be in order for the probability<br/>
+of it containing at least $p_100 colorblind people to be at least 95%?<br/>
+- Let \(X_i\) be a binary random variable, 0 if person \(i\) is not colorblind and 1 if person \(i\) is.  \(\mathbb{E}(X_i) = \)<numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>, \(\mbox{var}(X_i) = \)<numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- Let \(X = X_1+...X_n\) be the number of colorblind people in a sample of size \(n\).  For \(n = $n\), \(\mathbb{E}(X) = \)<numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>, \(\mbox{var}(X) = \)<numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  For \(n\) large, X is approximated well by a normal density.  <br/>
+- Problem 4 should be helpful in answering this part: Give the value of \(s\) such that for \(S\) a standard normal random variable, \(P(S &gt; s) \approx 0.95\)<numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- For a sample of size n, what is the smallest \(c\) such that \(P(X &gt; c) \approx 0.95\)?  <formularesponse type="ci" samples="n@10:200#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+- What is the minimum sample size n such that we would get at least $p_100 colorblind people in the sample with 95\% probability?  <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  Hint: Take the expression you obtained in the previous part- let's call the expression f(n), some function of the number of samples n.  For which n is \(f(n) \geq 3\)?  Try out integer values close to $n_min_trial.  Or solve the inequality directly.  <br/>
+</p>
+</problem>

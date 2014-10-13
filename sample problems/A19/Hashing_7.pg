@@ -1,0 +1,161 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+"contextArbitraryString.pl",
+"PGauxiliaryFunctions.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+sub Qinv {
+   shift; my $x = shift;
+   $xx = (1-2*$x)/2;
+   $b = main::normal_distr($xx, mean=>0, deviation=>1);
+   return $b; 
+}
+
+package main;
+
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1},
+Qinv =>{class=>"my::Function::numeric", nocomplex=>1},
+);
+Context()->flags->set(tolerance=>0.01);
+
+$p = 3/(8+11-3);
+$z = Compute("Qinv(0.025)");
+$ans =ceil($p*(1-$p)*$z**2/0.01**2);
+
+BEGIN_PGML
+
+[``\newcommand{\E}{\mathbb{E}}``]
+[``\newcommand{\R}{\mathbb{R}}``]
+[``\newcommand{\bP}{\mathbb{P}}``]
+[``\newcommand{\var}{\mbox{var}}``]
+[``\newcommand{\pr}{\mbox{Pr}}``]
+[``\def\X{{\cal X}}``]
+[``\def\cost{{\mbox{cost}}}``]
+[``\def\U{{\cal U}}``]
+[``\renewcommand{\log}{\mbox{log}_2}``]
+
+#### An algorithm based on random permutations ####
+
+We will encode each document by a single number. Here's how.
+
+* Pick any encoding of words as numbers: for instance, any word is in any case stored
+as a binary number in the computer, and we can just use that number. Let [`e(w)`] be the encoding
+of word [`w`]. Suppose these encodings are in the range [`1,\ldots, M`].
+* Let [`\sigma`] be a _random permutation_ of [`(1,2,\ldots, M)`]. Thus for each [`i`], 
+[`\sigma(i)`] is a number in the range 1 to [`M`], and all the [`\sigma(i)`] are different.
+* Hash each document [`d`] to the single number
+
+[$BCENTER]*
+[`` f(d) = \min \{\sigma(e(w)): w \in d\} .``]
+[$ECENTER]*
+
+That is, first think of all the words in the document as numbers, then apply the random 
+permutation to each of these numbers (to get a different set of numbers), and finally pick
+the smallest of these resulting numbers. It is important that the same permutation [`\sigma`]
+is used for _all_ the documents.
+
+We will use the single number [`f(d)`] in place of the entire document [`d`]! The rationale for doing 
+this is captured in the following lemma, which says that near-duplicate documents are likely to
+be hashed to the same value.
+
+*Lemma:*
+Let [`d,d'`] be any two documents. If [`\sigma`] is a random permutation, then
+
+[$BCENTER]*
+[`` \pr(f(d) = f(d')) \ = \ S(d,d') .``]
+[$ECENTER]*
+
+*Proof:*
+For any word [`w`], we will call [`\sigma(e(w))`] its _value_.
+
+Now, [`f(d)`] and [`f(d')`] will be equal if and only if the word in [`d`] with the
+smallest value is the same as the word in [`d'`] with the smallest value. This is the same 
+as saying that the smallest value among words in [`d \cup d'`] lies in [`d \cap d'`]. The 
+probability of this is exactly
+
+[$BCENTER]*
+[`` \frac{\mbox{# words in $d \cap d'$}}{\mbox{# words in $d \cup d'$}} \ = \ S(d,d').``]
+[$ECENTER]*
+
+Reason: [`\sigma`] is a random permutation, so each word in [`d \cup d'`] is equally likely to 
+be the one with the smallest value.
+
+Here's the revised algorithm.
+* Create a boolean array [`\verb|seen|[1\ldots M]`], initialized to [``\verb|false|``]
+* [`{\cal D} = \emptyset`] (set of documents, initially empty)
+* for each document [`d`] that appears:
+    - if not [`\verb|seen|[f(d)]`]: add [`d`] to [`{\cal D}`] and set [`\verb|seen|[f(d)] = \verb|true|`]
+
+This time, the running time is [`O(nL)`], just linear in [`n`].
+
+In practice, this algorithm is run not with the words in each document but with all 
+sequences of [`k`] words (called "[`k`]-shingles"). For instance, the document
+
+	[`\verb|the quick brown fox jumped over the lazy dog|`]
+
+has the following 3-shingles: [`\verb|the quick brown|`], [``\verb|quick brown fox|``], [`\verb|brown fox 
+jumped|`], [``\verb|fox jumped over|``], [``\verb|jumped over the|``], [``\verb|over the lazy|``], [``\verb|the lazy dog|``].
+
+---
+
+Consider the same example documents A and B in the previous question.
+
+What is the probability that the smallest value corresponds to a word in A but not B? [__________]{"5/(8+11-3)"}
+
+What is the probability that the smallest value corresponds to a word in both A and B? [__________]{"3/(8+11-3)"}
+
+Notice that this is exactly the similarity between A and B.
+
+Each permutation is essentially like a sampling of a binary random variable. Call the random variable [`X`], the sample counts as a hit ([`X=1`]) if the smallest value is in the intersection of A and B, equivalently [`f(d)=f(d')`]; otherwise counts as a miss ([`X=0`]). Notice that we have just calculated the probability of hit.
+
+Recall the formula we use to compute the confidence interval for the large-sample mean of a binary random variable. From that formula we can also find out how many samples are needed to estimate the sample mean within a certain accuracy.
+
+Now, how many permutation is necessary to estimate the similarity of document A and B within 0.01 with 95% confidence? [_______]{$ans} (round to integer, you can use Qinv)
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+###Solution: ###
+Let [``0.01 = \frac{\sqrt{p(1-p)}}{\sqrt{n}}z_{0.95}``], so [``n = \frac{p(1-p) z_{0.95}^2}{0.01^2}``]
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

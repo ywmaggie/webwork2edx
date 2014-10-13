@@ -1,0 +1,92 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+answer1 = "fact(m)/(fact(k)*fact(m-k))*z^k*(1-z)^(m-k)"
+answer2 = "m*z"
+answer3 = "z"
+answer4 = "m*z*(1-z)"
+answer5 = "(1-z)^m"
+answer6 = "(1-x)^m + (1-y)^m + (1-z)^m"
+answer7 = "(1-z)^m"
+answer8 = "n*(1-z)^m"
+answer9 = "n*exp(-z*m)"
+answer10 = "1/z*log(2*n)"
+
+</script>
+<p><br/>
+Here is a very general balls-in-bins problems. Suppose \(m\) balls are thrown into \(n\)<br/>
+bins, but that the bins are not equally likely to be chosen. Each time a ball is thrown, it<br/>
+goes into bin 1 with probability \(p_1\), bin 2 with probability \(p_2\), and so on. The numbers <br/>
+\(p_1, p_2, \ldots, p_n\) are nonnegative and sum to 1.<br/>
+When entering your answers, let \(z = p_i\).  For example, instead of the expression \(p_i (1-p_i)\) write \(z(1-z)\)<br/>
+1. Let \(X_i\) be the number of balls that fall into bin \(i\). What is the probability that<br/>
+\(X_i\) is exactly \(k\)?  <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+2. \(\mathbb{E}(X_i) = \) <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  <br/>
+   <b>Hint:</b> As in problem 2, let \(T_{i,j}\) Be a random variable that is 1 if the \(j\)'th ball falls in the \(i\)'th bin.  <br/>
+   Clearly \(T_{i,j},T_{i,k}\) are independent for \(1 \leq j &lt; k \leq m\), and \(X_i = \sum_{j=1}^{m} T_{i,j}\).  <br/>
+   What is \(\mathbb{E}(T_{i,j})\)? <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> Once you figure this out, it is easy to figure out the value of \(\mathbb{E}(X_i)\).<br/>
+3. \(\mbox{var}(X_i) = \) <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+4. \(P(X_i = 0) = \) <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+5. Using fact (4) and the union bound, derive an upper bound on the probability some bin is empty in terms of \(p_1,...p_n,m,n\).  What is this bound for \(n = 3\)?  Represent \(p_1,p_2,p_3\) as \(x,y,z\) in your answer.  <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+6. Let \(z = min_i{p_i}\).  What is an upper bound on the probability bin \(i\) is empty, in terms of \(z,m\)?  <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer7">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+7. Using the bounds in parts (6) and (5), write an upper bound on the probability that at least one bin is empty? <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer8">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> (expressed in terms of \(z,m,n\).<br/>
+8. Recall that \((1-1/a)^b \leq e^{-b/a}\).  Using this fact and the bound from (7), give a more succinct but looser upper bound on the probability some bin is empty.  <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer9">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  Note: you can type \(exp(x)\) in webwork to represent \(e^{x}\).  <br/>
+9. Using the bound from (8), how large should \(m\) be to ensure the probability of an empty bin is at most \(1/2\)?  <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer10">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  <br/>
+</p>
+</problem>

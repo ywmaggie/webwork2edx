@@ -1,0 +1,46 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$n_blue = random(3,6,1);
+$n_total = 2*$n_blue;
+$prob_second_sock = ($n_blue-1)/($n_total-1);
+$prob_both_socks = 1/2*$prob_second_sock; 
+
+######################################################################
+
+BEGIN_PGML
+## Drawer of Socks ##
+
+Now we turn to a problem regarding drawing socks from a drawer.
+
+A drawer with [$n_blue] red socks and [$n_blue] blue socks.
+We will calculate the probability that we draw two socks of the same color.
+
+When we first draw out a sock, there are [__________________]{"$n_total"} total socks in the drawer, [_________________]{"$n_blue"} of which are blue.
+
+Therefore, the probability of drawing a blue sock is [______________________]{1/2}.
+
+If we have drawn a blue sock, there are now [_______________]{"$n_total-1"} total socks in the drawer, [__________________]{"$n_blue-1"} of which are blue.
+
+Therefore, the probability of drawing a second blue sock is [_________________]{"$prob_second_sock"}.
+
+We can conclude, then, that the probability of drawing two blue socks is [____________________]{"$prob_both_socks"}.
+
+Since there are equal numbers of red and blue socks in the drawer, we can also conclude that the probability of drawing two red socks is [___________________]{"$prob_both_socks"}.
+
+Therefore, there is a [_____________________]{"$prob_both_socks*2"} probability of drawing two socks of the same color.
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

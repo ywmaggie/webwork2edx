@@ -1,0 +1,88 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+n = myrandom(3,6,1)
+m = myrandom(50,100,1)
+a = myrandom(118,124,5)
+b = myrandom(162,169,1)
+
+i = myrandom(0,2,1)
+quest = ["between a lb and b lb",
+           "above b lb",
+           "below a lb"]
+questi = quest[i]
+
+
+ans1 = []
+ans1.append(Phi((b-143)/29.0)-Phi((a-143)/29.0))
+ans1.append(Q((b-143)/29.0))
+ans1.append(Phi((a-143)/29.0))
+ans1i = ans1[i] 
+
+ndev = 29/sqrt(n)
+
+ans2 = []
+ans2.append(Phi((b-143)*1.0/ndev)-Phi((a-143)*1.0/ndev))
+ans2.append(Q((b-143)*1.0/ndev))
+ans2.append(Phi((a-143)*1.0/ndev))
+ans2i = ans2[i]
+
+mdev = 29/sqrt(m)
+
+ans3 = []
+ans3.append(Phi((b-143)*1.0/mdev)-Phi((a-143)*1.0/mdev))
+ans3.append(Q((b-143)*1.0/mdev))
+ans3.append(Phi((a-143)*1.0/mdev))
+ans3i = ans3[i]
+
+answer1 = ans1i
+answer2 = ans2i
+answer3 = ans3i
+
+</script>
+<p><br/>
+Assume that women's weights are normally distributed with a mean given by \(\mu=143\)<br/>
+and a standard deviation given by \(\sigma=29\) lb.<br/>
+(a) If 1 woman is randomly selected, find the probabity that her weight is  $questi <br/>
+<formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+(b) If $n women are selected independently at random from the same distribution, find the probability that their average weight is $questi<br/>
+<formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+(c)  If $m women are selected independently at random from the same distribution, find the probability that their average weight is $questi<br/>
+<formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+</p>
+</problem>

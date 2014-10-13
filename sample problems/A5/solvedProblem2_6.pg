@@ -1,0 +1,46 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+sub comb
+{
+	fact($_[0])/(fact($_[1])*fact($_[0]-$_[1]));
+}
+
+######################################################################
+
+$a_complement_den = 3;
+$b_den = random(3,6,1);
+$intersect_den = 2 * $b_den;
+$p_a = 1-1/$a_complement_den;
+$p_b = 1/$b_den;
+$p_intersect = 1/$intersect_den;
+
+BEGIN_PGML
+Let [`A`] and [`B`] be events defined on a sample space [`\Omega`] such that
+    [`P(A \cap B) = 1/[$intersect_den]`],  [`P(A^c) = 1/[$a_complement_den]`], and [`P(B) = 1/[$b_den]`].  
+
+Here [`A^c = \Omega \setminus A`] is the event that [`A`] _doesn't_ happen. 
+
+We want to find [`P(A \cup B)`]
+
+o  [`P(A) = `] [____]{"$p_a"}
+
+As can be seen in the attached diagram: [`P(A \cup B) = P(A)+P(B)-P(A \cap
+B)`]  
+
+o  Applying this to our case we get [`P(A \cup B) = `] [_____]{"$p_a+$p_b-$p_intersect"} 
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

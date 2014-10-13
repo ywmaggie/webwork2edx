@@ -1,0 +1,76 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+from math import e
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+k = 25
+n = 50
+ne = 5
+p = myrandom(0,1,0.01)
+ans1 = Phi(sqrt(k)*(0.8-p)/sqrt(p*(1-p)))
+pe = Phi(sqrt(k)*(0.8-0.92)/sqrt(0.92*(1-0.92)))
+np = n*(n-1)/2
+ans3 = Phi((ne-pe*np)/sqrt(np*pe*(1-pe)))
+
+answer1 = 1.0*ans1
+
+answer3 = 1.0*pe
+answer4 = 1.0*np
+answer5 = 1.0*ans3
+
+</script>
+<p><br/>
+Suppose we have $n documents, for each pair of documents, we compute their similarity score using minHash with $k permutations. Regard those pairs with similarity score less than 0.8 as "dissimilar", and those higher than 0.92 as "similar". Otherwise we do not give an judgement.<br/>
+Assuming all documents are in fact similar, what is an upper bound on the probability of making more than \(n_e\) false negatives (similar pairs identified as dissimilar) ?<br/>
+---<br/>
+\(\newcommand{\pr}{\textbf{Pr}}\)<br/>
+For a certain document pair, define  \(\hat{p}\) as the similarity score obtained from $k iterations of minHash, and the true similarity score \(p\). <br/>
+Let us first find the probability \(\pr(\text{false negative}) = \pr(\hat{p}\le 0.8, p \ge 0.92) = \pr(\hat{p}\le 0.8 | p \ge 0.92) \cdot\pr(p\ge 0.92) = \pr(\hat{p}\le 0.8 | p \ge 0.92)\).<br/>
+Recall that $k iterations of minHash essentially draw $k samples of a binary random variable with probability \(p\) of being 1, and the resultant estimated similarity score \(\hat{p}\) is exactly the sample mean. <br/>
+What is the probability \(\pr(\hat{p}\le 0.8)\), in terms of \(p\)? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> (you may use the "Phi" function which is the cdf of a standard normal, or "Q" which is the right tail of a standard normal)<br/>
+Notice that the term (z-score for 0.8) in the parenthesis is monotonically <stringresponse answer="decreasing" type="ci" >
+  <textline size="20"/>
+</stringresponse>(answer "decreasing" or "increasing") over \(p\) between 0.92 and 1. <br/>
+So, what is an upper bound for \(\pr(\hat{p}\le 0.8)\), given \(p \ge 0.92\)? <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+Call this upper bound \(p_e\). We assume, on the conservative side, that each document pair has probability \(p_e\) of having a false negative result. There are <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> pairs for 50 documents. We now find (an upper bound to) the probability that, among these document pairs, at most $ne document pairs give false negative results. This probability is a tail of a binomial distribution of a binary r.v. with probability \(p_e\) of being 1. Using an normal approximation to this binomial distribution, we can compute this tail probability, which is <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+% *Note:* At a first glance, you may doubt the validity of using central limit theorem here, since it seems that the different pairs are dependent, while CLT only works for i.i.d. random variables. In fact, the estimated similarity scores \(\hat{p}\) of different pairs are dependent. For example, if two document pairs A/B and B/C both have a high estimated similarity score, it gives us some information regarding the estimated similarity of A/C. However the random variable we are applying CLT to is not \(\hat{p}\), but the indicator of a false negative, which has a probability (upper bound) of \(p_e\). For a certain pair of documents, given the true similarity score \(p\) and the number of minHash iterations \(k\), the distribution of \(\hat{p}\) (which is a normal distribution) is completely defined, and thus the probability of a false negative. has nothing to do with parameters of other pairs. Therefore, these indicator r.v.'s are independent, and our approach is valid. %<br/>
+</p>
+</problem>

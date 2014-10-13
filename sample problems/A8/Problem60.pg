@@ -1,0 +1,39 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$people = random(7,9,1);
+$floors = random(3,5,1);
+######################################################################
+
+BEGIN_PGML
+An elevator operates in a building with [`[$floors]`] floors. One day, [$people] people get into the 
+elevator, and each of them chooses to go to a floor selected uniformly at random from 
+[`1`] to [`[$floors]`]. 
+1. Fix some particular person [`j`]. What is the probability that person [`j`] gets out at the [`i`]th floor, and every other person does not get out on the [`i`]th floor?  [__________]{"(1 / [$floors]) * (1 - (1 / [$floors]))**([$people] - 1)"}
+2. What is the probability that for _any_ [`j`], person [`j`] gets out at the [`i`]th floor and every other person does not get out at the [`i`]th floor?  [__________]{[$people] * (1 / [$floors]) * (1 - (1 / [$floors]))**([$people] - 1)}
+3. [$EITALIC]* Let [`X_i`] be [`1`] if exactly one person gets out on floor [`i`], and [`0`] otherwise. What is [`\mathbb{E}(X_i)`]?  [__________]{[$people] * (1 / [$floors]) * (1 - (1 / [$floors]))**([$people] - 1)}
+4. What is the expected number of floors in which exactly one person gets out?  [__________]{[$people] * (1 - (1 / [$floors]))**([$people] - 1)}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+For part (3): Define the random variable [`\mathbb{E}(X) = \mathbb{E}(X_1 + X_2 + ...X_[$floors])`] and use linearity of expectation.  
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

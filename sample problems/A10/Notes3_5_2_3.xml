@@ -1,0 +1,94 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+k = myrandom(15,20,1)
+n = myrandom(1000,10000,1)
+
+
+answer1 = 1.0*k * (k+1) * (2 * k + 1) / 6
+answer2 = 1.0*(k+1)/2
+answer3 = 1.0*sqrt((k**2-1)/12)
+answer4 = 1.0*sqrt((k**2-1)/(12*n))
+answer5 = 1.0*k * (k+1) * (2 * k + 1) / 6
+answer6 = 1.0*(k+1)/2
+answer7 = 1.0*sqrt((k**2-1)/12)
+answer8 = 1.0*sqrt((k**2-1)/(12*n))
+</script>
+<p><br/>
+Roll a \(k\)-sided die in which each face is equally likely to come up. The outcome space is \(X \in \{1,2,\ldots,k\}\).<br/>
+The expected outcome is<br/>
+<b><br/>
+\(<br/>
+\mathbb{E}(X) <br/>
+\ = \ <br/>
+\frac{1 + 2 + \cdots + k}{k} <br/>
+\ = \ <br/>
+\frac{\frac{1}{2} k(k+1)}{k}<br/>
+\ = \ <br/>
+\frac{k+1}{2},<br/>
+\)<br/>
+</b><br/>
+using a special formula for the sum of the first \(k\) integers. \(1+2+3+...+k = \frac{k(k+1)}{2}\)<br/>
+There is also a formula for the sum of the first \(k\) squares, \(\sum_{i=1}^{k}{i^2} = \frac{1}{6}k(k+1)(2k+1)\).  <br/>
+Using this formula we can calculate the expected value of \(X^2\):<br/>
+<b><br/>
+\(<br/>
+\mathbb{E}(X^2) <br/>
+\ = \ <br/>
+\frac{1^2 + 2^2 + \cdots + k^2}{k}<br/>
+\ = \ <br/>
+\frac{\frac{1}{6}k(k+1)(2k+1)}{k}<br/>
+\ = \ <br/>
+\frac{(k+1)(2k+1)}{6}.<br/>
+\)<br/>
+</b><br/>
+Combining the last two formulas can write an expression for the variance of \(X\):<br/>
+<b><br/>
+\(<br/>
+\mbox{var}(X)<br/>
+\ = \ <br/>
+\mathbb{E}(X^2) - (\mathbb{E}(X))^2<br/>
+\ = \ <br/>
+\frac{(k+1)(2k+1)}{6} - \frac{(k+1)^2}{4}<br/>
+\ = \ <br/>
+\frac{k^2 - 1}{12}.<br/>
+\)<br/>
+</b><br/>
+The standard deviation for rolling k dice is thus \(\sqrt{\frac{k^2 - 1}{12}} \approx \frac{k}{\sqrt{12}}\).<br/>
+----<br/>
+<b>Problems:</b><br/>
+What is \(1^2+2^2+...$k^2\)?  <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+A \($k\)-sided dice has $k faces numbered \(1,...$k\). You roll the dice  $n times. After each roll you write down the outcome (a number between 1 and $k). You then compute the average of the $n numbers you wrote down.  <br/>
+Can you give an estimate of the result?  <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+What is the standard deviation for rolling a $k-sided dice one time? (give the exact answer) <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+What is the standard deviation of the average value produced by rolling the $k-sided dice $n times? (give the exact answer) <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

@@ -1,0 +1,44 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+
+## The mean, or expected value (cont. 2) ##
+---
+### [$BITALIC]* Pascal's wager: does God exist? [$EITALIC]* ###
+
+Here was Pascal's take on the issue of God's existence: if you believe there is
+some chance [`p > 0`] (no matter how small) that God exists, then you should behave
+as if God exists.
+
+Why? Well, let the random variable [`X`] denote your amount of suffering.
+
+Suppose you behave as if God exists (that is, you are good). This behavior incurs
+a significant but finite amount of suffering (you are not able to do some of the
+things you would like to). Say [`X = 10`].
+
+On the other hand, suppose you behave as if God doesn't exist -- that is, you 
+do all the things you want to do. If God really doesn't exist, you're fine, and 
+your suffering is [`X = 0`]. But if God exists, then you go straight to hell
+and your suffering is [`X = \infty`]. Thus your [$BITALIC]* expected [$EITALIC]* suffering
+if you behave badly is [`\mathbb{E}(X) = 0 \cdot (1-p) + \infty \cdot p = `][_______________]{infinity} (write "infinity" for [`+\infty`], "-infinity" for [`-\infty`]).
+
+So: to minimize your expected suffering, behave as if God exists!
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

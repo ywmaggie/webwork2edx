@@ -1,0 +1,87 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(k => ['Real', limits=>[1,20], resolution=>1]);
+
+BEGIN_PGML
+
+## Probability of having an empty bin ##
+
+Suppose there are [`m`] balls and [`n`] bins. What is the chance that there is an empty bin if [`m = n`] ?
+
+Intuitively, one would expect this to be pretty close to 1 (that is, pretty much certain), because the complementary event -- no empty bins -- would occur only if every single bin received exactly one ball. Let's analyze this latter probability. The event whose probability we want to upper bound is the event that no two balls land in the same bin.
+
+[``A=\left\{ (b_1,b_2,\ldots,b_n) | \forall 1\leq i<j \leq n, b_i \neq b_j \right\}``]
+
+The probability that the first ball does not cause any bin to have more than one ball is [_____]{1}.
+
+Without loss of generality, let us assume the first ball is placed in the first bin. Then we place the second ball. In order to ensure every bin has only one ball, we cannot place the second ball in the first bin because it already has the first ball. This leaves us with the other [`n-1`] bins to put the second ball in. The probability that the second ball avoids the first bin is [_________]{(1-1/n)}.
+
+Again, without loss of generality, we assume the second ball is placed in the second bin. For the third ball, it can not be placed in the first or the second bin. The probability that the third ball avoids these two bins is 
+
+*(A)* [__________]{(1-2/n)}.
+
+More generally, the probability that the placement of the [`k`] th ball does not cause any bin to have more than one ball is 
+
+*(B)* [__________]{(1-(k-1)/n)}.
+
+Together, after placing all [`m=n`] balls, the probability that each bin has exactly one ball is 
+
+*(C)* [____________________________]{n!/n^n} (write the answer in [`n`] only).
+
+This probability is miniscule. To show this, we need to upper bound *(C)*.
+
+We start by upper bounding *(B)*.  Recall the inequality [`1+x \leq e^x`]. Plugging [`-\frac{k-1}{n}`] in for [`x`], gives us an upper bound on *(B)*
+that is 
+
+*(D)* [______________]{Formula("e^(-(k-1)/n)")}.
+
+We now want to derive an upper bound on *(C)* which is the probability that each of the [`n`] balls is placed in a different bin. To do this we take the product [`\prod_{k=1}^n \exp(-(k-1)/n)`] simplifying this expression gives
+
+[`P(A) \leq `] [______________]{Formula("e^(-(n-1)/2)")}, which decreases to 0 rapidly as [`n \to \infty `]
+
+END_PGML
+
+
+BEGIN_PGML_SOLUTION
+
+---
+### Solution ###
+
+Placing the [`k`]th ball should avoid the [`k-1`] bins that are already occupied by the previous [`k`] balls, so the probability that it does not cause any bin to have more than one ball is [`1-\frac{k-1}{n}`].
+
+Because the placement of each ball is independent, the final probability of not having any bin with more than one ball after placing all [`m`] balls, is the product of the probabilities of successfully placing each ball. This is
+
+[``
+\textbf{Pr}(\mbox{every bin gets exactly one ball})
+\ = \ 
+\left(1 - \frac{1}{n}\right) \left( 1- \frac{2}{n}\right) \cdots \frac{1}{n} 
+\ = \
+\frac{n!}{n^n}
+``].
+
+This probability is miniscule; Using the inequality [`(1-x) \le e^{-x}`], we can have a upper bound of it:
+
+(If you can not see the equations below, change the "display option" to 'MathJax' from the left panel, then click "Apply Options")
+
+[``\begin{align*}
+(1-\frac{1}{n})(1-\frac{2}{n}) \cdots \frac{1}{n} & \le  e^{-\frac{1}{n}}e^{-\frac{2}{n}}\cdots e^{-\frac{n-1}{n}} \\
+& =  e^ {-\frac{1+2+\cdots+(n-1)}{n}} = e^ {-\frac{n(n-1)/2}{n}} = e^ {-\frac{n-1}{2}}
+\end{align*}
+``]
+
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

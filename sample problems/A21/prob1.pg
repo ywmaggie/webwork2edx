@@ -1,0 +1,108 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+"contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->flags->set(reduceConstants=>0);
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.001);
+
+Context()->variables->are(
+      n => ['Real', limits=>[1,100], resolution=>1],
+      k => ['Real', limits=>[1,100], resolution=>1],
+      p => ['Real', limits=>[0,1], resolution=>0.01],
+    );
+
+Context()->strings->add(
+     decreasing=>{},
+     increasing=>{},
+);
+
+$k = 25;
+$n = 50;
+$ne = 5;
+$ans1 = Compute("Phi(sqrt($k)*(0.8-p)/sqrt(p*(1-p)))");
+$pe = Compute("Phi(sqrt($k)*(0.8-0.92)/sqrt(0.92*(1-0.92)))");
+$np = Compute("$n*($n-1)/2");
+$ans3 = Compute("Phi(($ne-$pe*$np)/sqrt($np*$pe*(1-$pe)))");
+
+BEGIN_PGML
+
+Suppose we have [$n] documents, for each pair of documents, we compute their similarity score using minHash with [$k] permutations. Regard those pairs with similarity score less than 0.8 as "dissimilar", and those higher than 0.92 as "similar". Otherwise we do not give an judgement.
+Assuming all documents are in fact similar, what is an upper bound on the probability of making more than [`n_e`] false negatives (similar pairs identified as dissimilar) ?
+---
+[`\newcommand{\pr}{\textbf{Pr}}`]
+
+For a certain document pair, define  [`\hat{p}`] as the similarity score obtained from [$k] iterations of minHash, and the true similarity score [`p`]. 
+
+Let us first find the probability [`\pr(\text{false negative}) = \pr(\hat{p}\le 0.8, p \ge 0.92) = \pr(\hat{p}\le 0.8 ~|~ p \ge 0.92) \cdot\pr(p\ge 0.92) = \pr(\hat{p}\le 0.8 ~|~ p \ge 0.92)`].
+
+Recall that [$k] iterations of minHash essentially draw [$k] samples of a binary random variable with probability [`p`] of being 1, and the resultant estimated similarity score [`\hat{p}`] is exactly the sample mean. 
+
+What is the probability [`\pr(\hat{p}\le 0.8)`], in terms of [`p`]? [_______________________]{"$ans1"} (you may use the "Phi" function which is the cdf of a standard normal, or "Q" which is the right tail of a standard normal)
+
+Notice that the term (z-score for 0.8) in the parenthesis is monotonically [________________]{"decreasing"} (answer "decreasing" or "increasing") over [`p`] between 0.92 and 1. 
+
+So, what is an upper bound for [`\pr(\hat{p}\le 0.8)`], given [`p \ge 0.92`]? [_______________________]{"$pe"}
+
+Call this upper bound [`p_e`]. We assume, on the conservative side, that each document pair has probability [`p_e`] of having a false negative result. There are [____________]{"$np"} pairs for 50 documents. We now find (an upper bound to) the probability that, among these document pairs, at most [$ne] document pairs give false negative results. This probability is a tail of a binomial distribution of a binary r.v. with probability [`p_e`] of being 1. Using an normal approximation to this binomial distribution, we can compute this tail probability, which is [__________________________________]{"$ans3"}
+
+
+[% *Note:* At a first glance, you may doubt the validity of using central limit theorem here, since it seems that the different pairs are dependent, while CLT only works for i.i.d. random variables. In fact, the estimated similarity scores [`\hat{p}`] of different pairs are dependent. For example, if two document pairs A/B and B/C both have a high estimated similarity score, it gives us some information regarding the estimated similarity of A/C. However the random variable we are applying CLT to is not [`\hat{p}`], but the indicator of a false negative, which has a probability (upper bound) of [`p_e`]. For a certain pair of documents, given the true similarity score [`p`] and the number of minHash iterations [`k`], the distribution of [`\hat{p}`] (which is a normal distribution) is completely defined, and thus the probability of a false negative. has nothing to do with parameters of other pairs. Therefore, these indicator r.v.'s are independent, and our approach is valid. %]
+
+END_PGML
+
+
+BEGIN_PGML_SOLUTION
+##Solution:##
+---
+For a given document pair, the probability of false negative, [`[$ans1]`]. 
+
+Given that [`p\ge 0.92`], this probability is upper-bounded by [$pe].
+
+Among the total of [$np] document pairs, the probability of having at most [$ne] false negatives is [$ans3].
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

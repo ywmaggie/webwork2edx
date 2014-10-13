@@ -1,0 +1,55 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+p1 = myrandom(20,27,1)
+p2 = myrandom(28,37,1)
+p3 = 100 - p1 - p2
+
+defective1 = myrandom(6,8,1)
+defective2 = myrandom(4,7,1)
+defective3 = myrandom(1,4,1)
+
+defective = p1*defective1 + p2*defective2 + p3*defective3
+defective_probability = (p1*defective1 + p2*defective2 + p3*defective3)/10000
+defective_given_1 = p1*defective1 / defective
+
+
+answer1 = 1.0*(p1*defective1 + p2*defective2 + p3*defective3)/10000
+answer2 = 1.0*p1*defective1/defective
+</script>
+<p></p>
+<p>A particular car manufacturer has three factories \(F_1\), \(F_2\), \(F_3\) making $p1\, $p2\, </p>
+<p>and $p3\, respectively, of its cars. Of their output, $defective1\, $defective2\, and $defective3\, respectively, are </p>
+<p>defective. A car is chosen at random from the manufacturer's supply.</p>
+<p>---<br/>\(1.\) What is the probability that the car is defective? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>The event that the car is defective can be split into three disjoint cases:</p>
+<p>being defective and made by each of the three factories. </p>
+<p>Using the law of total probability, we can write this as:<br/>\(\begin{align<b>}<br/>\textbf{Pr}(\text{defective})  = \textbf{Pr}(\text{defective}, F_1) + \textbf{Pr}(\text{defective}, F_2) + \textbf{Pr}(\text{defective}, F_3)\\<br/> = \textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1) + \textbf{Pr}(\text{defective}|F_2)\textbf{Pr}(F_2) + \textbf{Pr}(\text{defective}|F_3)\textbf{Pr}(F_3) \\<br/>\end{align</b>}</p>
+<p>\)</p>
+<p>---<br/>\(2.\) Given that the car is defective, what is the probability that it came from factory \(F_1\)?<numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>The description literally tells us what probability we should solve for: \(\textbf{Pr}(F_1|\text{defective})\). </p>
+<p>Using Bayes rule, convert this conditional probability into a joint probability:<br/>\(\textbf{Pr}(F_1|\text{defective}) = \frac{\textbf{Pr}(F_1, \text{defective})}{\textbf{Pr}(\text{defective})}</p>
+<p>\)</p>
+<p>Again using Bayes rule, convert the joint probability into conditional probability that are known.<br/>\(\textbf{Pr}(F_1, \text{defective}) = \textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1)\)</p>
+<p>---</p>
+<p><b>Notice</b> that by applying Bayes rule twice, we reverse the condition, and we are able to write \(\textbf{Pr}(F_1 | \text{defective})\) in terms of \(\textbf{Pr}(\text{defective} | F_1)\) along with some scaling factors. This, is an instance of one of the most important formulae in Bayesian statistics: \(\textbf{Pr}(A|B) = \frac{\textbf{Pr}(B|A)\textbf{Pr}(A)}{\textbf{Pr}(B)}.\)</p>
+<p></p>
+</problem>

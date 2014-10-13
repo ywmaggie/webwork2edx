@@ -1,0 +1,74 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(k => ['Real', limits=>[1,20], resolution=>1]);
+
+BEGIN_PGML
+
+## Two or more balls ##
+
+Suppose there are [`m`] balls and [`n`] bins. What is the probability that some bin gets two or more balls? Clearly, keeping [`n`] fixed and increasing [`m`] will increase this probability. We are interested in characterizing the rate are which [`m`] should increase as a function of [`n`] so as to guarantee that , with high probability, as [`n`] increases to infinity, there is a bin with 2 or more balls.
+
+First, let's choose an notation to represent the outcomes. The notation we will use here is an m-tuple [`(b_1,b_2,\ldots,b_m)`], where [`b_i`] is the number of the bin into which the [`i`]'th ball has landed. (why use this rather than some other notation? Because it works, it gives us an upper bound. Other notations might not work, and there is no general rule, you have to try different approaches until you find one that works, or, more likely, have sufficient experience to make an intelligent guess.
+
+Using this notation, the event whose probability we wish to lower-bound is
+[`` A= \left\{ (b_1,\ldots,b_m) | \forall 1\leq i<j\leq m, 1\leq b_i \leq n, b_i \neq b_j \right\} ``] 
+
+We want to show that the probability of the event is close to one. As we are better equipped to show that a probability is close to zero we use the complement of the event. In other words, the probability that all bins have z or 1 balls. We know the probability that placing the [`k`]th ball lands in an empty bin, given that the previous [`k-1`] balls landed in different bins, is
+
+*(A)* [___________]{1-(k-1)/n}.
+
+As the events associated with different balls are independent. We need to take the product of expression *(A)* for [`k=1,...,m`] to calculate the probability that *ALL* [`m`] balls fall in different bins. Calculating this product we get
+[`\prod_{i=1}^m \left(1-\frac{i-1}{n} \right)`] find a way to express this quantity without using an explicit product, and instead using only exponentiation: [`i^j`] or the factorial [`i!`] to get:
+
+*(B)* [____________]{n!/((n-m)!*n^m)}.
+
+Although this is exact, it is hard to calculate from it the rate at which [`m`] can increase so as to make this probability go to zero as [`n,m \to \infty`], and so let's use an upper bound. Using the inequality [`1+x \leq e^x`] we can bound *(A)* by [`1-(k-1)/n\leq \exp(-(k-1)/n)`]. Taking the product over [`i=1\ldots,m`], this gives us a bound on *(B)*, which is [_________________]{e^(-m(m-1)/(2n))}.
+
+This is an excellent approximation when [`m \ll n`]. It tells us that if [`m \geq c \sqrt{n}`] (for some small constant [`c`]), then this probability is at most 1/2. To be exact, [`c = \sqrt{\frac{2}{ln(2)}}`]. In other words, if you throw [`\sqrt{\frac{2}{ln(2)}}\sqrt{n} \approx 1.7 \sqrt{n}`] (or more) balls into [`n`] bins, then chances are that some bin will get two or more balls. If you want the probability to go to zero as [`n \to \infty`], you need to make
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+### Solution ###
+
+The probability that the placement of the [`k`]th ball does not cause some bin to have more than one ball is [`1-\frac{k-1}{n}`].
+
+Taking a product of the probabilities that each of the [`m`] balls is successfully placed, we obtain the probability that after all [`m`] balls are placed, every bin gets at most one ball:
+
+[``
+\textbf{Pr}(\mbox{every bin gets 0 or 1 ball}) \
+= \
+\left(1 - \frac{1}{n}\right) \left( 1- \frac{2}{n} \right)\cdots \left( 1- \frac{m-1}{n} \right) \
+= \ 
+\frac{n!}{(n-m)! n^m}.
+``]
+
+Using the approximation [`1-i/n \leq e^{-i/n}`], this gives us a bound to this probability:
+
+(If you can not see the equations below, change the "display option" to 'MathJax' from the left panel, then click "Apply Options")
+
+[``\begin{align*}
+\textbf{Pr}(\mbox{every bin gets 0 or 1 ball}) & = & 
+\left(1 - \frac{1}{n}\right) \left( 1 - \frac{2}{n} \right) \cdots \left( 1- \frac{m-1}{n} \right) \\
+& \leq & \exp(-1/n) \exp(-2/n) \cdots \exp(-(m-1)/n)  \\
+& = & \exp\left(-\frac{1}{n} \left(1 + \cdots + (m-1) \right) \right) \\
+& = & \exp\left(-\frac{m(m-1)}{2n} \right).
+\end{align*}``].
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

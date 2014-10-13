@@ -1,0 +1,56 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+</script>
+<p><br/>
+<br/>
+A simple random sample of 100 ights for United Airlines and a simple random sample of 100 ights for American Airlines was obtained. Let \(p_1\) be the true proportion of all<br/>
+ights that are on time for United Airlines and let \(p_2\) be the true proportion of all ights<br/>
+that are on time for American Airlines. Let \(\hat{p_1}\) and \(\hat{p_2}\) be the sample proportions of on time ights for United<br/>
+Airlines and American Airlines, respectively. Based on the sample proportions, the 90% condence interval for<br/>
+the difference in the on-time rates for the two airlines, \(p_1  p_2\), was calculated to be<br/>
+(0.259, 0.055).<br/>
+---<br/>
+Based on the 90% condence interval given above, answer each of<br/>
+the following questions with _true_, _false_, or _can't tell_.<br/>
+1. The true difference in the on-time rate for the two airlines lies in the<br/>
+90% condence interval (0.259, 0.055).<stringresponse answer="can't tell" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+2.  The probability that \(\hat{p_1}  \hat{p_2}\) lies in<br/>
+the 90% condence interval (0.259, 0.055) is 1.<stringresponse answer="true" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+3. The probability that the true difference in the on-time rate for the two<br/>
+airlines lies in the 90% condence interval (0.259, 0.055) is equal to 0.90.<stringresponse answer="false" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+<b>In this question, try to carefully identify which quantities are deterministic, and which are random.</b><br/>
+</p>
+</problem>

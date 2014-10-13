@@ -1,0 +1,39 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+
+$ans8 = 40/comb(52,5);
+$ans8Real = Real("$ans8");
+$ans9 = 4/comb(52,5);
+$ans9Real = Real("$ans9");
+
+
+######################################################################
+
+BEGIN_PGML
+## Rolling Three Dice ##
+
+A Six-Sided Die has six faces, numbered 1, 2, 3, 4, 5, and 6.  We are going to do some computation about the sum of rolling three of these dice and adding the faces that turn up.
+
+First, the number of all possible results from rolling one die is [___________________________________________]{6}.
+
+The result of rolling the dice three time can be represented as a tuple of length 3: (roll1,roll2,roll3). Therefor the number of possible outcomes of this experiment (or the size of the sample space) is:[___________________________________________]{"6^3"}.
+
+The total number of tuples (roll1, roll2, roll3) that sum to 3 is [___________________________________________]{1}.
+
+Therefore, the probability of rolling a sum of 3 while rolling three dice is [___________________________________________]{"1/(6^3)"}
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

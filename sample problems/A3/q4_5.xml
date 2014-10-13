@@ -1,0 +1,56 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+answer1=1.0*4
+answer2=1.0*C(13,5)
+answer3=1.0*10
+answer4=1.0*C(13,5)-10
+answer5=1.0*4*(C(13,5)-10)
+answer6=1.0*4*(C(13,5)-10)/C(52,5)
+</script>
+<p></p>
+<p></p>
+<p>1. The number of possibilities for the suit is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The ranks can be anything except those that are in order. The number of all possible ranks for a hand of the same suit is <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+. Among these, the number of hands whose ranks are in order is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ So the number of possible ranks of a flush is <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>4. Thus the number of hands that is a flush is <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p></p>
+</problem>

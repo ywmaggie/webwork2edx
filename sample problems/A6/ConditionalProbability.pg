@@ -1,0 +1,48 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+## Conditional Probability ##
+
+You meet a stranger, a random citizen of the United States. What's the chance that he (or, equally likely, she) votes for the Democratic party? Who knows, but it's probably close to [`50%`].
+[`` \Omega = \{\mbox{citizens of the US}\}, \ \ E = \{\omega \in \Omega: \mbox{votes Dem}\}.``]
+Now what if you find out a little bit more information: this stranger likes spicy food.
+[`` F = \{\omega \in \Omega: \mbox{likes spicy food}\}.``]
+How does change the odds? What is [`P(E|F)`] (``probability of [`E`] given [`F`] ')? Again, it's hard to say, but for illustrative purposes here is a (definitely incorrect) set of probabilities:
+[`` P(E) = 0.5, \ \ \ \ P(F) = 0.2, \ \ \ \ P(E \cap F) = 0.15.``]
+
+What is [`P(E \setminus F)?`] [____]{0.35} [`E \setminus F`] means the set of elements that are in [`E`] but not in [`F`].
+
+The Venn diagram for this scenario is:
+
+END_PGML
+BEGIN_TEXT
+$BR \{ image("ConditionalProbabilityDiagram.png", width=>250, height=>200) \} 
+END_TEXT
+BEGIN_PGML
+
+If you stare at it a little bit, you will probably conclude, correctly, that [`P(E|F)`] is the chance that a point drawn from the small blob lies inside the large blob, namely [`0.15 / 0.2 = 0.75`].  By reasoning this way, you are implicitly using
+[`` P(E|F) \ = \ \frac{P(E \cap F)}{P(F)} .``]
+We will make heavy use of this and of the equivalent
+[`` P(E \cap F) = P(E|F) P(F).``]
+
+What is [`P(E|F)*P(F)/P(E \cap F)`]?  [_____]{1}
+
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,92 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+  "contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.01);
+
+$a = Compute("0.05/sqrt(0.16/200)");
+$q = Compute("Q($a)");
+
+BEGIN_PGML
+## Psychic Test ##
+
+A noted psychic was tested for extrasensory perception. The psychic was presented
+with 200 cards face down and asked to determine if the card were one of five symbols.
+The psychic was correct in 50 cases. Let p represent the probability that the psychic
+correctly identifies the symbol on the card in a random trial. Assume the 200 trials
+can be treated as a simple random sample.
+
+Suppose you wished to see if there were evidence that the psychic is
+doing better than just guessing. To do this, you test the hypotheses [`H_0 : p = .20`]
+versus [`H_{alternative} : p > .20`].
+
+What is the z-score? [__________________________________________]{"$a"}
+
+
+What is the p-value for the test statistic? (You can use Q function in the answer) [_________]{"$q"}
+
+Can you reject at the .05 significance level? (answer "yes" or "no") [_______]{"yes"}
+
+Can you reject at the .01 significance level? (answer "yes" or "no") [_______]{"no"}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+## Solution ##
+
+The sample size is [`n = 200`]. The estimated probability that the psychic correctly identifies the symbol on the card in a random trial is [`\hat{p} = 50/200 = 0.25`]. The null hypothesis is the psychic just random guesses, which corresponds to [`p = 0.20`]. So the z-value is 
+[`` z = \frac{\hat{p}-p}{\sqrt{p(1-p)/n}} = \frac{0.05}{\sqrt{0.16/200}} = 1.7678``].
+
+The p-value for the test statistic is P(Z > 1.7678) = Q(1.7678) = 0.039. The
+p-value is greater than 0.01 but less than 0.05. So the null hypothesis that
+p = 0.20 can be rejected at the 0.05 significance level. But cannot be rejected at
+the 0.01 signficance level.
+
+END_PGML_SOLUTION
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

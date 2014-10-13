@@ -1,0 +1,60 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+#### Fixed points of a permutation ####
+
+The [$BITALIC]* fixed points [$EITALIC]* of a permutation are the numbers that remain in their original 
+position. For instance, in the permutation
+
+[$BCENTER]*
+[`` (1,2,3,4,5,6) \rightarrow (6,2,5,4,1,3)``]
+[$ECENTER]*
+
+the fixed points are 2 and 4. Let [`X`] be the number of fixed points in a random 
+permutation of [`(1,2,\ldots, n)`]; what is [`\mathbb{E}(X)`]?
+
+Linearity is very helpful here. Define the random variable [`X_i`] to be [`1`] if [`i`]
+is a fixed point, and [`0`] otherwise. Then [`\mathbb{E}(X_i) = 1/n`]. Therefore
+
+[$BCENTER]*
+[`` \mathbb{E}(X) 
+\ = \ 
+\mathbb{E}(X_1 + \cdots + X_n)
+\ = \ 
+1.
+``]
+[$ECENTER]*
+
+The expected number of fixed points is 1, regardless of [`n`].
+
+How many fixed points are there in the following permutation [__________]{4}?
+
+[$BCENTER]*
+[`` (1,2,3,4,5,6,7,8) \rightarrow (1,2,6,3,4,5,7,8)``]
+[$ECENTER]*
+
+What is the expected number of fixed points of a random permutation of [` (1,2,3,4,5,6,7,8)`]?
+[______]{1}
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

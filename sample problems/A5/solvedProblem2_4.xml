@@ -1,0 +1,111 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+a_den = myrandom(2,5,1);
+b_den = myrandom(2,5,1);
+p_a = 1/a_den;
+p_b = 1/b_den;
+p_c = 1 - p_a - p_b;
+
+
+
+answer1 = 1.0*p_c
+answer2 = "1"
+answer3 = "1"
+answer4 = 1.0*2**2
+answer5 = 1.0*2**3
+answer6 = "0"
+answer7 = 1.0*p_a
+answer8 = 1.0*p_b
+answer9 = 1.0*p_c
+answer10 = 1.0*p_a+p_b
+answer11 = 1.0*p_a+p_c
+answer12 = 1.0*p_b+p_c
+answer13 = "1"
+</script>
+<p></p>
+<p>Consider a sample space \(\Omega = \{a,b,c\}\) with probabilities \(P(a) = 1/$a_den\) and \(P(b) = 1/$b_den\) </p>
+<p>o  What is \(P(c)\)?  <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>---</p>
+<p>Recall that if \(\Omega\) is a sample space, then each subset \(A \subseteq \Omega\) is an event.</p>
+<p>o  Is \(\emptyset\) an event in the sample space \(S = \{a,b\}\)? <formularesponse type="ci" samples="n@1:10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+ (1=true, 0=false)</p>
+<p>o  Is \(\{a\}\) an event on the sample space \(S\)?  <formularesponse type="ci" samples="n@1:10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+ (1=true, 0=false)</p>
+<p>o  How many distinct events can be defined on the space \(S\)? <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>---</p>
+<p>We now go back to the initial sample space \( \Omega=\{a,b,c\}\) with the probabilities defined above.</p>
+<p>o  How many distinct events can be defined on the space \(\Omega\)?  <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>o  Find the probabilities of each of these possible events.</p>
+<p>o  \(P(\emptyset) = \) <formularesponse type="ci" samples="n@1:10#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>o  \(P(\{a\}) = \) <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>o  \(P(\{b\}) = \) <numericalresponse answer="$answer8">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>o  \(P(\{c\}) = \) <numericalresponse answer="$answer9">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>o  \(P(\{a,b\}) = \) <numericalresponse answer="$answer10">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>o  \(P(\{a,c\}) = \) <numericalresponse answer="$answer11">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>o  \(P(\{b,c\}) = \) <numericalresponse answer="$answer12">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>o  \(P(\{a,b,c\}) = \) <formularesponse type="ci" samples="n@1:10#10" answer="$answer13">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p></p>
+</problem>

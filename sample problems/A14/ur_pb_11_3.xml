@@ -1,0 +1,77 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+n = myrandom(10,20,1)
+score = myrandom(570,589,0.5)
+
+ans1 = Q((score-509)/112.0)
+
+newdev = 112.0/sqrt(n)
+ans2 = Q((score-509)*1.0/newdev)
+
+
+
+
+answer1 = 1.0*ans1
+answer2 = 1.0*ans2
+answer3 = "0"
+
+
+</script>
+<p><br/>
+Scores for men on the verbal portion of the SAT-I test are normally distributed with a mean of 509 and a standard deviation of 112.<br/>
+(a) If 1 man is randomly selected, find the probability that his score is at least $score.<br/>
+<numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+(b) If $n men are randomly selected, find the probability that their mean score is at least $score.<br/>
+<numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+(c) As more and more men are randomly selected, the probability that their mean score is at least $score approaches <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+(d) Two students are debating this diminishing tail probability is a consequence of which statistics law. <br/>
+Student A argues that the <b>Law of Large Number (LLN)</b> explains this behavior because this is basically what the weak LLN states.<br/>
+Student B argues that <b>Central Limit Theorem (CLT)</b> explains this behavior because as \(n\) gets larger the Gaussian gets more concentrated and the tail gets smaller. <br/>
+Having heard both arguments, which of the following statements do you think is correct ?<br/>
+<multiplechoiceresponse>
+  <choicegroup label="Which of the following statements do you think is correct ?" type="MultipleChoice">
+    <choice correct="true">Just the Law of Large Number is sufficient</choice>
+    <choice correct="false">LLN is not enough, we also need Central Limit Theorem to justify this behavior</choice>
+  </choicegroup>
+</multiplechoiceresponse>
+</p><p><br/>
+</p>
+</problem>

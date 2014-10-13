@@ -1,0 +1,46 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$n = 2*random(40,50,1);
+
+######################################################################
+
+BEGIN_PGML
+Let [`X_1, X_2, \ldots, X_{100}`] be the outcomes of [`100`] independent rolls of a fair coin.  
+[`P(X_i=0)=P(X_i=1)=0.5`]  
+
+1. [`\mathbb{E}(X_1) = `][____]{"1/2"}
+2. [`var(X_1) = `][_______]{"1/4"}
+
+Define the random variable [`X`] to be [`X_1 - X_2`]. 
+3. [`\mathbb{E}(X) = `][______]{"0"}
+4. [`var(X) = `][_______]{"1/2"}  
+   *Hint:* if [`X,Y`] are independent random variables then [`var(X+Y)=var(X)+var(Y)`]
+
+Define the random variable [`Y = X_1 - 2X_2 + X_3`]. 
+5. [`\mathbb{E}(Y) = `][_______]{"0"}
+6. [`var(Y) = `][_________]{"6/4"}  
+   *Hint:* if [`a`] is a constant and [`X`] a random variable, then [`var(aX)=a^2 var(X)`].
+
+Define the random variable [`Z = X_1 - X_2 + X_3 - X_4 + ... + X_{[$n-1]} - X_{[$n]}`]. 
+7. [`\mathbb{E}(Z) = `][_______]{"0"}
+8. [`var(Z) = `][_________]{"$n/4"}
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

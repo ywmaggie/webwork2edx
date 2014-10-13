@@ -1,0 +1,27 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "infinity"
+</script>
+<p><br/><br/>---<br/><br/>Here was Pascal's take on the issue of God's existence: if you believe there is<br/>some chance \(p &gt; 0\) (no matter how small) that God exists, then you should behave<br/>as if God exists.<br/>Why? Well, let the random variable \(X\) denote your amount of suffering.<br/>Suppose you behave as if God exists (that is, you are good). This behavior incurs<br/>a significant but finite amount of suffering (you are not able to do some of the<br/>things you would like to). Say \(X = 10\).<br/>On the other hand, suppose you behave as if God doesn't exist -- that is, you <br/>do all the things you want to do. If God really doesn't exist, you're fine, and <br/>your suffering is \(X = 0\). But if God exists, then you go straight to hell<br/>and your suffering is \(X = \infty\). Thus your <b> expected </b> suffering<br/>if you behave badly is \(\mathbb{E}(X) = 0 \cdot (1-p) + \infty \cdot p = \)<formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+ (write "infinity" for \(+\infty\), "-infinity" for \(-\infty\)).<br/>So: to minimize your expected suffering, behave as if God exists!<br/></p>
+</problem>

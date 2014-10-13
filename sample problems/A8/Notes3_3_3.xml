@@ -1,0 +1,60 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+bins = myrandom(5,10,1)
+
+
+
+answer1 = 1.0*sqrt(2)
+answer2 = 1.0*1/bins
+answer3 = 1.0*sqrt(2 * bins)
+answer4 = 1.0*sqrt(2)
+answer5 = 1.0*1/bins
+answer6 = 1.0*sqrt(2 * bins)
+</script>
+<p><br/>
+You can enter \(\sqrt{n}\) in WebWork as sqrt(n).  Enter \(\sqrt{2}\): <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+<br/>
+Toss \(m\) balls in \(n\) bins what is the expected number of <b> collisions </b>? Let's make<br/>
+this more precise. For any \(1 \leq i &lt; j \leq m\), define the random variable \(X_{ij}\) to<br/>
+be \(1\) if balls \(i\) and \(j\) land in the same bin, and \(0\) otherwise. Then the<br/>
+number of collisions is defined to be<br/>
+<b><br/>
+\( X  \ = \ \sum_{1 \leq i &lt; j \leq m} X_{ij} .\)<br/>
+</b><br/>
+Since \(\mathbb{E}(X_{ij}) = 1/n\) (do you see why?), it follows that the expected number of <br/>
+collisions is <br/>
+<b><br/>
+\( \mathbb{E}(X) \ = \ {m \choose 2} \frac{1}{n} \ = \ \frac{m(m-1)}{2n} .\)<br/>
+</b><br/>
+So if \(m &lt; \sqrt{2n}\), the expected number of collisions is \(&lt; 1\), which means<br/>
+every ball goes into a different bin. <br/>
+This relates back to the birthday paradox, where \(m\) is close to the threshold \(\sqrt{2n}\).<br/>
+If there are \($bins\) bins, what is the expected number of collisions between balls \(i\) and \(j\), for some fixed \(i,j\)?  <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+What is an upper bound (using the bound we learned above) on the number of balls we can insert into $bins bins, with less than 1 expected collision?  <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+</p>
+</problem>

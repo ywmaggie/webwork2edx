@@ -1,0 +1,267 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+"contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.01);
+
+Context()->variables->are(
+      n => ['Real', limits=>[1,100], resolution=>1],
+      m => ['Real', limits=>[1,100], resolution=>1],
+     k => ['Real', limits=>[1,100], resolution=>1],
+    );
+
+$a = Compute("0.05/sqrt(0.16/200)");
+$q = Compute("Q($a)");
+
+BEGIN_PGML
+
+[``\newcommand{\E}{\mathbb{E}}``]
+[``\newcommand{\R}{\mathbb{R}}``]
+[``\newcommand{\bP}{\mathbb{P}}``]
+[``\newcommand{\var}{\mbox{var}}``]
+[``\newcommand{\pr}{\mbox{Pr}}``]
+[``\def\X{{\cal X}}``]
+[``\def\cost{{\mbox{cost}}}``]
+[``\def\U{{\cal U}}``]
+[``\renewcommand{\log}{\mbox{log}_2}``]
+
+## Bloom Filters ##
+
+In some situations we are given a very long string, say billions of
+characters long, and we want to find all words that appear more than
+one time.
+
+An reasonably efficient way of doing that is to create a large hash
+table, keyed by words which stores the _count_ for each
+observed word.  This gives us a linear time algorithm in the length of
+the input. In many cases the number of different words that appear in
+the input is very large but most of them occur only once
+(mis-spellings, people's names etc). This single-occurance words or
+_singletons_ place a large demand on the computer memory while
+containing no useful information.
+
+What we need is a _filter_. This filter will recieve as input the
+stream of words, one word at a time. For each word it will answer the
+question "did this word appear earlier in the stream?". If this is
+the first time the word appears, then it is _filtered out_ or
+ignored. If the word has appeared earlier then it is _filtered in_
+or passed on to the hash table holding the counters. We would like to
+find a method which uses much less memory than would be used by the
+hash table.  *Bloom filters* provide an elegant solution to this
+problem, but with a slight caveat: while no word that appears more
+than once will be mistakenly filtered out, the method does allow a
+small fraction of the singletons to be filtered in.
+
+We now describe Bloom filters. Initially, two integer parameters [`k,m`]
+are chosen (how to choose it will be described a little later). We
+then choose and fix [`k`] different hash functions [`h_1,h_2,\ldots,h_k`]
+that map words to integers in the range [`1,\ldots,l`]. We also allocate
+a bit vector [`B[\cdot]`] of length [`m`] where all bits are initialized to
+zero.
+
+The filter operates as follows. Given a word [`w`], it computes the [`k`]
+numbers [`h_1(w),h_2(w),\ldots,h_k(w)`] and uses them as indices into
+the bit vector [`B`]. If all of the [`k`] bits
+[`B[h_1(w)],B[h_2(w)],\ldots,[h_k(w)]`] are equal to 1 then the we
+declare that word [`w`] did appear earlier in the stream and therefor
+[`w`] is filtered _in_.  If any of the [`k`] bits is not 1 then the
+word [`w`] is filtered _out_ and not counted and the [`k`] bits in [`B`]
+are set to 1.
+
+We now want to analyze the probability that the Bloom filter makes a
+mistake. There are two types of mistakes: filtering out a word that
+appeared previously and filtering in a word that did not appear
+previously. We consider each error type in turn:
+
+ *Filtering out a word that appeared previously* (false
+  negative) This can never happen. If the word [`w`] appeared in the
+  past then the bits [`B[h_1(w)],B[h_2(w)],\ldots,[h_k(w)]`] have been
+  set to 1. As the algorithm never resets bits to zero, these bits
+  must still be all 1 when we encounter [`w`] for the second, third,
+  ... time. As a result [`w`] will not be filtered out. The Bloom filter
+  does not make false negative mistakes.
+ *Filtering in a word that did not previously appear* (false
+  positive) This can happen. The [`k`] bits that are checked might have
+  been set to 1 as a result of observing other words. However, we will
+  now show that the probability of this event is small (provided [`k`]
+  and [`m`] are set appropriately. Note also that the cost of a false
+  positive mistake is small - it means that the algorithm will
+  unneccesarily store a singleton word in the hash table. The result
+  is a waste of memory space but not an actual error.
+
+We now analyze the probability of making a false positive mistake,
+  i.e. dincorrectly declaring that a new word appeared earlier in the
+  sequence. Let [`n`] be the number of different elements (words) that
+  we inserted into the filter before we test the new word. We assume
+  that each hash function [`h_j(w)`] is a number chosen uniformaly at
+  random from the range [`1 \leq j \leq m`]. Consider a particular
+  location [`j`] in the bitvector [`B`], which is one of the [`k`] locations
+  that the new word [`w`] is mapped to. We want to compute the
+  probability that this bit is _not_ set to one. 
+
+The probability that *one* of the [`k`] hash functions, operating on *one* of the previous
+  [`n`] words, does _not_ set the bit [`j`] to one is [________]{1-1/m}.
+  
+[%
+[$BCENTER]*
+[``
+  1-\frac{1}{m}
+  ``]
+[$ECENTER]*
+%]
+
+  Thus the probability that *none* of the [`k`] hash functions, operating
+  on *any* of the [`n`] words sets the [`j`]th bit to one is [______________________]{(1-1/m)^(kn)}
+  
+[%
+[$BCENTER]*
+[``
+  \left(  1-\frac{1}{m} \right)^{kn}
+  ``]
+[$ECENTER]*
+%]
+
+  Thus the probability that the [`j`]th bit *is* set to one is [______________]{1-(1-1/m)^(kn)}
+  
+[%
+[$BCENTER]*
+[``
+  1-\left(  1-\frac{1}{m} \right)^{kn}
+  ``]
+[$ECENTER]*
+%]
+
+  Finally, the new word will be identified as new only if all of the
+  [`k`] locations in [`B`] to which it is hashed have been set to one. As
+  these locations are independent, we get that the probability of
+  making a false positive mistake is 
+
+>>[_________________________________]{(1-(1-1/m)^(kn))^k} [`\approx
+  \left(  1-e^{-kn/m}\right)^k`]<<
+  
+[%
+[$BCENTER]*
+[``
+  \left(  1-\left(  1-\frac{1}{m} \right)^{kn} \right)^k \approx
+  \left(  1-e^{-kn/m}\right)^k
+  ``]
+[$ECENTER]*
+%]
+
+The number of hash functions [`k`] that minimizes the probability is
+[$BCENTER]*
+[``
+k^* = \frac{m}{n}\ln 2 \approx 0.7\frac{m}{n}  \hspace{20px}    (1)
+``]
+[$ECENTER]*
+which gives the false positive probability of
+
+[$BCENTER]*
+[``2^{-k} \approx {0.6185}^{m/n}.``]
+[$ECENTER]*
+
+The required number of bits [`m`],
+given [`n`] (the number of inserted elements) and a desired false
+positive probability [`p`] (and assuming the optimal value of [`k`] is
+used) can be computed by substituting the optimal value of [`k`] in the
+probability expression above:
+
+[$BCENTER]*
+[``p = \left( 1-e^{-(m/n\ln 2) n/m} \right)^{(m/n\ln 2)}``]
+[$ECENTER]*
+ which can be
+simplified to:
+[$BCENTER]*
+[``
+\ln p = -\frac{m}{n} \left(\ln 2\right)^2. \hspace{20px} (2)
+``]
+[$ECENTER]*
+
+This results in:
+
+[$BCENTER]*
+[``m=-\frac{n\ln p}{(\ln 2)^2}.``]
+[$ECENTER]*
+
+
+To gain some intuition about these results, lets compare the
+performance for the optimal [`k\approx m/n`] defined in
+Equation (1) with the performance for [`k=1`].  The case
+[`k=1`] is very intuitive, each word is mapped to a single bit and if
+this bit is one, then the algorithm concludes that the word has been
+seen before. As the length of the bit vector [`B`] is [`m`] and the number
+of different words already observed is [`n`] then [`n`] of the [`m`] bits in
+[`B`] are set. The result is that the probability of making a false
+positive mistake is [`p=n/m`]. We call the ratio [`r=m/n`] the _redundancy_ of the bitmap, because it defines the number of bits
+that are associated with each word. If we had a perfect hashing
+function, that maps each word to a different bit, we would be able to
+use a table with no reducdancy, i.e. [`r=1`]. As we showed above when
+[`k=1`], [`p=1/r`].
+
+Condider now using the optimal setting for [`k`] as defined in
+Equation (1). In this case we have from
+Equation (2) that:
+
+[$BCENTER]*
+[``
+p = \exp\left( -\frac{m}{n} \left(\ln 2\right)^2 \right) \leq
+    \exp\left( -0.48 \frac{m}{n} \right)
+=  \exp\left( -0.48 r \right)
+``]
+[$ECENTER]*
+
+END_PGML
+
+Context("ArbitraryString");
+
+BEGIN_PGML
+We find that in both cases the probability of a false positive is a
+function of the redundancy, however, while for [`k=1`], [`p`] decreases
+like [`1/r`], for the optimal value of [`k`] it decreases like [`e^{-r}`], which is much [___________]{"faster"} (answer "faster" or "slower"). Thus using the optimal value of [`k`], with the same size bit vector we get a much [___________]{"smaller"} (answer "larger" or "smaller") probability
+of error.
+END_PGML
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

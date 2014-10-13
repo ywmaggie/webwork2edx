@@ -1,0 +1,87 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "unionTables.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+Roll a 4-sided die (a tetrahedron) in which each face is equally likely to come
+up, and let the outcome be [`X \in \{1,2,3,4\}`].
+
+We have two formulas for the variance: 
+
+[$BCENTER]*
+[`` \begin{eqnarray*}
+\mbox{var}(X) & = & \mathbb{E} \left( (X - \mu)^2 \right) \\
+\mbox{var}(X) & = & \mathbb{E}(X^2) - \mu^2 
+\end{eqnarray*}``]
+[$ECENTER]*
+
+where [`\mu = \mathbb{E}(X)`].
+Let's try both and make sure we get the same answer.
+First of all, [`\mu = \mathbb{E}(X) = (1 + 2 + 3 + 4)/4 = 2.5`]. Now, let's tabulate the
+distribution of [`X^2`] and [`(X-\mu)^2`].
+
+
+[$BCENTER]*
+ 
+END_PGML
+
+$bHTML="";
+$eHTML="";
+
+TEXT(
+BeginTable(),
+$PAR,
+Row([Prob,PGML::Format2("[``X``]"),PGML::Format2("[``X^2``]"),PGML::Format2("[``(X-\mu)^2``]")],separation=>10),
+Row([PGML::Format2("[``1/4``]"),1,1,2.25],separation=>10),
+Row([PGML::Format2("[``1/4``]"),2,4,0.25],separation=>10),
+Row([PGML::Format2("[``1/4``]"),3,9,0.25],separation=>10),
+Row([PGML::Format2("[``1/4``]"),4,16,2.25],separation=>10),
+EndTable()
+);
+
+BEGIN_PGML
+
+
+
+[$ECENTER]*
+
+
+
+Reading from this table,
+
+[$BCENTER]*
+[`` \begin{eqnarray*}
+\mathbb{E}(X^2)     & = & \frac{1}{4} \left( 1 + 4 + 9 + 16 \right) \ \ = \ \ 7.5 \\
+\end{eqnarray*}``] 
+[$ECENTER]*
+
+From this we can calculate [`\mbox{var}(X) = \mathbb{E}(X^2) - \mu^2 = 7.5 - (2.5)^2 = 1.25`].  
+Now it's your turn!  Use a similar method to calculate [`\mbox{var}(X) = \mathbb{E}(X-\mu)^2 = `] [_____]{1.25}
+
+Notice something?  
+
+What is the probability [`X^2 \leq 6`]?  [______]{1/2}
+
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

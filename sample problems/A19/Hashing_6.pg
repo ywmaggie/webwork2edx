@@ -1,0 +1,124 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+  "contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.01);
+Context()->variables->are(
+      n => ['Real', limits=>[1,100], resolution=>1],
+    );
+
+
+$a = Compute("0.05/sqrt(0.16/200)");
+$q = Compute("Q($a)");
+
+BEGIN_PGML
+
+[``\newcommand{\E}{\mathbb{E}}``]
+[``\newcommand{\R}{\mathbb{R}}``]
+[``\newcommand{\bP}{\mathbb{P}}``]
+[``\newcommand{\var}{\mbox{var}}``]
+[``\newcommand{\pr}{\mbox{Pr}}``]
+[``\def\X{{\cal X}}``]
+[``\def\cost{{\mbox{cost}}}``]
+[``\def\U{{\cal U}}``]
+[``\renewcommand{\log}{\mbox{log}_2}``]
+
+## Detecting near-duplicates ##
+
+Near-duplication is pervasive in the web: there are large numbers of distinct URLs which have exactly
+the same content but differ only in unimportant details like headers and footers. The user of a search
+engine would not be pleased if the answer to his query was a set of 10 near-identical pages! In order
+to remove this redundancy, we need to define a notion of _similarity_ between documents.
+
+#### The similarity between two documents ####
+
+For any document---call it [`d`]---let the set of all words in [`d`] be denoted [`C(d)`]. For two documents 
+[`d`] and [`d'`], we will measure their similarity by the function
+
+[$BCENTER]*
+[`` S(d,d') \ = \ \frac{|C(d) \cap C(d')|}{|C(d) \cup C(d')|} .``]
+[$ECENTER]*
+
+If the two documents are truly identical, [`S(d,d') = 1`]. If they are almost-identical, [`S(d,d')`] will
+be close to 1. And if they are completely different, with no words in common, then [`S(d,d')`] will be
+zero. We'll consider [`d`] and [`d'`] to be near-duplicates if [`S(d,d')`] is sufficiently close to 1.
+
+Now, imagine a search engine that is going through a list of documents or webpages, and wants to 
+eliminate near-duplicates. Here's an algorithm it could use:
+
+* [`{\cal D} = \emptyset`] (set of documents, initially empty)
+* for each document [`d`] that appears:
+    - if [`S(d,d')`] is significantly smaller than 1 for all [`d'`] in [`{\cal D}`]: add [`d`] to [`{\cal D}`]
+
+The final set of documents [`{\cal D}`] will contain no near-duplicates. This is good, but the
+algorithm is very slow. Suppose for the sake of simplicity that there are [`n`] documents in total,
+each of length [`L`]. Then computing the similarity between two documents takes [`O(L)`] time, and there are [________]{(n-1)n/2} pairs, thus the algorithm takes [`O(n^2L)`]. This quadratic dependence on [`n`] is prohibitive in web-scale applications,
+where [`n`] could easily be in the billions or tens of billions.
+
+To get a faster algorithm, we once again resort to hashing.
+
+---
+
+Again for the example:
+
+A: [`\verb|Thanksgiving may be the perfect day to give thanks, but what about giving thanks to a delicious and flawless turkey?|`]
+
+B: [`\verb|Pick the perfect centerpiece for your Thanksgiving or holiday meal from our ultimate collection of roast turkey recipes.|`]
+
+
+
+After preprocessing, the document A is represented by the *set*  [`\{\verb|Thanksgiving, perfect, day, give, thanks, delicious, flawless, turkey|\}`], and
+
+document B becomes the *set* [`\{\verb|pick, perfect, centerpiece, Thanksgiving, holiday, meal, ultimate, collection, roast, turkey, recipe |\}`]
+
+
+The similarity between A and B is [__________]{"3/(8+11-3)"}.
+
+
+
+END_PGML
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

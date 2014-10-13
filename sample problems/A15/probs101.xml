@@ -1,0 +1,119 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+darts = myrandom(90,110,1)
+wedges = 2*myrandom(7,12,1)
+var = ((1/wedges)*(1-(1/wedges)))
+
+answer1 = 1.0*((wedges-1)/wedges)**(darts)
+answer2 = 1.0*darts/wedges
+answer3 = 1.0*darts*var
+answer4 = 1.0*Phi(1.65)
+answer5 = 1.0*darts/wedges + 1.65*sqrt(darts*var)
+answer6 = 1.0*0
+answer7 = 1.0*1
+answer8 = 1.0*0
+answer9 = 1.0*darts
+answer10 = 1.0*2.575*(sqrt(darts))
+answer11 = 1.0*2.575*(sqrt(darts))
+
+</script>
+<p><br/>
+A dartboard is partitioned into $wedges wedges of equal size, numbered 1 through $wedges. Half <br/>
+the wedges are painted red, and the other half are painted black. Suppose $darts darts are thrown <br/>
+at the board, and land at uniformly random locations on it.<br/>
+- What is the probability that a particular wedge (say, wedge 1) does not receive a single <br/>
+dart? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+Let \(X_i\) be the number of darts that fall in wedge \(i\). <br/>
+- \(\mathbb{E}(X_i) = \)<numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- \(\mbox{var}(X_i) = \)<numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- For \(S\) a real random variable with standard normal distribution, what is \(P(S &lt; 1.65)\)?  <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- Using the normal approximation to the binomial distribution, give an upper bound on <br/>
+\(X_i\) that holds with 95\% confidence.  The answer to the previous question may be helpful here.  Note: you're only considering one tail of the distribution.  <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+Let \(Z_r\) be the number of darts that fall on red wedges, let \(Z_b\) be the number of darts <br/>
+that fall on black wedges, and let \(Z = |Z_r - Z_b|\) be the absolute value of their <br/>
+difference. We would like to get a 99\% confidence interval for \(Z\). To do this, define<br/>
+<b><br/>
+\( Y_i \ = \ \left\{ \begin{array}{ll}<br/>
+                     1  \mbox{if }i^{th}\mbox{ dart falls in red region} \\<br/>
+                    -1  \mbox{if }i^{th}\mbox{ dart falls in black region}<br/>
+                     \end{array} \right.\)<br/>
+</b><br/>
+and notice that \(Z_r - Z_b\) can be written as \(Y_1 + Y_2 + \cdots + Y_{$darts}\), the sum of <br/>
+independent random variables.<br/>
+- \(\mathbb{E}(Y_i) = \)<numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> and \(\mbox{var}(Y_i) = \)<numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>?<br/>
+- Using the central limit theorem, we can assert that \(Z_0 = Z_r - Z_b\) is approximately<br/>
+a normal distribution.  \(\mathbb{E}(Z_0) = \)<numericalresponse answer="$answer8">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> and \(\mbox{var}(Z_0) = \)<numericalresponse answer="$answer9">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- Give a 99\% confidence interval for \(Z_0\):  \(\mathbb{E}(Z_0) \pm\)<numericalresponse answer="$answer10">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  Hint: look back to problem 3.  <br/>
+- Using this, give a 99% confidence interval for \(Z = |Z_0|\): \(0 \leq Z \leq \)<numericalresponse answer="$answer11">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

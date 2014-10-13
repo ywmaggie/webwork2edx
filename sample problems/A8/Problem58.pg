@@ -1,0 +1,40 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$coin_den = random(5,10,1);
+
+######################################################################
+
+BEGIN_PGML
+If the probability of some repeatable experiment producing a successful outcome is [`p`], the expected number of iterations until a success is [`1/p`].  
+
+What is the probability a fair coin turns up heads?  [_________]{1/2}
+
+The expected number of rolls of a fair coin until heads is reached:
+[______]{2}
+
+What is the the expected number of rolls of a biased coin with [`P(heads)=1/[$coin_den]`] until heads is reached?  [_______]{[$coin_den]}
+
+What is the probability a fair die turns up a 6?  [_________]{1/6}
+
+What is the expected number of rolls until a fair die turns up a 6?  [_________]{6}
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

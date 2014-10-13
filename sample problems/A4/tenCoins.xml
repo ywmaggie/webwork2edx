@@ -1,0 +1,47 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+coins=myrandom(10,14,1)
+heads=myrandom(6,8,1)
+head_combos=C(coins,heads)
+
+
+
+
+answer1=1.0*2**coins
+answer2=1.0*(coins)/(heads*(coins-heads))
+answer3=1.0*(coins)/(heads*(coins-heads))/2**coins
+</script>
+<p></p>
+<p></p>
+<p>In this problem we will look at flipping fair coins, e.g. coins where there is an equal chance of heads or tails.  We will calculate the probability of exactly $heads of $coins coin flips coming up heads.</p>
+<p>Lets represent the outcome of $coins flips as a length $coins tuple such as (T,H,..,T). How many $coins-tuples are there if we don't restrict the number of heads? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ This is the size of the sample space.</p>
+<p>How many $coins-tuples are there that contain exactly $heads heads?</p>
+<p>Note that this is exactly the same question as - how many sequences of length $coins are there that contain $heads H's and $coins-$heads T's.</p>
+<p><numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>Therefore, the probability of getting $heads heads when flipping $coins fair coins is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

@@ -1,0 +1,59 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+sub comb
+{
+	fact($_[0])/(fact($_[1])*fact($_[0]-$_[1]));
+}
+
+sub perm
+{
+     $n = $_[0];
+     $k = $_[1];
+     $prod = 1;
+     for ($i=$n-$k+1; $i <= $n; $i++) {
+         $prod = $prod * $i;
+     }
+     return $prod;
+}
+$numbers = random(6,10,1);
+$balls  = random(4,5,1);
+$balls_minus_1 = $balls-1;
+$prob_mismatch = perm(100-$numbers, $balls)/perm(100, $balls);
+$prob_mismatch2 = Real("$prob_mismatch");
+
+######################################################################
+
+BEGIN_PGML
+NOTE: If the formatting doesn't look right, select "Mathjax" under "display options" on the left
+
+A certain lottery has the following rules: you buy a ticket, choose [$numbers] different
+numbers from 1 to 100, and write them on the ticket. The lottery has a box with
+100 balls numbered 1 to 100. [$balls] (different) balls are chosen. If any of the balls has one of the numbers you have chosen, you win. We will compute the probability of winning.  
+
+It is somewhat easier to compute the probability of the complement
+event, that none of the balls matches any of the chosen numbers. 
+
+o  How many balls _don't_ match any of your numbers? [___]{100-[$numbers]}
+o  What is the probability the first ball picked doesn't match any of your numbers? [___]{(100-[$numbers])/100}
+o  Assuming that the first ball _was_ a mismatch, how many balls are left to choose from?  [____]{99}
+o  How many of these balls don't match any of your numbers?  [____]{99-[$numbers]}
+o  Under these conditions, what is the probability the second ball is a mismatch? [_____]{(99-[$numbers])/99}
+o  What is the probability ball [$balls] is a mismatch, assuming balls [`1,2,... [$balls_minus_1]`] are all mismatches?  [____]{(100-[$numbers]-[$balls]+1)/(100-[$balls]+1)}
+o  What is the probability balls 1,...[$balls] are all mismatches?  [____]{[$prob_mismatch2]}
+o  What is the probability you win the lottery (hint: the answer to the previous question is helpful here)?  [_____]{1-[$prob_mismatch2]}
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

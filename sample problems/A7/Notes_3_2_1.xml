@@ -1,0 +1,59 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+answer1 = "p"
+answer2 = "3.5"
+</script>
+<p></p>
+<p></p>
+<p>For a random variable \(X\) that takes on a finite set of possible values, the </p>
+<p>$BITALIC<b> mean $EITALIC</b>, or $BITALIC<b> expected value $EITALIC</b>, is</p>
+<p>$BCENTER<b><br/>\( \mathbb{E}(X) \ = \ \sum_{x} x \, \mbox{Pr}(X = x) \)</p>
+<p>$ECENTER</b></p>
+<p>(where the summation is over all the possible values \(x\) that \(X\) can have). This</p>
+<p>is a direct generalization of the notion of $BITALIC<b> average $EITALIC</b> (which is typically</p>
+<p>defined in situations where the outcomes are equally likely). If \(X\) is a continuous </p>
+<p>random variable, then this summation needs to be replaced by an equivalent integral </p>
+<p>but we'll get to that later in the course.</p>
+<p>Here are some examples.</p>
+<p>---</p>
+<p></p>
+<p>Define \(X\) to be \(1\) if the outcome is heads, or \(0\) if it is tails. Then </p>
+<p>$BCENTER<b><br/>\( \mathbb{E}(X) <br/>\ = \ <br/>0 \cdot \mbox{Pr}(X = 0) + 1 \cdot \mbox{Pr}(X = 1)  <br/>\ = \ <br/>0 \cdot (1-p) + 1 \cdot p<br/>\ = \ \)<formularesponse type="ci" samples="p@1:20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>$ECENTER</b></p>
+<p>Another random variable on this space is \(X^2\), which also takes on values in \(\{0,1\}\).</p>
+<p>Notice that \(X^2 = X\), and in fact \(X^k = X\) for all \(k = 1,2,3,\ldots\)! Thus, <br/>\(\mathbb{E}(X^2) = p\) as well. This simple case shows that in general, \(\mathbb{E}(X^2) \neq \mathbb{E}(X)^2\).</p>
+<p>---</p>
+<p></p>
+<p>Define \(X\) to be the outcome of the roll, so \(X \in \{1,2,3,4,5,6\}\). Then</p>
+<p>$BCENTER<b><br/>\( \mathbb{E}(X) <br/>\ = \ <br/>1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + 3 \cdot \frac{1}{6} + 4 \cdot \frac{1}{6}<br/>+ 5 \cdot \frac{1}{6} + 6 \cdot \frac{1}{6} <br/>\ = \ \)<formularesponse type="ci" samples="p@1:20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>$ECENTER</b></p>
+<p>---</p>
+<p></p>
+<p>Let \(X\) be their sum, so that \(X \in \{2,3,4,\ldots, 12\}\). We can calculate the probabilities</p>
+<p>of each possible value of \(X\) and tabulate them as follows:</p>
+<p></p>
+</problem>

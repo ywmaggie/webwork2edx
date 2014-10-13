@@ -1,0 +1,86 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+def perm(n,k):
+    prod = 1
+    for i in range(n-k+1,n+1):
+        prod = prod * i
+    return prod
+    
+    
+numbers = myrandom(6,10,1)
+balls  = myrandom(4,5,1)
+balls_minus_1 = balls-1
+prob_mismatch2 = 1.0*perm(100-numbers, balls)/perm(100, balls)
+
+
+
+answer1 = "100-numbers"
+answer2 = "(100-numbers)/100"
+answer3 = "99"
+answer4 = "99-numbers"
+answer5 = "(99-numbers)/99"
+answer6 = "(100-numbers-balls+1)/(100-balls+1)"
+answer7 = "prob_mismatch2"
+answer8 = "1-prob_mismatch2"
+</script>
+<p></p>
+<p>NOTE: If the formatting doesn't look right, select "Mathjax" under "display options" on the left</p>
+<p>A certain lottery has the following rules: you buy a ticket, choose $numbers different</p>
+<p>numbers from 1 to 100, and write them on the ticket. The lottery has a box with</p>
+<p>100 balls numbered 1 to 100. $balls (different) balls are chosen. If any of the balls has one of the numbers you have chosen, you win. We will compute the probability of winning.  </p>
+<p>It is somewhat easier to compute the probability of the complement</p>
+<p>event, that none of the balls matches any of the chosen numbers. </p>
+<p>o  How many balls _don't_ match any of your numbers? <formularesponse type="ci" samples="n@1:10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>o  What is the probability the first ball picked doesn't match any of your numbers? <formularesponse type="ci" samples="n@1:10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>o  Assuming that the first ball _was_ a mismatch, how many balls are left to choose from?  <formularesponse type="ci" samples="n@1:10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>o  How many of these balls don't match any of your numbers?  <formularesponse type="ci" samples="n@1:10#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>o  Under these conditions, what is the probability the second ball is a mismatch? <formularesponse type="ci" samples="n@1:10#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>o  What is the probability ball $balls is a mismatch, assuming balls \(1,2,... $balls_minus_1\) are all mismatches?  <formularesponse type="ci" samples="n@1:10#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>o  What is the probability balls 1,...$balls are all mismatches?  <formularesponse type="ci" samples="n@1:10#10" answer="$answer7">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>o  What is the probability you win the lottery (hint: the answer to the previous question is helpful here)?  <formularesponse type="ci" samples="n@1:10#10" answer="$answer8">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p></p>
+</problem>

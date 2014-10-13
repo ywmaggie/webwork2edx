@@ -1,0 +1,57 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+answer1 = "4"
+answer2 = "1"
+answer3 = "4"
+answer4 = "1"
+</script>
+<p><br/>
+<br/>
+The <b> fixed points </b> of a permutation are the numbers that remain in their original <br/>
+position. For instance, in the permutation<br/>
+<b><br/>
+\( (1,2,3,4,5,6) \rightarrow (6,2,5,4,1,3)\)<br/>
+</b><br/>
+the fixed points are 2 and 4. Let \(X\) be the number of fixed points in a random <br/>
+permutation of \((1,2,\ldots, n)\) what is \(\mathbb{E}(X)\)?<br/>
+Linearity is very helpful here. Define the random variable \(X_i\) to be \(1\) if \(i\)<br/>
+is a fixed point, and \(0\) otherwise. Then \(\mathbb{E}(X_i) = 1/n\). Therefore<br/>
+<b><br/>
+\( \mathbb{E}(X) <br/>
+\ = \ <br/>
+\mathbb{E}(X_1 + \cdots + X_n)<br/>
+\ = \ <br/>
+1.<br/>
+\)<br/>
+</b><br/>
+The expected number of fixed points is 1, regardless of \(n\).<br/>
+How many fixed points are there in the following permutation <formularesponse type="ci" samples="n@1:10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+?<br/>
+<b><br/>
+\( (1,2,3,4,5,6,7,8) \rightarrow (1,2,6,3,4,5,7,8)\)<br/>
+</b><br/>
+What is the expected number of fixed points of a random permutation of \( (1,2,3,4,5,6,7,8)\)?<br/>
+<formularesponse type="ci" samples="n@1:10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

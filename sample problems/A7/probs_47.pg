@@ -1,0 +1,76 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+
+A scientist discovers a fossil fragment that he believes is either some kind
+of tiger (with probability [`1/3`]) or mammoth (with probability [`2/3`]). To shed
+further light on this question, he conducts a test which has the property that
+for tigers, it will come out positive with probability [`5/6`] whereas for mammoths
+it will come out positive with probability just [`1/3`]. Suppose the test comes 
+out negative. What is the probability, given the outcome of the test, that the 
+fossil comes from a tiger?
+
+---
+
+What the question asks is the probability [`\textbf{Pr}(\text{tiger} \ | \ \text{negative})`]. Using Bayes rule, we convert it into a joint probability:
+
+[``\textbf{Pr}(\text{tiger} \ | \ \text{negative}) = \frac{\textbf{Pr}(\text{tiger},\text{negative})}{\textbf{Pr}(\text{negative})}``]
+
+Split the probability of negative outcome into two cases: outcome negative and the fossil is a tiger *OR* outcome negative and the fossil is a mammoth.
+
+[``\textbf{Pr}(\text{negative})  = \textbf{Pr}(\text{tiger},\text{negative}) +  \textbf{Pr}(\text{mammoth},\text{negative})``]
+
+Then write each joint probability using conditional probabilities that are known. Such conditional probabilities often have an intuitive causal meanings.
+
+[``
+\textbf{Pr}(\text{tiger},\text{negative}) = \textbf{Pr}(\text{negative} \ | \ \text{tiger}) \textbf{Pr}(\text{tiger})
+``]
+
+[``
+\textbf{Pr}(\text{mammoth},\text{negative}) = \textbf{Pr}(\text{negative} \ | \ \text{mammoth}) \textbf{Pr}(\text{mammoth})
+``]
+
+Now we can write the conditional probability [`\textbf{Pr}(\text{tiger} \ | \ \text{negative})`] in terms of probabilities that we know.
+
+The answer is [`\textbf{Pr}(\text{tiger} \ | \ \text{negative}) =`] [________________]{1/6*1/3/(1/6*1/3+2/3*2/3)}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+
+---
+### Solution ###
+
+[``
+\textbf{Pr}(\text{tiger},\text{negative}) = \textbf{Pr}(\text{negative} \ | \ \text{tiger}) \textbf{Pr}(\text{tiger}) = 1/6*1/3 = 1/18
+``]
+
+[``
+\textbf{Pr}(\text{mammoth},\text{negative}) = \textbf{Pr}(\text{negative} \ | \ \text{mammoth}) \textbf{Pr}(\text{mammoth}) = 2/3 *2/3 = 4/9
+``]
+
+[``
+\begin{align*}
+\textbf{Pr}(\text{tiger} \ | \ \text{negative}) & = \frac{\textbf{Pr}(\text{tiger},\text{negative})}{\textbf{Pr}(\text{negative})} \\
+&= \frac{1/18}{1/18+4/9} = 1/9
+\end{align*}
+``]
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,156 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+## Probability of Poker Hands ##
+
+A hand in Texas Hold'em consists of 5 cards from a deck of 52 cards. A hand may fall into one of the following categories. We are going to compute the probability of each category.
+
+First, the number of all possible hands is [_____]{Compute("C(52,5)")}.
+
+### Pair: exactly one pair of equal rank cards ###
+
+1. The number of possibilities for the ranks of the pair is [______]{13}.
+
+2. The number of possibilities for the suits of the pair is [_____]{Compute("C(4,2)")}.
+
+3. The three other cards have three ranks different from the pair, the number of possibilities for their ranks is [_____]{Compute("C(12,3)")}
+
+4. And they can have any suit, thus the number of possibilities of their suites is [______]{Compute("4**3")}.
+
+5. Thus the number of hands with exactly one pair is [______]{Compute("13*C(4,2)*C(12,3)*(4**3)")}
+
+6. The ratio of this number to the number of all hands [______]{Compute("13*C(4,2)*C(12,3)*(4**3)/C(52,5)")}
+
+----
+
+### Two Pairs ###
+
+1. The number of possibilities for the ranks of the two pairs is [______]{Compute("C(13,2)")}.
+
+2. The number of possibilities for the rank of the single is [______]{11}.
+
+2. The number of possibilities for the suites of the two pairs is [_____]{Compute("C(4,2)**2")}.
+
+3. The number of possibilities for the suite of the single is [______]{4}.
+
+4. Thus the number of hands with exactly two pairs is [______]{Compute("C(13,2)*11*C(4,2)**2*4")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("C(13,2)*11*C(4,2)**2*4/C(52,5)")}.
+
+----
+
+### Three of A Kind ###
+
+1. The number of possibilities for the rank of the triple is [______]{13}.
+
+2. The number of possibilities for the ranks of the other two singles is [______]{Compute("C(12,2)")}.
+
+2. The number of possibilities for the suites of the triple is [_____]{Compute("C(4,3)")}.
+
+3. The number of possibilities for the suite of the two singles is [______]{Compute("4**2")}.
+
+4. Thus the number of hands with three of a kind is [______]{Compute("13*C(12,2)*C(4,3)*4**2")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("13*C(12,2)*C(4,3)*4**2/C(52,5)")}.
+
+----
+
+### Straight : Five cards in sequence, but not all of the same suite ###
+
+1. The ranks of a straight is one of (Ace,2,3,4,5) ... (10,J,Q,K,Ace), so the number of possibilities for the ranks of a straight is [______]{10}.
+
+2. The suits can be anything other than all equal, so the number of possibilities for the suits of a straight is [______]{Compute("4**5 - 4")}.
+
+4. Thus the number of hands that is a straight is [______]{Compute("10*(4**5-4)")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("10*(4**5-4)/C(52,5)")}.
+
+----
+
+### Flush: Cards of the same suite, but not in order ###
+
+1. The number of possibilities for the suit is [______]{4}.
+
+2. The ranks can be anything except those that are in order. The number of all possible ranks for a hand of the same suit is [______]{Compute("C(13,5)")}. Among these, the number of hands whose ranks are in order is [______]{10}. So the number of possible ranks of a flush is [______]{Compute("C(13,5)-10")}.
+
+4. Thus the number of hands that is a flush is [______]{Compute("4*(C(13,5)-10)")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("4*(C(13,5)-10)/C(52,5)")}.
+
+
+----
+
+### Full House: 2 of one rank and 3 of another rank ###
+
+1. The number of possibilities for the rank of the triple is [______]{13}.
+
+2. Given the rank of the triple, the number of possibilities for the rank of the pair is [______]{12}.
+
+2. The number of possibilities for the suite of the triple is [_____]{Compute("C(4,3)")}.
+
+3. The number of possibilities for the suite of the pair is [_____]{Compute("C(4,2)")}.
+
+4. Thus the number of hands that is a full house is [______]{Compute("13*12*C(4,3)*C(4,2)")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("13*12*C(4,3)*C(4,2)/C(52,5)")}.
+
+----
+
+### Four of A Kind ###
+
+1. The number of possibilities for the rank of the quadruple is [______]{13}.
+
+2. Given the rank of the quadruple, the number of possibilities for the rank of the single is [______]{12}.
+
+2. The number of possibilities for the suite of the quadruple is [_____]{1}.
+
+3. The number of possibilities for the suite of the single is [_____]{4}.
+
+4. Thus the number of hands that is a four-of-a-kind is [______]{Compute("13*12*1*4")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("13*12*1*4/C(52,5)")}.
+
+----
+
+### Straight Flush = straight + flush: all same suite and in order ###
+
+1. The number of possibilities for the suites of a straight flush is [______]{4}.
+
+2. The number of possibilities for the ranks of a straight flush is [______]{10}.
+
+4. Thus the number of hands that is a four-of-a-kind is [______]{40}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("40/C(52,5)")}.
+
+
+----
+
+### Royal Flush: straight flush with an ace high ###
+
+1. The number of possibilities for the suites of a royal flush is [______]{4}.
+
+2. The number of possibilities for the ranks of a royal flush is [______]{1}.
+
+4. Thus the number of hands that is a four-of-a-kind is [______]{4}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("4/C(52,5)")}.
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

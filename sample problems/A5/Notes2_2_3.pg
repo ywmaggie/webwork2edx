@@ -1,0 +1,79 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCredits = 0;
+
+Context("Numeric");
+Context()->variables->add(n => 'Real');
+Context()->variables->add(m => 'Real');
+Context()->variables->add(k => 'Real');
+
+BEGIN_PGML
+
+## What if there are more balls ##
+
+Suppose there are [`m`] balls and [`n`] bins. What is the chance that there is an empty bin if [`m = 2n\ln n`] ?
+
+Remember when [`m=n`], it is almost certain that there is an empty bin. When [`m`] is increased from [`n`] to [`2n \ln n`]  the chance of an empty bin drops from [`\approx 1`] to [`\approx 0`]. To see this, let [`A_i`] be the event that the [`i`] h bin is empty. 
+
+We proved in the previous question that 
+[`\textbf{Pr}(A_i) \leq \exp(-m/n) = \exp(-2\ln n) = 1/n^2`]. 
+
+Therefore,
+[``
+\textbf{Pr}(\mbox{some bin is empty}) 
+\ = \ 
+\textbf{Pr}(A_1 \cup \cdots \cup A_n) 
+\ \leq \ 
+\textbf{Pr}(A_1) + \cdots + \textbf{Pr}(A_n)
+\ \leq \ 
+n \cdot \frac{1}{n^2}
+\ = \ 
+\frac{1}{n}
+``].
+
+Recognize that the first inequality is the union bound. Thus with high probability (at least [`1-1/n`]) , every bin gets at least one ball.
+
+---
+### Problem ###
+
+What is the chance that there is an empty bin if [`m = n\ln n`] ? 
+
+The probability that the [`i`]th bin is empty is bounded by [________]{1/n}.
+
+The probability that some bin is empty is bounded by [_________]{1}.
+
+Does this bound still shrink to 0 as [`n`] approaches [`\infty`] ? [_____]{0} (1 for yes, 0 for no)
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+### Solution ###
+
+The probability that the [`i`]th bin is empty is [`\textbf{Pr}(A_i) \leq \exp(-m/n) = \exp(-1\ln n) = 1/n`].
+
+The probability that some bin is empty is, 
+
+[``
+\textbf{Pr}(\mbox{some bin is empty}) 
+\ = \ 
+\textbf{Pr}(A_1 \cup \cdots \cup A_n) 
+\ \leq \ 
+\textbf{Pr}(A_1) + \cdots + \textbf{Pr}(A_n)
+\ \leq \ 
+n \cdot \frac{1}{n} = 1
+``].
+
+This bound does not shrink as [`n`] increases.
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,49 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+
+$a_den = random(2,5,1);
+$b_den = random(2,5,1);
+$p_a = 1/$a_den;
+$p_b = 1/$b_den;
+$p_c = 1 - $p_a - $p_b;
+
+######################################################################
+
+BEGIN_PGML
+Consider a sample space [`\Omega = \{a,b,c\}`] with probabilities [`P(a) = 1/[$a_den]`] and [`P(b) = 1/[$b_den]`] 
+o  What is [`P(c)`]?  [______]{"$p_c"}
+---
+Recall that if [`\Omega`] is a sample space, then each subset [`A \subseteq \Omega`] is an event.
+
+o  Is [`\emptyset`] an event in the sample space [`S = \{a,b\}`]? [_]{1} (1=true, 0=false)
+o  Is [`\{a\}`] an event on the sample space [`S`]?  [_]{1} (1=true, 0=false)
+o  How many distinct events can be defined on the space [`S`]? [____]{"2^2"}
+---
+We now go back to the initial sample space [` \Omega=\{a,b,c\}`] with the probabilities defined above.
+
+o  How many distinct events can be defined on the space [`\Omega`]?  [______]{"2^3"}
+o  Find the probabilities of each of these possible events.
+o  [`P(\emptyset) = `] [___]{0}
+o  [`P(\{a\}) = `] [___]{"$p_a"}
+o  [`P(\{b\}) = `] [___]{"$p_b"}
+o  [`P(\{c\}) = `] [___]{"$p_c"}
+o  [`P(\{a,b\}) = `] [___]{"$p_a+$p_b"}
+o  [`P(\{a,c\}) = `] [___]{"$p_a+$p_c"}
+o  [`P(\{b,c\}) = `] [___]{"$p_b+$p_c"}
+o  [`P(\{a,b,c\}) = `] [___]{1}
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

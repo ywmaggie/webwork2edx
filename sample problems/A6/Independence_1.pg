@@ -1,0 +1,44 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+## Independence ##
+
+Two events are called _independent_ if the outcome of one (that is, whether or not it occurs) does not affect the probability that the other will occur. For instance, suppose you flip two fair coins. The outcome of either coin does not influence the other; therefore the two outcomes are independent.
+
+Formally, we say events [`A`] and [`B`] (defined on some sample space [`\Omega`]  are independent if
+[`` P(A \cap B) 
+\ = \ 
+P(A) P(B).``]
+Can you show that this definition (assuming [`A`], [`B`] are independent) implies the following?
+
+[`P(A | B) = P(A)`] 
+
+[`P(B | A) = P(B)`] 
+
+[`P(A | B^c) = P(A)`] 
+
+Assuming [`A`], [`B`] are independent, what is [`P(A \cap B) - P(A)P(B)`]? [_____]{0}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+### Solution ###
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

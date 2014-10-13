@@ -1,14 +1,13 @@
-webwork2edx
+###webwork2edx translation system
 ===========
 
-Aim to translate PG format problems to edX/XML problems
+This project basicly aims to translate PG format problems on webwork to XML problems on edX, in order to adapt to edX platform.
 
-This is a partially completed translator from webwork PG format to edX XML format.
+See instructions in 'instructions on how to use the scripts.pdf'.
 
-Folder 'class encapsulated' contains the most recent translator. Put all three files in the same folder. To run the translator, run 'python translate.py' and when you see '>     ', input the name of file that you want to transalte. Then you will get a XML file of the same name as the original file in the same folder.
+See examples in the folder 'Sample problems'.
 
-Folder 'sample examples' contains all original PG files and the output XML files. You can see for reference.
+Pls contact me for any problem at <zhyuwei0115@gmail.com>
 
-Folder 'lex' and 'yacc' are old versions of the translator.
+Have fun!
 
-If you want to test the result, copy the output and paste to the edX studio and you can see the result.

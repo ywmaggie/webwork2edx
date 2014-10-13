@@ -1,0 +1,48 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$n = random(5,10,1);
+$m = $n + 4;
+
+######################################################################
+
+BEGIN_PGML
+
+
+Suppose you throw [`m=`][$m] balls into [`n=`][$n] bins. 
+
+Let [`X_i`] be the number of balls that fall into bin [`i`].  
+Let [`T_{i,j}`] Be a random variable that is 1 if the [`j`]'th ball falls in the [`i`]'th bin.  
+Clearly [`T_{i,j},T_{i,k}`] are independent for [`1 \leq j < k \leq m`], and [`X_i = \sum_{j=1}^{m} T_{i,j}`].
+
+Using these facts, answer the following questions:
+
+1. What is [`\mathbb{E}(T_{i,j})`]? [____________]{"1/$n"}
+2. What is [`var(T_{i,j})`]? [___________]{"($n-1)/($n**2)"}
+1. What is [`Pr(X_i=0)`] (i.e. there are no balls in bin [`i`]) ?  [______________]{"(($n - 1) / $n) ** $m"}
+2. What is [`Pr(X_i = 1)`] (i.e. there is exactly one ball in bin [`i`]) ?  [______________________]{"($m/$n)*(($n-1)/$n)**($m-1)"}
+3. What is [`\mathbb{E}(X_i)`]? [_____________]{"$m/$n"}  
+   *Hint:* Recall linearity of expectations:[`E(\sum_{i=1}^n T_{i,j})=\sum_{i=1}^n E(T_{i,j})`]
+4. What is [`var(X_i)`]? [_______________]{"$m*($n-1)/($n**2)"}  
+*Hint:* The variance of the sum of _independent_ random variables is equal to the sum of the variances.
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

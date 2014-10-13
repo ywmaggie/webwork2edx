@@ -1,0 +1,119 @@
+## DESCRIPTION
+##   Apply the Central Limit Theorem
+## ENDDESCRIPTION
+
+## KEYWORDS('Probability', 'Central Limit Theorem')
+## Tagged by nhamblet
+
+## DBsubject('Probability')
+## DBchapter('Theory')
+## DBsection('The Central Limit Theorem')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.001);
+
+Context()->texStrings;
+
+
+Context()->variables->are(
+      c => ['Real', limits=>[1.1,20], resolution=>0.001],
+      n => ['Real', limits=>[1,100], resolution=>1],
+    );
+
+
+BEGIN_PGML
+## Hashing ##
+
+In many situations, such as a dictionary application, we need to store a vast 
+collection of items in such a way that we can look up any item instantaneously. 
+The way to do this is by _hashing_.
+
+#### The hashing framework ####
+
+Suppose you have a large collection of items [`x_1, \ldots, x_n`] that you want 
+to store (for instance, all English words), where these items are 
+drawn from some set [`\mathcal{U}`] (for instance, the set of all conceivable words). 
+The requirements are:
+
+1. The total storage space used should be [`O(n)`].
+2. Given a query [`q \in \mathcal{U}`], it should be possible to _very rapidly_
+determine whether [`q`] is one of the stored items [`x_i`].
+
+#### A simple solution using randomization ####
+
+1. Pick a completely random function [`h: \mathcal{U} \rightarrow \{1,2,\ldots, n\}`]. This is the _hash function_. 
+
+2. Create a table [`T`] of size [`n`], each of whose entries is a pointer to a 
+linked list, initialized to null. 
+
+3. Store each [`x_i`] in the linked list at [`T[h(x_i)]`]. We say [`x_i`] _hashes to_ location [`h(x_i)`].
+
+4. Given a query [`q`], look through the linked list at [`T[h(q)]`] to see if
+it's there.
+
+Here's a picture of the data structure.
+
+END_PGML
+BEGIN_TEXT
+$BR
+ \{image("hash_table.png", width=>500, height=>400) \}
+END_TEXT
+BEGIN_PGML
+
+The storage used is [`O(`][____]{n}) (answer in terms of [`n`]). What about the query time?
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

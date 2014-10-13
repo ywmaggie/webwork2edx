@@ -1,0 +1,41 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => 'Real');
+Context()->variables->add(m => 'Real');
+Context()->variables->add(k => 'Real');
+
+BEGIN_PGML
+
+## The coupon collector problem ##
+
+Many probability questions turn out to be thinly disguised balls-and-bins problems. Here's an example. Suppose that each cereal box contains one of [`k`] action figures (chosen uniformly at random). How many cereal boxes should you buy in order to guarantee, with high probability, that you collect all [`k`] figures?(assuming [`k`] is very large) [__________]{2k*ln(k)}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+### Solution ###
+
+If you make the following associations:
+
+bin  =  action figure
+
+throw a ball =  buy a box of cereal
+
+every bin gets a ball = you collect all the figures
+
+then you see that what we are really asking is, how many balls do you need to throw into [`n = k`] bins in order to hit all of them? And we've already seen that [`m = 2k\ln k`] balls (cereal boxes) will suffice, while [`m=k \n k`] might not.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

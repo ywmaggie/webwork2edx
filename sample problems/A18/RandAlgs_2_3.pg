@@ -1,0 +1,91 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.001);
+
+Context()->texStrings;
+
+Context()->variables->are(
+      n => ['Real', limits=>[1,100], resolution=>1],
+      i => ['Real', limits=>[1,100], resolution=>1],
+      k => ['Real', limits=>[1,100], resolution=>1],
+    );
+
+BEGIN_PGML
+Suppose you have a linked list of [`n`] elements in sorted order. Here’s the obvious way to look up an element [`x`], given [`L`], a pointer to the first node in the list.
+---
+*function* lookup(L, x)
+- if L is NULL: *return* _NULL_
+- if value(L) = x: *return* L
+- if value(L) > x: *return* _NULL_
+- *return* lookup(next(L), x)   
+
+---
+
+*Notation*: given the pointer P to a node, value(P) and next(P) are the value in the node and the pointer to the next node.
+
+Suppose an element of [`L`] is chosen uniformly at random. Suppose the time taken to look up an element is equal to how far that element is into the list (e.g. it takes time 1 to look up element [`1`]).  
+- For a list of length [`1`], what is the expected time to look up the only element?  [_____]{"1"}
+- For a list of length [`3`], what is the expected time to look up an element?  [______]{"(1+2+3)/3"}
+- For a list of length [`n`], what is the expected time to look up an element?  [______]{(n+1)/2}
+This is order [`n`], right?  
+
+---
+
+One way to get faster lookups is to add a second pointer jump(P) that points to the node [`k`] steps down the list from P (that is, following a “jump” pointer is like following [`k`] “next” pointers). The procedure above is then altered by adding the following line just before the final return statement:
+1. if [`\text{value}(\text{jump}(L)) \leq x`]: return [`\text{lookup}(\text{jump}(L), x)`]
+With this addition, the data structure is called a _skip list_. Now suppose an element of L is chosen uniformly at random. 
+1. We want to find, roughly, the expected time to look it up, as a function of [`n`] and [`k`]. 
+1. The process of looking up the value [`x`] in the list will proceed as follows:
+    a. Jump in [`k`]-size steps until getting to the last location whose value is smaller than [`x`].
+    b. From here, step one-by-one over the [`k`] locations prior to the next [`k`]-size step. This is repeated until either finding a location with the value [`x`] or finding out that the value does not exist.
+1. Roughly how many k-size jumps are needed to reach location [`i`] in the sorted list (this should be a quick & easy answer)?  [_______]{i/k}
+1. After jumping, what is roughly the expected number of single steps that will be needed to reach location [`i`]?  Eg, if your answer were [`\lceil k/3 \rceil`], put [`k/3`].  [________]{k/2}
+1. Using what you just computed, what is the rough cost to look up the element which is in location [`i`]?  [______]{i/k+k/2}
+1. Now that you have the cost per index [`i`], and, assuming we are looking for an element that is in the list, the distribution of of lookups over locations is uniform, what is the expected cost of a lookup in a list of length [`n`]?  [_______]{(n+1)/(2*k) + k/2}
+1. What is the best choice of [`k`] (ignoring the fact that [`k`] has to be integer?  [________]{sqrt(n+1)}
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

@@ -1,0 +1,57 @@
+## DESCRIPTION
+##   Apply the Central Limit Theorem
+## ENDDESCRIPTION
+
+## KEYWORDS('Probability', 'Central Limit Theorem')
+## Tagged by nhamblet
+
+## DBsubject('Probability')
+## DBchapter('Theory')
+## DBsection('The Central Limit Theorem')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+
+
+$p_100 = random(3,5,1);
+$p = $p_100/100;
+$n = random(100,110,1);
+$n_min = ( (33*sqrt($p*(1-$p))+sqrt($p*(1089-1089*$p+1600*$p_100)) ) / (40*$p) )**2;
+$n_min = Real(sprintf("%0.0f",$n_min));
+$n_min_trial = $n_min + random(1,2,1);
+BEGIN_PGML
+Suppose colorblindness appears in [$p] of people. How large must a sample be in order for the probability
+of it containing at least [$p_100] colorblind people to be at least 95%?
+
+- Let [`X_i`] be a binary random variable, 0 if person [`i`] is not colorblind and 1 if person [`i`] is.  [`\mathbb{E}(X_i) = `][______]{"$p"}, [`\mbox{var}(X_i) = `][_____]{"$p*(1-$p)"}
+- Let [`X = X_1+...X_n`] be the number of colorblind people in a sample of size [`n`].  For [`n = [$n]`], [`\mathbb{E}(X) = `][______]{"$n*$p"}, [`\mbox{var}(X) = `][_____]{"$n*$p*(1-$p)"}.  For [`n`] large, X is approximated well by a normal density.  
+- Problem 4 should be helpful in answering this part: Give the value of [`s`] such that for [`S`] a standard normal random variable, [`P(S > s) \approx 0.95`][______]{"-1.65"}
+- For a sample of size n, what is the smallest [`c`] such that [`P(X > c) \approx 0.95`]?  [_______________________________________]{n*$p - 1.65*sqrt(n*$p*(1-$p))}
+- What is the minimum sample size n such that we would get at least [$p_100] colorblind people in the sample with 95\% probability?  [________________]{"$n_min"}  Hint: Take the expression you obtained in the previous part- let's call the expression f(n), some function of the number of samples n.  For which n is [`f(n) \geq 3`]?  Try out integer values close to [$n_min_trial].  Or solve the inequality directly.  
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

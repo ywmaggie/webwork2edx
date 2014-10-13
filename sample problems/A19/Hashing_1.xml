@@ -1,0 +1,51 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+</script>
+<p><br/>
+<br/>
+In many situations, such as a dictionary application, we need to store a vast <br/>
+collection of items in such a way that we can look up any item instantaneously. <br/>
+The way to do this is by _hashing_.<br/>
+<br/>
+Suppose you have a large collection of items \(x_1, \ldots, x_n\) that you want <br/>
+to store (for instance, all English words), where these items are <br/>
+drawn from some set \(\mathcal{U}\) (for instance, the set of all conceivable words). <br/>
+The requirements are:<br/>
+1. The total storage space used should be \(O(n)\).<br/>
+2. Given a query \(q \in \mathcal{U}\), it should be possible to _very rapidly_<br/>
+determine whether \(q\) is one of the stored items \(x_i\).<br/>
+<br/>
+1. Pick a completely random function \(h: \mathcal{U} \rightarrow \{1,2,\ldots, n\}\). This is the _hash function_. <br/>
+2. Create a table \(T\) of size \(n\), each of whose entries is a pointer to a <br/>
+linked list, initialized to null. <br/>
+3. Store each \(x_i\) in the linked list at \(Th(x_i)\). We say \(x_i\) _hashes to_ location \(h(x_i)\).<br/>
+4. Given a query \(q\), look through the linked list at \(Th(q)\) to see if<br/>
+it's there.<br/>
+Here's a picture of the data structure.<br/>
+</p>
+</problem>

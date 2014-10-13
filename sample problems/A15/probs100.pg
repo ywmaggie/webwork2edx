@@ -1,0 +1,66 @@
+## DESCRIPTION
+##   Apply the Central Limit Theorem
+## ENDDESCRIPTION
+
+## KEYWORDS('Probability', 'Central Limit Theorem')
+## Tagged by nhamblet
+
+## DBsubject('Probability')
+## DBchapter('Theory')
+## DBsection('The Central Limit Theorem')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+
+
+
+$p = 0.54;
+$tosses = random(9000,11000,100);
+$heads = $p*$tosses;
+$zscore = "($heads - ($tosses/2))/sqrt($tosses*(1/2)*(1/2))";
+
+BEGIN_PGML
+A sample is taken to find the fraction of females in a certain population. Find a sample size so that this fraction is estimated within 0.01 with confidence at least 99%.
+
+We will consider a worst-case situation: no matter what the underlying population proportion [`p`] of females is, the sample size we've taken will be sufficient.  
+
+Let [`X_i`] be a binary random variable: 1 if the i'th person selected is a female, 0 if male.  
+- In terms of [`p`], [`\mathbb{E}(X_i) = `][____]{p}
+- In terms of [`p`], [`var(X_i) = `][_____]{p * (1-p)} and [`std(X_i) = `][_____]{sqrt(p * (1-p))}
+- What value of [`p`] maximizes [`var(X_i)`]?  [_____]{1/2}
+- Using this fact, what is an upper bound on [`std(X_i)`]?  [____]{1/2}
+
+- For [`Y`] distributed according the standard normal distribution, what is [`P(-2.575 <= Y <= 2.575)`]? [_____]{"1-2*Q(2.575)"}  
+- What is the Z score associated with a 99% confidence interval?  Hint: you may find the previous part helpful.  [________]{"2.575"}
+- Let [`X = 1/n(X_1 + ...X_n)`].  What is [`std(X)`]?  [_____]{(1/2)/sqrt(n)}
+- Suppose [`k`] out of [`n`] people in the sample are female.  What is a worst-case (for the choice of [`p`]) 99% confidence interval for the fraction of the population that is female?  [`k/n \pm`][______________________]{2.575*(1/2)/sqrt(n)}  This is often called the _empirical confidence interval_.  
+- Consider a related question.  Suppose we know that the fraction of females is 50%.  Then what is the smallest interval such that the fraction of females in our sample is in this interval with 99% probability [`1/2 \pm `][______]{2.575*(1/2)/sqrt(n)} This is sometimes called the _theoretical confidence interval_.  
+
+Finally, the answer to the original question:   
+- What is the smallest sample size [`n`] so that the sample proportion of females is estimated within 1% with 99% confidence?  [`n = `][____________]{"(2.575/(2*0.01))**2"}
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

@@ -1,0 +1,22 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+</script>
+<p><br/><br/>A <b> random variable </b> (r.v.) is defined on a probability space \((\Omega, \mbox{Pr})\) and <br/>is a mapping from \(\Omega\) to \(\mathbb{R}\). <br/>The value of the random variable is fully determined by the outcome \(\omega \in \Omega\).<br/>Thus the underlying probability space (probabilities \(\mbox{Pr}(\omega)\)) induces a probability<br/>distribution over the random variable. Let's look at some examples.<br/>Suppose you roll a fair die. The sample space is \(\Omega = \{1,2,3,4,5,6\}\), all outcomes <br/>being equally likely. On this space we can then define a random variable<br/><b><br/>\( X = \left\{ \begin{array}{ll}<br/>               1  \mbox{if die is \geq 3} \\<br/>               0  \mbox{otherwise}<br/>               \end{array} \right.\)<br/></b><br/>In other words, the outcomes \(\omega = 1,2\) map to \(X = 0\), while the outcomes <br/>\(\omega = 3,4,5,6\) map to \(X = 1\). The r.v. \(X\) takes on values \(\{0,1\}\), with <br/>probabilities \(\mbox{Pr}(X = 0) = 1/3\) and \(\mbox{Pr}(X=1) = 2/3\).<br/>Or say you roll this same die \(n\) times, so that the sample space is <br/>\(\Omega = \{1,2,3,4,5,6\}^n\). Examples of random variables on this larger space are<br/><b><br/>\( \begin{eqnarray<b>}<br/>X  =  \mbox{the number of 6's rolled,} \\<br/>Y  =  \mbox{the number of 1's seen before the first 6.}<br/>\end{eqnarray</b>} \)<br/></b><br/>The sample point \(\omega = (1,1,1,1,\ldots,1,6)\), for instance, would map to <br/>\(X = 1, Y = n-1\). The variable \(X\) takes values in \(\{0,1,2,\ldots,n\}\),<br/>with<br/><b><br/>\( \mbox{Pr}(X = k) <br/>\ = \ <br/>{n \choose k} \left(\frac{1}{6} \right)^k \left( \frac{5}{6} \right)^{n-k} \)<br/></b><br/>(do you see why?).<br/>As a third example, suppose you throw a dart at a dartboard of radius \(1\), and that it<br/>lands at a random location on the board. Define random variable \(X\) to be the distance<br/>of the dart from the center of the board. Now \(X\) takes values in \(0,1\), and for <br/>any \(x\) in this range, \(\mbox{Pr}(X \leq x) = x^2\).<br/>Henceforth, we'll follow the convention of using capital letters for r.v.'s.<br/></p>
+</problem>

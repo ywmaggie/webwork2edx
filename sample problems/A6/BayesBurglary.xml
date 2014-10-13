@@ -1,0 +1,82 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+
+answer1 = "1/10000"
+answer2 = "0.95*0.0001+ 0.01*0.9999"
+answer3 = "0.95*0.0001*100"
+answer4 = "(0.95/10000)/(0.95*0.0001+ 0.01*0.9999)"
+answer5 = "1/10000"
+answer6 = "0.95*0.0001+ 0.01*0.9999"
+answer7 = "0.95*0.0001*100"
+answer8 = "(0.95/10000)/(0.95*0.0001+ 0.01*0.9999)"
+</script>
+<p><br/>
+<br/>
+The following example is taken from _Probabilistic Reasoning in Intelligent Systems_ by Judea Pearl:<br/>
+'''You wake up in the middle of the night to the shrill sound of your burglar alarm. What is the chance that a burglary attempt has taken place?'''<br/>
+The relevant facts are:<br/>
+o  There is a 95% chance that an attempted burglary attempt will trigger the alarm. That is,<br/>
+\( P(\mbox{alarm} | \mbox{burglary}) = 0.95 .\)<br/>
+o  There is a 1% chance of a false alarm.<br/>
+\( P(\mbox{alarm} | \mbox{no burglary}) = 0.01.\)<br/>
+o  Based on local crime statistics, there is a one-in-10,000 chance that a house will be burglarized on a given night:<br/>
+\( P(\mbox{burglary}) = \) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+o  We are interested in the chance of a burglary given that the alarm has sounded. We can use the conditional probability formula for this:<br/>
+\( P(\mbox{burglary} | \mbox{alarm}) <br/>
+\ = \ \frac{P(\mbox{burglary, alarm})}{P(\mbox{alarm})}<br/>
+\ = \ \frac{P(\mbox{alarm} | \mbox{burglary}) P(\mbox{burglary})}{P(\mbox{alarm})}<br/>
+.\)<br/>
+o  The one term we don't immediately know is \(P(\mbox{alarm})\).  By the summation rule,<br/>
+\( <br/>
+P(\mbox{alarm}) <br/>
+\ = \ <br/>
+P(\mbox{alarm} | \mbox{burglary}) P(\mbox{burglary}) +<br/>
+P(\mbox{alarm} | \mbox{no burglary}) P(\mbox{no burglary})<br/>
+.\)<br/>
+o  What is \(P(\mbox{alarm})\)?  <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+o  What is \(P(\mbox{burglary}, \mbox{alarm})*100\)?  <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+o  Putting it all together, using the conditional probability definition mentioned above:<br/>
+\( P(\mbox{burglary} | \mbox{alarm}) = \)<br/>
+<formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+about \(0.94%\)  Thus our belief in a burglary has risen approximately a hundredfold from its default value of \(10^{-4}\)  on account of the alarm.<br/>
+It is frequently the case, as in this example, that we wish to update the chances of an event \(H\) based on new evidence \(E\)  In other words, we wish to know \(P(H | E)\)  <br/>
+o  The derivation above implicitly uses the following formula, called Bayes Rule:<br/>
+\( P(H | E) <br/>
+\ = \ <br/>
+\frac{P(E|H) P(H)}{P(E)}.<br/>
+\)<br/>
+</p>
+</problem>

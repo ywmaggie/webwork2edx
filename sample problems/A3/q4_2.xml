@@ -1,0 +1,58 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+answer1=1.0*C(13,2)
+answer2=1.0*11
+answer3=1.0*C(4,2)**2
+answer4=1.0*4
+answer5=1.0*C(13,2)*11*C(4,2)**2*4
+answer6=1.0*C(13,2)*11*C(4,2)**2*4/C(52,5)
+</script>
+<p></p>
+<p></p>
+<p>1. The number of possibilities for the ranks of the two pairs is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>2. The number of possibilities for the rank of the single is <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the suites of the two pairs is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>3. The number of possibilities for the suite of the single is <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>4. Thus the number of hands with exactly two pairs is <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. The ratio of this number to the number of all hands <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p></p>
+</problem>

@@ -1,0 +1,109 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.01);
+
+Context()->texStrings;
+
+
+Context()->variables->are(
+      n => ['Real', limits=>[1,100], resolution=>1],
+      k => ['Real', limits=>[1,100], resolution=>1],
+    );
+
+
+$k = random(2,5,1);
+$n = random(5,10,1);
+$red = random(2,3,1);
+$red2 = random(4,5,1);
+$m = $n*$red;
+$kopt = ln(2)*$red2;
+
+BEGIN_PGML
+
+## Bloom Filters ##
+
+In class we talked about the importance of the _number_ of hash functions used by a Bloom filter, which we denote by [`k`]. In a previous assignment, we have described how to compute the false positive rate given [`k`]. Now we work through a concrete example. 
+
+Suppose [`k=[$k]`]. Say we have already observed [`n=[$n]`] words, and each word has been hashed to [$k] of the [`m=[$m]`] bits that are determined by the [$k] hash functions. Each of the [$m] bits is equally likely to be chosen. For a new "unseen" word, we have a false positive if this new word happens to be hashed to [$k] bits that are exactly the same [$k] bits associated with a previous different word. What is the chance of this happening?
+
+Notice that all the bits are independent, so this probability should be a product of the probability that each of the [$k] bits is set. Without loss of generality, assume this new word hashes to bits 1 to [$k].
+
+To find the probability that bit 1 is set, it is easier to find the complement: bit 1 is not set.
+
+Let's first consider one of the [$n] observed words, say, "hello", and a single hash function, say, [`h_1`]. What is the probability that [`h_1`] does not hash "hello" to bit 1? [___________]{"1-1/$m"}. Remember there are a total of [$m] bits to choose from, and the hash function is random.
+
+There are all together [$k] hash functions that may hash this "hello" to bit 1, and there are a total of [$n] such words, what is the probability that bit 1 survives (i.e. not set to 1) after all these hashes?[______________]{"(1-1/$m)**($k*$n)"}
+
+Back to the original statement, what is the probability of bit 1 being set? [_______________]{"1-(1-1/$m)**($k*$n)"}
+
+What is the probability that all [$k] bits are set? [____________________]{"(1-(1-1/$m)**($k*$n))**$k"}. This is the false positive rate for [`k=[$k]`].
+
+In the notes we have an approximation formula for this probability, [`(1-e^{-kn/m})^k`]. Note that it is not the value of [`m`] or [`n`], but their ratio that affects the false positive rate. The ratio [`m/n`] is called the redundancy.
+
+---
+
+
+For the same [`k=[$k]`], if we increase the redundancy so that [`m=[$n*$red2]`], what is the false positive rate? [_____________________]{"(1-e**(-$k/$red2))**$k"} (Use the approximation formula.)
+
+---
+
+Fix this redundancy, we change the number of hash functions to be the optimal value, [`k = \ln 2\times \text{redundancy}`], what is the false positive rate then? [____________________]{"(1-e**(-$kopt/$red2))**$kopt"}
+
+---
+
+Suppose the optimal [`k`] is used, if we want to have a false positive rate of 0.05, what is the number of bits [`m`] that we need to use? [_________________]{"-$n*ln(0.05)/(ln(2)**2)"} (do not round to integer)
+
+---
+
+
+
+
+
+
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

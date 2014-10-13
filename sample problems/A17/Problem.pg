@@ -1,0 +1,63 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+BEGIN_PGML
+## Hypothesis testing ##
+
+We want to prove that seat-belts save a significant number of lives.
+
+Suppose first that we know that, in general, the probability of a fatality
+in a car accident is q=1%.
+
+We examine n=1000 randomy selected records of accidents where the driver
+wore a seat velt. We find that k=7 of these accidents were fatal.
+
+With what confidence can we conclude that claim is
+correct?
+
+[`X_i`] = [`i`]'th accident was fatal.
+
+The null hypothesis is that seat belts make no difference. 
+[`Pr(X_i=1)=q=0.01`]
+Alternative hypothesis, [`Pr(X_i=1)<q`]
+
+[`S=\sum_i X_i`]
+[`E(S)=nq=10`]
+[`var(S)=nq(1-q) = 9.9 \approx 10`]
+[`std(S) = \sqrt(10) \approx 3.1`]
+
+Therefore [`z`]-value =1 , and the probability of getting 5 or higher is [`< Q(1) = `]{0.16}
+
+The p-value is 16%.  the p value is a *random variable*
+
+is 16% small enough? probably not, but what is small enough?
+
+Suppose that an important decision needs to be made, for example, to
+increase the fine for not wearing a seat-belt. We need to choose
+a significance level (alpha). And this choice has to be made before
+looking at the data. It should *NOT* be a random variable.
+
+If [`p \leq \alpha`] we say that the test rejected the null hypothesis
+
+If [`p > alpha`] we say that the test failed to reject the null
+hypothesis.
+
+In other words, if we chose alpha=0.05, then the test failed. We
+did not show that seatbelt save lives. However, we did *NOT* gain
+evidence that seat-belts are useless. A test cannot provide evidence
+towards the null hypothesis.
+
+We did not disprove that belts save lives.
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

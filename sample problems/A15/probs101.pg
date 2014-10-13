@@ -1,0 +1,78 @@
+## DESCRIPTION
+##   Apply the Central Limit Theorem
+## ENDDESCRIPTION
+
+## KEYWORDS('Probability', 'Central Limit Theorem')
+## Tagged by nhamblet
+
+## DBsubject('Probability')
+## DBchapter('Theory')
+## DBsection('The Central Limit Theorem')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+
+
+$darts = random(90,110,1);
+$wedges = 2*random(7,12,1);
+$var = ((1/$wedges)*(1-(1/$wedges)));
+
+BEGIN_PGML
+A dartboard is partitioned into [$wedges] wedges of equal size, numbered 1 through [$wedges]. Half 
+the wedges are painted red, and the other half are painted black. Suppose [$darts] darts are thrown 
+at the board, and land at uniformly random locations on it.
+- What is the probability that a particular wedge (say, wedge 1) does not receive a single 
+dart? [______]{"(($wedges-1)/$wedges)**($darts)"}
+
+Let [`X_i`] be the number of darts that fall in wedge [`i`]. 
+- [`\mathbb{E}(X_i) = `][_____]{"$darts/$wedges"}
+- [`\mbox{var}(X_i) = `][_____]{"$darts*$var"}
+- For [`S`] a real random variable with standard normal distribution, what is [`P(S < 1.65)`]?  [______]{"Phi(1.65)"}
+- Using the normal approximation to the binomial distribution, give an upper bound on 
+[`X_i`] that holds with 95\% confidence.  The answer to the previous question may be helpful here.  Note: you're only considering one tail of the distribution.  [____________________]{"$darts/$wedges + 1.65*sqrt($darts*$var)"}
+
+Let [`Z_r`] be the number of darts that fall on red wedges, let [`Z_b`] be the number of darts 
+that fall on black wedges, and let [`Z = |Z_r - Z_b|`] be the absolute value of their 
+difference. We would like to get a 99\% confidence interval for [`Z`]. To do this, define
+
+[$BCENTER]*
+[`` Y_i \ = \ \left\{ \begin{array}{ll}
+                     1 & \mbox{if }i^{th}\mbox{ dart falls in red region} \\
+                    -1 & \mbox{if }i^{th}\mbox{ dart falls in black region}
+                     \end{array} \right.``]
+[$ECENTER]*
+and notice that [`Z_r - Z_b`] can be written as [`Y_1 + Y_2 + \cdots + Y_{[$darts]}`], the sum of 
+independent random variables.
+- [`\mathbb{E}(Y_i) = `][_______]{"0"} and [`\mbox{var}(Y_i) = `][______]{"1"}?
+- Using the central limit theorem, we can assert that [`Z_0 = Z_r - Z_b`] is approximately
+a normal distribution.  [`\mathbb{E}(Z_0) = `][______]{"0"} and [`\mbox{var}(Z_0) = `][_______]{"$darts"}
+- Give a 99\% confidence interval for [`Z_0`]:  [`\mathbb{E}(Z_0) \pm`][______]{"2.575*(sqrt($darts))"}  Hint: look back to problem 3.  
+- Using this, give a 99% confidence interval for [`Z = |Z_0|`]: [`0 \leq Z \leq `][______]{"2.575*(sqrt($darts))"}
+
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

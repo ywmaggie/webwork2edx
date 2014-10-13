@@ -1,0 +1,61 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+ "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+$nHearts = random(1,4,1);
+$nCards = random($nHearts+1,9,1);
+$nTotal = Compute("C(52,$nCards)");
+$nRanks = Compute("C(13,$nHearts)");
+$nOther = Compute("$nCards-$nHearts");
+$nNonHeart = Compute("C(39,$nOther)");
+$nEvent = Compute("$nRanks * $nNonHeart");
+$ans = Compute("$nEvent/$nTotal");
+
+BEGIN_PGML
+
+## Probability of heart cards ##
+
+A poker hand, consisting of [$nCards] cards, is dealt from a standard deck of 52 cards.
+Find the probability that the hand contains exactly [$nHearts] hearts.
+
+1. First consider the number of all possible hands, which is to choose [$nCards] from 52 cards, [________]{$nTotal}. 
+
+2. Then we compute the number of possibilities for a hand that contains [$nHearts] hearts. 
+
+	We need to get the number of possible set of ranks of the [$nHearts] hearts. This is to choose [$nHearts] from all 13 possible ranks, thus [________]{$nRanks}.
+
+	The other [$nOther] non-heart cards can be any of the non-heart cards in the deck. The total number of non-heart cards is the total number of cards, minus the heart cards, which is 52 - 13 = 39. Thus the number of possibilities for the [$nOther] non-heart cards in the hand is [________]{$nNonHeart}.
+
+	Thus we know that the number of hands that contain exactly [$nHearts] hearts is [_______]{$nEvent}.
+
+3. Finally we can calculate the probability of such hands, by calculating th ratio of the number of such hands to the number of all hands. This is [_______]{$ans}
+
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+1. First consider the number of all possible hands, which is to choose [$nCards] from 52 cards, [`\begin{pmatrix} 52 \\ [$nCards] \end{pmatrix} = `] [$nTotal]. 
+
+2. Then we compute the number of possibilities for a hand that contains [$nHearts] hearts. 
+
+	We need to get the number of possible set of ranks of the [$nHearts] hearts. This is to choose [$nHearts] from all 13 possible ranks, thus [`\begin{pmatrix} [$nCards] \\ 5 \end{pmatrix} = `][$nRanks].
+
+	The other [$nOther] non-heart cards can be any of the non-heart cards in the deck. The total number of non-heart cards is the total number of cards, minus the heart cards, which is 52 - 13 = 39. Thus the number of possibilities for the [$nOther] non-heart cards in the hand is [`\begin{pmatrix} 39 \\ [$nOther] \end{pmatrix} = `][$nNonHeart].
+
+	Thus we know that the number of hands that contain exactly [$nHearts] hearts is [`[$nRanks] \times [$nNonHeart]`].
+
+3. Finally we can calculate the probability of such hands, by calculating th ratio of the number of such hands to the number of all hands. This is [`\frac{[$nRanks] \times [$nNonHeart]}{[$nTotal]} = `][$ans]
+
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

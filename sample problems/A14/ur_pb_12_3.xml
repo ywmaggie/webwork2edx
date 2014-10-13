@@ -1,0 +1,66 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+b = myrandom(150,400,1)
+p = myrandom(0.8,0.9,0.01)
+mean =b*p
+dev = sqrt (1.0*b * p * (1 - p))
+
+z = myrandom(1.7, 3.1, 0.01)
+s = 10*int((z * dev + mean)/10+1)
+
+
+ans = Q((s-mean)*1.0/dev)
+
+answer1 = 1.0*mean
+answer2 = 1.0*dev
+answer3 = 1.0*ans
+
+</script>
+<p><br/>
+An airline company is considering a new policy of booking as many as $b persons on an<br/>
+airplane that can seat only $s.<br/>
+(Past studies have revealed that only $p*100% of the booked passengers actually arrive for the flight.)<br/>
+What is the mean of the number of passengers that arrive for the flight ? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+What is the standard deviation ? <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+Estimate the probability that if the company books $b persons, not enough seats will be <br/>
+available. <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

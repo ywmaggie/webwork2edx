@@ -1,0 +1,127 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+k = myrandom(3,5)
+p = "((k-1)/k)"
+
+answer1 = "20"
+answer2 = "log(n)"
+answer3 = "1"
+answer4 = "n/2"
+
+</script>
+<p><br/>
+
+<br/>
+Assume \(n\) items are hashed to \(n\) locations.  <br/>
+Suppose query \(q\) is picked at random, so that it is equally likely to hash to<br/>
+any of the locations \(1,2,\ldots, n\). What is the expected query time?<br/>
+<b><br/>
+\(
+Expected query time \\<br/>
+ = <br/>
+\sum_{i=1}^n \pr($q hashes to location $i) \cdot (length of list at $Ti)\\<br/>
+ =<br/>
+\frac{1}{n} \sum_i  (length of list at $Ti) \\<br/>
+ = <br/>
+\frac{1}{n} \cdot n \ = \ 1\\<br/>
+\)<br/>
+</b><br/>
+So the average query time is constant!<br/>
+<br/>
+What is the worst case query time that is, what is the length of the longest linked list<br/>
+in \(T\)? Equivalently, when you throw \(n\) balls in \(n\) bins, what is the size of the <br/>
+largest bin? We'll see that with very high probability, no bin gets \(\geq \log n\)<br/>
+balls.<br/>
+For any bin \(i\), let \(E_i\) be the event that it gets \(\geq \log n\) balls.<br/>
+<b><br/>
+\( \pr(E_i) \  \leq \ {n \choose \log n} \left( \frac{1}{n} \right)^{\log n} .\)<br/>
+</b><br/>
+(Do you see why? Because we want to select \(\log n\) balls to go into bin \(i\), but do not care where the other balls go.) <br/>
+To upper bound this probability we use the inequality (see cheat sheet) that<br/>
+<b><br/>
+\(<br/>
+{n \choose k} \leq \left( \frac{ne}{k} \right)^k<br/>
+\)<br/>
+</b><br/>
+Applying this inequality we get:<br/>
+<b><br/>
+\(<br/>
+{n \choose \log n} \left( \frac{1}{n} \right)^{\log n} \leq <br/>
+\left( \frac{ne}{n \log n}  \right)^{\log n} =<br/>
+\left( \frac{e}{\log n}  \right)^{\log n} =<br/>
+\frac{n^{\log e}}{(\log n)^{\log n}} \leq \frac{1}{n^2}<br/>
+\)<br/>
+</b><br/>
+Where the last inequality can be shown by taking the log of both sides:<br/>
+<b><br/>
+\(
+\log{\frac{n^{\log e}}{(\log n) ^{\log n}}\\<br/>
+= \log \left(n^{\log e} \right) - \log \left((\log n)^{\log n}\right)\\<br/>
+= \log e\log n - \log n \log\log n\\<br/>
+= \log n (\log e - \log\log n) \le -2\log n}\\<br/>
+\)
+</b> <br/>
+or equivalently <br/>
+&gt;&gt;\(\log \log n \ge 2+\log e\)&lt;&lt;<br/>
+which holds when \(n&gt;2000\).<br/>
+Having shown that \(\pr(E_i) \leq 1/n^2\), it follows that<br/>
+<b><br/>
+\( \pr(\mbox{some bin gets \geq \log n balls})<br/>
+\ = \ <br/>
+\pr(E_1 \cup E_2 \cup \cdots \cup E_n)<br/>
+\ \leq \ <br/>
+\pr(E_1) + \cdots + \pr(E_n) <br/>
+\ \leq \ <br/>
+\frac{1}{n}.<br/>
+\)<br/>
+</b><br/>
+For instance, if you throw a million balls into a million bins, then the chance that<br/>
+there is a bin with \(\geq\)<formularesponse type="ci" samples="n@1:100#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> (round to integer) balls is at most 1 in a million.<br/>
+Getting back to hashing, this means that for \(n\) elements, the worst case query time (with probability as high as \(1-1/n\)) is \(O\)(<formularesponse type="ci" samples="n@1:100#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>). (answer in terms of \(n\), you can use "log" in the answer, but not "log2" although they are equivalent in big-O notation)<br/>
+---<br/>
+Suppose we already hashed \(n\) elements, and bucket 1 gets half of them. <br/>
+What is the expected search time for a new element? O(<formularesponse type="ci" samples="n@1:100#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>)<br/>
+What is the worst search time? Notice that this scenario is a rare one. O(<formularesponse type="ci" samples="n@1:100#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>) (answer in terms of \(n\))<br/>
+</p>
+</problem>

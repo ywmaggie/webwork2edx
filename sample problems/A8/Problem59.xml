@@ -1,0 +1,46 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+sunny_den = myrandom(5,7,1)
+sunny_num = sunny_den-1
+dinner_den = myrandom(2,4,1)
+early_den = myrandom(8,10,1)
+
+
+
+answer1 = 1.0*(sunny_num ) / ( sunny_den * dinner_den * early_den )
+answer2 = 1.0*sunny_den * dinner_den * early_den / (sunny_num)
+answer3 = 1.0*(sunny_num ) / ( sunny_den * dinner_den * early_den )
+answer4 = 1.0*sunny_den * dinner_den * early_den / (sunny_num)
+</script>
+<p><br/>
+On any given day, the probability it will be sunny is \($sunny_num/$sunny_den\), the probability you <br/>
+will have a nice dinner is \(1/$dinner_den\), and the probability that you will get to bed<br/>
+early is \(1/$early_den\). Assume these three events are independent. <br/>
+Denote by \(S(i)\) be the event that the \(i\)'th day is sunny. Similarly, define \(Di,B(i)\) to be the events that that you have a good dinner on day \(i\) and that you go to bed early on day \(i\) respectively.<br/>
+On a particular day, what is the probability all three of these independent events will happen together?  <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+<b>Hint:</b> recall that if three events \(A,B,C\) are independent, then \(P(A \cap B \cap C) = P(A)P(B)P(C)\).<br/>
+What is the expected number of days before all three of them happen together?  <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+<br/>
+<b>Hint:</b> Consider the techniques used in problem 2.  <br/>
+</p>
+</problem>

@@ -1,0 +1,44 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$x_min = random(3,5,1);
+
+######################################################################
+
+BEGIN_PGML
+A die is thrown twice. Let [`X_1`] and [`X_2`] denote the outcomes, and define
+random variable [`X`] to be the minimum of [`X_1`] and [`X_2`]. We will examine the distribution of [`X`].
+
+How large is the outcome space corresponding to tossing a sequence of two die?  [______]{36}
+
+How many of these outcomes satisfy [`X_1 = 2`] and [`X_2 = 2`]?  [____]{1}
+
+How many of these outcomes satisfy [`X_1 = 2`] and [`X_2 >= 2`]?  [____]{5}
+
+How many of these outcomes satisfy [`X_1 >= 2`] and [`X_2 = 2`]?  [____]{5}
+
+How many of these outcomes satisfy [`min(X_1,X_2) = 2`]?  [______]{2*5-1}
+
+What is the probability [`X = 2`]?  [______________]{"(2*5-1)/36"}
+
+What is the probability [`X = [$x_min]`]?  [___________]{"(2*(6 - $x_min + 1) - 1)/36"}
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

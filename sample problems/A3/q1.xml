@@ -1,0 +1,59 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+nCards=myrandom(4,9,1)
+b=myrandom(2,nCards-1,1)
+nTotal=C(52,nCards)
+nFace=C(12,b)
+nOther=C(40,nCards-b)
+
+
+answer1=1.0*C(52,nCards)
+answer2=1.0*C(12,b)
+answer3=1.0*C(40,nCards-b)
+answer4=1.0*C(12,b)*C(40,nCards-b)
+answer5=1.0*C(12,b)*C(40,nCards-b)/C(52,nCards)
+</script>
+<p></p>
+<p></p>
+<p>A poker hand consisting of $nCards cards is dealt from a standard deck of 52 cards.</p>
+<p>Find the probability that the hand contains exactly $b face cards (Jack, Queen or King).</p>
+<p>First, we know the number of all possible hands of $nCards cards is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>Then, we calculate the number of hands that have exactly $b face cards.</p>
+<p>	The total number of face cards is 12 (Jack, Queen or King of all four suites). To choose $b from them we have <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ possibilities.</p>
+<p>	The other $nCards-$b cards in the hand can be any of the non-face cards. There are a total of 52 - 12 = 40 non-face cards. To choose $nCards-$b form them, there are <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ possibilities.</p>
+<p>	Thus we can compute the number of hands that have exactly $b face cards, which is <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>Finally we can calculate the probability of such hands, by calculating the ratio of the number of such hands to the number of all hands. This is <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

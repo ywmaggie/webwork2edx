@@ -1,0 +1,70 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+bins = myrandom(5,10,1)
+
+answer1 = "1"
+answer2 = "1"
+</script>
+<p><br/>
+<br/>
+If you need to summarize a probability distribution by a single number, then <br/>
+the mean is a reasonable choice -- although often the _median_ is better <br/>
+advised (more on this later). But neither the mean nor median captures how<br/>
+_spread out_ the distribution is.<br/>
+Look at the following two distributions:<br/>
+<image src="/static/1.png" width="800" height="400"/><br/>
+They both have the same expectation, 100, but one is concentrated near the middle <br/>
+while the other is pretty flat. To distinguish between them, we are interested<br/>
+not just in the mean \(\mu = \mathbb{E}(X)\), but also in the typical distance from the<br/>
+mean, \(\mathbb{E}(|X - \mu|)\). It turns out to be mathematically convenient to work with<br/>
+the square instead: the _variance_ of \(X\) is defined to be<br/>
+<b><br/>
+\( \mbox{var}(X)  \ = \ \mathbb{E}((X - \mu)^2) \ = \ \mathbb{E}((X - E(X))^2) .\)<br/>
+</b><br/>
+In the above example, which distribution has a higher variance? <formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> (Answer 0 for the left, 1 for the right)<br/>
+---<br/>
+<br/>
+In what follows, take \(\mu\) to be \(\mathbb{E}(X)\).<br/>
+1\. The variance cannot be negative.<br/>
+    Since each individual value \((X - \mu)^2\) is \(\geq 0\) (since its squared), the <br/>
+average value \(\mathbb{E}((X - \mu)^2)\) must be \(\geq 0\) as well.<br/>
+2\. \(\mbox{var}(X) = \mathbb{E}(X^2) - \mu^2\).<br/>
+    This is because,<br/>
+<b><br/>
+\( <br/>
+\mbox{var}(X)   =  \mathbb{E}((X - \mu)^2) \\<br/>
+          =  \mathbb{E}(X^2 + \mu^2 - 2\mu X) \\<br/>
+          =  \mathbb{E}(X^2) + \mathbb{E}(\mu^2) + \mathbb{E}(-2 \mu X) \ \ \mbox{(linearity)} \\<br/>
+          =  \mathbb{E}(X^2) + \mu^2 - 2 \mu \mathbb{E}(X) \\<br/>
+          =  \mathbb{E}(X^2) + \mu^2 - 2 \mu^2 \ = \ \mathbb{E}(X^2) - \mu^2.<br/>
+\<br/>
+\)<br/>
+</b><br/>
+3\. For any random variable \(X\), it must be the case that \(\mathbb{E}(X^2) \geq (\mathbb{E}(X))^2\).<br/>
+    This is simply because \(\mbox{var}(X) = \mathbb{E}(X^2) - (\mathbb{E}(X))^2 \geq 0\).<br/>
+4\. \(\mathbb{E}(|X - \mu|) \leq \sqrt{\mbox{var}(X)}\).<br/>
+    If you apply the previous property to the random variable \(|X - \mu|\) instead of \(X\),<br/>
+you get \(\mathbb{E}(|X - \mu|^2) \geq (\mathbb{E}(|X - \mu|))^2\). Therefore,<br/>
+\(\mathbb{E}(|X - \mu|) \leq \sqrt{\mathbb{E}(|X - \mu|^2)} = \sqrt{\mbox{var}(X)}\). <br/>
+The last property tells us that \(\sqrt{\mbox{var}(X)}\) is a good measure of the typical spread of<br/>
+\(X\): how far it typically lies from its mean. We call this the _standard deviation_ of <br/>
+\(X\).<br/>
+</p>
+</problem>

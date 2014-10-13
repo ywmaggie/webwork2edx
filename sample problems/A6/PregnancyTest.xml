@@ -1,0 +1,53 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "1"
+answer2 = "0.1"
+answer3 = "0.3"
+answer4 = "1"
+answer5 = "0.1"
+answer6 = "0.3"
+</script>
+<p><br/>
+<br/>
+How accurate is a pregnancy test? Here we make up some numbers and compute the relevant conditional probabilities.<br/>
+The sample space in this case consists of women who use the test call this \(\Omega\)  There are two events on this space that we care about: \(P = \{\mbox{actually pregnant}\}\) and \(T = \{\mbox{test says pregnant}\}\)  <br/>
+Suppose that the following are determined (warning: these are fabricated!):<br/>
+\( T \subset P, \ \ \ P(P) = 0.4, \ \ \ P(T) = 0.3 .\)<br/>
+There are two conditional probabilities we'd like to compute.  <br/>
+<br/>
+Well, since \(T \subset P\)  we have \(P(P|T) = 1.0\)  Algebraically, \(P(P \cap T) = P(T)\)  so \(P(P|T) = P(P \cap T)/P(T) =\) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+ <br/>
+<br/>
+Let \(T^c = \Omega - T\) be the event that the test is negative. Then \(P(T^c) = 1 - P(T) = 0.7\) and \(P(P \cap T^c) = P(P) - P(P \cap T) = \) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+  These are the two probabilities we need.<br/>
+\( P(P | T^c)  \ = \ \frac{P(P \cap T^c)}{P(T^c)} \ = \ \frac{0.1}{0.7} \ \approx \ 0.14 .\)<br/>
+What is \(P(P|T)P(T)\)? <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

@@ -1,0 +1,76 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+######################################################################
+
+BEGIN_PGML
+
+One coin in a collection of 65 coins has two heads; the rest of the coins are
+fair. If a coin, chosen at random from the lot and then tossed, turns up heads
+six times in a row, what is the probability that it is the two-headed coin? [_______________]{0.5}
+
+
+
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+
+---
+### Solution ###
+
+What the question asks is the probability of a coin being two-head, *given* that we have tossed six heads in a row.
+
+[``
+\begin{align*}
+\textbf{Pr}(\text{two-head} | \text{six heads in a row}) &= \frac{\textbf{Pr}(\text{two-head, six heads in a row})}{\textbf{Pr}(\text{six heads in a row})} \\
+&=\frac{\textbf{Pr}(\text{six heads in a row | two-head})\textbf{Pr}(\text{two-head})}{\textbf{Pr}(\text{six heads in a row, two-head)} + \textbf{Pr}(\text{six heads in a row, one-head)}} \\
+&=\frac{\textbf{Pr}(\text{six heads in a row | two-head})\textbf{Pr}(\text{two-head})}{\textbf{Pr}(\text{six heads in a row | two-head})\textbf{Pr}(\text{two-head}) + \textbf{Pr}(\text{six heads in a row | one-head})\textbf{Pr}(\text{one-head})} (*)
+\end{align*}
+``]
+
+Using Bayes Rule, we convert the joint probability to one conditioned on whether the dice is two-head or one-head. 
+
+[``
+\textbf{Pr}(\text{six heads in a row, two-head}) = \textbf{Pr}(\text{six heads in a row | two-head})\textbf{Pr}(\text{two-head})
+``]
+
+Because each toss is independent, the joint probability is the product of the individual probabilities.
+
+[``
+\textbf{Pr}(\text{six heads in a row | two-head}) = 
+\prod_{i=1}^6 \textbf{Pr}(\text{the $i$'th toss is head}| \text{two-head}) = 1
+``]
+
+[``
+\textbf{Pr}(\text{six heads in a row | one-head}) = 
+\prod_{i=1}^6 \textbf{Pr}(\text{the $i$'th toss is head}| \text{one-head}) = (1/2)^6
+``]
+
+Also, we know from the question that,
+
+[``
+\textbf{Pr}(\text{two-head}) = 1/65
+``]
+
+and
+
+[``
+\textbf{Pr}(\text{one-head}) = 64/65
+``]
+
+These give us all we need to compute formula (\*). The result is [`\textbf{Pr}(\text{two-head} | \text{six heads in a row}) = 0.5`].
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

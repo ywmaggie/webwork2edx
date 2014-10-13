@@ -1,0 +1,82 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+n_blue=myrandom(3,6,1)
+n_total=2*n_blue
+prob_second_sock=(n_blue-1)/(n_total-1)
+prob_both_socks=1/2*prob_second_sock
+
+
+
+
+answer1=1.0*n_total
+answer2=1.0*n_blue
+answer3=1.0*1/2
+answer4=1.0*n_total-1
+answer5=1.0*n_blue-1
+answer6=1.0*prob_second_sock
+answer7=1.0*prob_both_socks
+answer8=1.0*prob_both_socks
+answer9=1.0*prob_both_socks*2
+</script>
+<p></p>
+<p></p>
+<p>Now we turn to a problem regarding drawing socks from a drawer.</p>
+<p>A drawer with $n_blue red socks and $n_blue blue socks.</p>
+<p>We will calculate the probability that we draw two socks of the same color.</p>
+<p>When we first draw out a sock, there are <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ total socks in the drawer, <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ of which are blue.</p>
+<p>Therefore, the probability of drawing a blue sock is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>If we have drawn a blue sock, there are now <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ total socks in the drawer, <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ of which are blue.</p>
+<p>Therefore, the probability of drawing a second blue sock is <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>We can conclude, then, that the probability of drawing two blue socks is <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>Since there are equal numbers of red and blue socks in the drawer, we can also conclude that the probability of drawing two red socks is <numericalresponse answer="$answer8">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>Therefore, there is a <numericalresponse answer="$answer9">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ probability of drawing two socks of the same color.</p>
+<p></p>
+</problem>

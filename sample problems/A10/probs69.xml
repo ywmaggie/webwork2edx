@@ -1,0 +1,86 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+n = 2*myrandom(40,50,1)
+
+
+
+answer1 = 1.0*1/2
+answer2 = 1.0*1/4
+answer3 = 1.0*0
+answer4 = 1.0*1/2
+answer5 = 1.0*0
+answer6 = 1.0*6/4
+answer7 = 1.0*0
+answer8 = 1.0*n/4
+answer9 = 1.0*1/2
+answer10 = 1.0*1/4
+answer11 = 1.0*0
+answer12 = 1.0*1/2
+answer13 = 1.0*0
+answer14 = 1.0*6/4
+answer15 = 1.0*0
+answer16 = 1.0*n/4
+</script>
+<p><br/>
+Let \(X_1, X_2, \ldots, X_{100}\) be the outcomes of \(100\) independent rolls of a fair coin.  <br/>
+\(P(X_i=0)=P(X_i=1)=0.5\)  <br/>
+1. \(\mathbb{E}(X_1) = \)<numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+2. \(var(X_1) = \)<numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+Define the random variable \(X\) to be \(X_1 - X_2\). <br/>
+3. \(\mathbb{E}(X) = \)<numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+4. \(var(X) = \)<numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  <br/>
+   <b>Hint:</b> if \(X,Y\) are independent random variables then \(var(X+Y)=var(X)+var(Y)\)<br/>
+Define the random variable \(Y = X_1 - 2X_2 + X_3\). <br/>
+5. \(\mathbb{E}(Y) = \)<numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+6. \(var(Y) = \)<numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  <br/>
+   <b>Hint:</b> if \(a\) is a constant and \(X\) a random variable, then \(var(aX)=a^2 var(X)\).<br/>
+Define the random variable \(Z = X_1 - X_2 + X_3 - X_4 + ... + X_{$n-1} - X_{$n}\). <br/>
+7. \(\mathbb{E}(Z) = \)<numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+8. \(var(Z) = \)<numericalresponse answer="$answer8">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

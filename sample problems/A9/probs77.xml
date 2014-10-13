@@ -1,0 +1,131 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+bins = myrandom(5,10,1)
+
+
+
+answer1 = "1-1/n"
+answer2 = "n(1-1/n)"
+answer3 = "0"
+answer4 = "1/n"
+answer5 = "(n-1)(1/n)"
+answer6 = "(n-i+1)/n"
+answer7 = "(n+1)/2"
+answer8 = "fact(n)/(fact(i)*fact(n-i))"
+answer9 = "fact(i-1)"
+answer10 = "fact(n-i)"
+answer11 = "(fact(n)*fact(i-1)*fact(n-i))/(fact(n-i)*fact(i))"
+answer12 = "(fact(n)*fact(i-1)*fact(n-i))/(fact(n-i)*fact(i)*fact(n))"
+answer13 = "1/i"
+answer14 = "ln(n)"
+</script>
+<p><br/>
+<br/>
+Pick a random permutation of \((1,2,\ldots,n)\). Let \(X_i\) be the number that ends up in the <br/>
+\(i\)th position. For instance, if the permutation is \((3,2,4,1)\) then <br/>
+\(X_1 = 3\), \(X_2 = 2\), \(X_3 = 4\), and \(X_4 = 1\).<br/>
+<b>(a)</b> What is the expected number of positions at which \(X_i \neq i\) (i.e. the number of _wrong_ positions)?<br/>
+Let random variable \(D\) represents the number of wrong positions, we aim to find \(\mathbb{E}(D)\).<br/>
+If we devise a new r.v. \(Y_i = \{0,1\}\) to represent whether or not \(X_i \neq i\), then it is easy to see that, \(D = Y_1 + Y_2 + \cdots + Y_n\). <br/>
+The linearity of expectation gives: <br/>
+\(\mathbb{E}(D) = \mathbb{E}(Y_1 + Y_2 + \cdots + Y_n) = \mathbb{E}(Y_1) + \mathbb{E}(Y_2) + \cdots + \mathbb{E}(Y_n)\). Notice that all positions are equivalent, so all \(Y_i\) have the same distribution. <br/>
+We can easily compute \(\mathbb{E}(Y_i) = 0 \cdot \textbf{Pr}(X_i = i) + 1 \cdot \textbf{Pr}(X_i \neq i) = \)<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+It follows that,<br/>
+\(\mathbb{E}(D) = \)<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+<b>(b)</b> What is the expected number of positions at which \(X_i = i + 1\)?<br/>
+Similar to the previous question, we let \(D\) represent the number of positions at which \(X_i = i + 1\), and let \(Y_i = {0,1}\) represent whether or not \(X_i = i+1\) at a specific position. Again we use the linearity of expectations. Notice that this time, not all \(Y_i\) are the same, because \(Y_n\) is always 0, while the other \(Y_i\)'s have some chances of taking both values.<br/>
+In other words \( \mathbb{E}(Y_n) = \) <formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+and for all \(1\leq i &lt; n   \mathbb{E}(Y_i) = \) <formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+Using the linearity of expectation we get that<br/>
+\(\mathbb{E}(D) = \)<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+<b>(c)</b> What is the expected number of positions at which \(X_i  \ge i\)?<br/>
+In this part, the different \(Y_i\)'s have different distributions, but you should be able to compute each of \(\mathbb{E}(Y_i)\) easily.<br/>
+\(\mathbb{E}(Y_i) = \)<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+\(\mathbb{E}(D) = \)<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer7">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  <br/>
+<b>Hint:</b> use the equality: \(1+2+\cdots +n = \frac{n(n+1)}{2} \)<br/>
+<b>(d)</b> What is the expected number of positions at which \(X_i &gt; \textbf{max}(X_1, . . . ,X_{i1})\)?<br/>
+In this part, \(\mathbb{E}(Y_i)\) is not so obvious. We know that \(\mathbb{E}(Y_i) = \textbf{Pr}(X_i &gt; \textbf{max}(X_1, . . . ,X_{i1}))\), but how do we compute this probability ? <br/>
+We are going to use the combinatorial method. Fix the value of \(i\). <br/>
+Let \(A_i\) be the set of all permutations which obey the condition \(X_i &gt; \textbf{max}(X_1, . . . ,X_{i1})\). We will calculate \(|A_i|\)<br/>
+Let us design a method for constructing the elements of \(A_i\). We first choose a <b>set</b> \(S_i\) of \(i\) different numbers from 1 to \(n\) to put in the bins \(X_1\) through \(X_i\). The largest of these \(i\) numbers will be \(X_i\), and the remaining \(n-i\) numbers can be assigned arbitrarily to \(X_{i+1}, \cdots, X_{n}\). <br/>
+1. How large is the sample space, i.e. how many possibilities are there for choosing the <b>set</b> \(S_i\) when there is no restriction on the values for \(X_i\) other than that they are a subset of \(\{1,\ldots,n\}\)? <formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer8">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> (Note that \(S_i\) is a set, i.e. order does not matter).<br/>
+2. How many ways are there to place the elements of \(S_i\) into the bins \(X_1\) through \(X_i\)?<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer9">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  <br/>
+<b>Hint:</b> recall that \(X_i\) has to be the largest of the \(i\) elements, therefor only \(i-1\) elements can be freely placed in positions \(X_1\) through \(X_{i-1}\).<br/>
+3. For positions after \(i\), we can arbitrarily assign the unused \(n-i\) numbers, so that gives us <formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer10">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> permutations for position \(i+1\) through \(n\).<br/>
+4. taking the product of the numbers we calculated in 1,2,3 we find that \(|A_i| = \)<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer11">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+5. Finally we know the size of the entire outcome space is \(n!\), dividing by \(n!\) we get that<br/>
+\(\mathbb{E}(Y_i)=P(A_i) = \frac{|A_i|}{n!} = \) <formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer12">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> which simplifies to \(\mathbb{E}(Y_i)=\)<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer13">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+Now you should be able to compute \(\mathbb{E}(D) = \sum_{i=1}^n \mathbb{E}(Y_i)\)<br/>
+For large \(n\), \(\mathbb{E}(D) \approx \)<formularesponse type="ci" samples="n,i@1,1:10,10#10" answer="$answer14">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> <br/>
+<b>Hint:</b> use the approximation \(\sum_{i=1}^n 1/i \approx \ln n\)<br/>
+</p>
+</problem>

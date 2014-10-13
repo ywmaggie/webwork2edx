@@ -1,0 +1,58 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+sub comb
+{
+	fact($_[0])/(fact($_[1])*fact($_[0]-$_[1]));
+}
+
+$ans8 = 40/comb(52,5);
+$ans8Real = Real("$ans8");
+$ans9 = 4/comb(52,5);
+$ans9Real = Real("$ans9");
+
+
+######################################################################
+
+BEGIN_PGML
+## Rolling 4 Dice ##
+
+A Six-Sided Die has six faces, numbered 1, 2, 3, 4, 5, and 6.  We are going to do some computation about the sum of rolling the dice 4 times.
+
+First, the number of all possible results from rolling one die is [___________________________________________]{6}.
+
+The number of 4-tuples that result from rolling 4 dice is [___________________________________________]{"6^4"}.
+
+Suppose you represent a 4-tuple as a 4 digit number with each digit being in the range 1-6. thus rolling 3 four times in a row is represented as 3333.
+
+The set of 4 tuples that sum to 4 contains just one element and is {1111}
+
+What is set of 4-tuples that sum to 5? [___________________________________________]{Set(1112,1121,1211,2111)}.
+
+The number of 4-tuples that sum to 5 is therefore [___________________________________________]{4}.
+
+Therefore, the probability of rolling a sum of 5 when rolling four dice is [___________________________________________]{"4/(6^4)"}.
+
+This one is a little harder. What is the set of tuples that sum to 6?
+[___________________________________________]{Set(1122,1212,2112,2121,1221,2211,1113,1131,1311,3111)}
+
+The number of 4-tuples that sum to 6 is
+[___________________________________________]{10}.
+
+Therefore, the probability of rolling a sum of 41 when rolling seven dice is
+[___________________________________________]{"10/(6^4)"}.
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

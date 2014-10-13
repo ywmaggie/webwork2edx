@@ -1,0 +1,87 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "unionTables.pl"
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$bins = random(5,10,1);
+
+######################################################################
+
+BEGIN_PGML
+
+## Independent random variables ##
+
+Random variables [`X`] and [`Y`] are [$BITALIC]* independent [$EITALIC]* if
+
+[$BCENTER]*
+[`` \mbox{Pr}(X=x, Y=y) \ = \ \mbox{Pr}(X=x) \mbox{Pr}(Y=y) ``]
+[$ECENTER]*
+
+for all [`x,y`]. In words, the joint distribution of [`(X,Y)`] factors into the product
+of the individual distributions. This also implies, for instance, that
+
+[$BCENTER]*
+[`` \mbox{Pr}(X = x | Y = y) \ = \ \mbox{Pr}(X=x) .``]
+[$ECENTER]*
+
+
+Are the following pairs [`(X,Y)`] independent?（Answer 1 for yes, 0 for no）
+
+	1. Pick a random card out of a standard deck. Define [`X`] to be [`1`] if it is a heart;
+ and [`0`] otherwise. Define [`Y`] to be 1 if it is a jack, queen, or king; and [`0`] otherwise. [_____]{1}
+
+	2. Toss a fair coin [`n`] times, and define [`X`] to be the number of heads, and [`Y`] to 
+be [`1`] if the last toss is heads (and [`0`] otherwise).[_____]{0}
+
+	3. [`X`] and [`Y`] take values in [`\{-1,0,1\}`], and their joint distribution is given by 
+the following table of probabilities. [______]{1}
+
+END_PGML
+
+$bHTML="";
+$eHTML="";
+
+TEXT(
+BeginTable(),
+$PAR,
+Row(['','Y=-1','Y=0','Y=1'],separation=>10),
+Row(['X=-1','0.4','0.16','0.24'],separation=>10),
+Row(['X=0','0.05','0.02','0.03'],separation=>10),
+Row(['X=1','0.05','0.02','0.03'],separation=>10),
+EndTable()
+);
+
+BEGIN_PGML
+
+If [`X,Y`] are independent, they satisfy the following useful [$BITALIC]* product rule [$EITALIC]*:
+
+[$BCENTER]*
+[`` \mathbb{E}(XY) \ = \ \mathbb{E}(X) \mathbb{E}(Y) .``]
+[$ECENTER]*
+
+Another useful fact is that [`f(X)`] and [`g(Y)`] must also be independent, for any
+functions [`f`] and [`g`].
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+### Solution ###
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

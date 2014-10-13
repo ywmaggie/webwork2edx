@@ -1,0 +1,88 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+n = myrandom(40,100,5)
+d = myrandom(2,5,1)
+
+dev = 1.0/sqrt(12)*sqrt(n)
+a1 = Q(d/dev)
+ans = 2*Q(d/dev)
+
+answer1 = "0"
+answer2 = 1.0*sqrt(1/12)
+answer3 = "0"
+answer4 = 1.0*1/sqrt(12)*sqrt(n)
+answer5 = 1.0*(d-0)/dev
+answer6 = 1.0*a1
+answer7 = 1.0*ans
+
+</script>
+<p><br/>
+$n numbers are rounded off to the nearest integer and then summed. Suppose the individual round-off error are uniformly distributed over \( (-.5, .5) \).<br/>
+---<br/>
+Remember a random variable that follows a uniform distribution over \((a,b)\) has a mean of \((a+b)/2\), and variance of \(\frac{1}{12}(b-a)^2\).<br/>
+What is the mean of the round-off error of one number? <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+What is the standard deviation of the round-off error of one number? <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+---<br/>
+Suppose the <b>sum</b> of the round-off errors is \(Y\).<br/>
+What is the mean of \(Y\)? <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+What is the standard deviation of \(Y\)? <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+---<br/>
+To compute the probability that the resultant sum of the $n numbers differs from the exact sum by more than $d, we find the two tails on the distribution of \(Y\).<br/>
+What is the z-score at \(Y=$d\) ? <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+What is the probability that the rounded sum is <b>larger</b> than the exact sum by more than $d ?<numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+What is the probability that the rounded sum <b>differs</b> from the exact sum by more than $d ?<numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

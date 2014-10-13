@@ -1,0 +1,74 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+$p1 = random(20,27,1);
+$p2 = random(28,37,1);
+$p3 = 100 - $p1 - $p2;
+
+$defective1 = random(6,8,1);
+$defective2 = random(4,7,1);
+$defective3 = random(1,4,1);
+
+$defective = $p1*$defective1 + $p2*$defective2 + $p3*$defective3;
+$defective_probability = ($p1*$defective1 + $p2*$defective2 + $p3*$defective3)/10000;
+$defective_given_1 = $p1*$defective1 / $defective;
+Context("Numeric");
+
+BEGIN_PGML
+
+A particular car manufacturer has three factories [`F_1`], [`F_2`], [`F_3`] making [$p1]\%, [$p2]\%, 
+and [$p3]\%, respectively, of its cars. Of their output, [$defective1]\%, [$defective2]\%, and [$defective3]\%, respectively, are 
+defective. A car is chosen at random from the manufacturer's supply.
+
+---
+[`1.`] What is the probability that the car is defective? [________________]{"($p1*$defective1 + $p2*$defective2 + $p3*$defective3)/10000"}
+
+The event that the car is defective can be split into three disjoint cases:
+being defective and made by each of the three factories. 
+
+Using the law of total probability, we can write this as:
+
+[``\begin{align*}
+\textbf{Pr}(\text{defective}) & = \textbf{Pr}(\text{defective}, F_1) + \textbf{Pr}(\text{defective}, F_2) + \textbf{Pr}(\text{defective}, F_3)\\
+& = \textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1) + \textbf{Pr}(\text{defective}|F_2)\textbf{Pr}(F_2) + \textbf{Pr}(\text{defective}|F_3)\textbf{Pr}(F_3) \\
+\end{align*}
+``]
+
+---
+[`2.`] Given that the car is defective, what is the probability that it came from factory [`F_1`]?[________________]{"$p1*$defective1/$defective"}
+
+The description literally tells us what probability we should solve for: [`\textbf{Pr}(F_1|\text{defective})`]. 
+
+Using Bayes rule, convert this conditional probability into a joint probability:
+
+[``\textbf{Pr}(F_1|\text{defective}) = \frac{\textbf{Pr}(F_1, \text{defective})}{\textbf{Pr}(\text{defective})}
+``]
+
+Again using Bayes rule, convert the joint probability into conditional probability that are known.
+
+[``\textbf{Pr}(F_1, \text{defective}) = \textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1)``]
+---
+*Notice* that by applying Bayes rule twice, we reverse the condition, and we are able to write [`\textbf{Pr}(F_1 | \text{defective})`] in terms of [`\textbf{Pr}(\text{defective} | F_1)`] along with some scaling factors. This, is an instance of one of the most important formulae in Bayesian statistics: [``\textbf{Pr}(A|B) = \frac{\textbf{Pr}(B|A)\textbf{Pr}(A)}{\textbf{Pr}(B)}.``]
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+
+---
+### Solution ###
+
+[``\textbf{Pr}(\text{defective}) = \textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1) + \textbf{Pr}(\text{defective}|F_2)\textbf{Pr}(F_2) + \textbf{Pr}(\text{defective}|F_3)\textbf{Pr}(F_3) = [$defective_probability]``]
+
+[``\textbf{Pr}(F_1, \text{defective}) = \frac{\textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1)}{\textbf{Pr}(\text{defective})} = [$defective_given_1]``]
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

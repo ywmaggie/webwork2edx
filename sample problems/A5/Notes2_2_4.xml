@@ -1,0 +1,23 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+answer1 = "2k*ln(k)"
+</script>
+<p></p>
+<p></p>
+<p>Many probability questions turn out to be thinly disguised balls-and-bins problems. Here's an example. Suppose that each cereal box contains one of \(k\) action figures (chosen uniformly at random). How many cereal boxes should you buy in order to guarantee, with high probability, that you collect all \(k\) figures?(assuming \(k\) is very large) <formularesponse type="ci" samples="n,m,k@1,1,1:20,20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p></p>
+</problem>

@@ -1,0 +1,28 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+answer1=1.0*C(52,5)
+</script>
+<p></p>
+<p></p>
+<p>A hand in Texas Hold'em consists of 5 cards from a deck of 52 cards. A hand may fall into one of the following categories. We are going to compute the probability of each category.</p>
+<p>First, the number of all possible hands is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p></p>
+</problem>

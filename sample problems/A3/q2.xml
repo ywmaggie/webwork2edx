@@ -1,0 +1,75 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+nCards=myrandom(4,7,1)
+b=myrandom(2,nCards-1,1)
+nSame=C(13,b)
+
+nTotal=C(52,nCards)
+nOther=C(39,nCards-b)
+
+nEvent=nSame*nOther
+ans=4*C(13,b)*C(39,nCards-b)/C(52,nCards)
+
+
+answer1=1.0*nTotal
+answer2=1.0*4
+answer3=1.0*nSame
+answer4=1.0*52-13
+answer5=1.0*nOther
+answer6=1.0*4*C(13,b)*C(39,nCards-b)
+answer7=1.0*ans
+</script>
+<p></p>
+<p></p>
+<p>A poker hand consisting of $nCards cards is dealt from a standard deck of 52 cards.</p>
+<p>Find the probability that the hand contains exactly $b cards of the same suite. It is allowed to have any number of cards in other suites.</p>
+<p>First, we know the number of all possible hands of $nCards cards is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>Then, we calculate the number of hands that contain exactly $b cards of the same suite.</p>
+<p>	</p>
+<p>	We first choose which suite the $b cards is. Obviously, there are <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ possibilities.</p>
+<p>	The number of possibilities for the ranks of these cards is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>	The other $nCards-$b cards in the hand can be any cards that has a different suite than the $b cards. There are a total of <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ such cards. To choose $nCards-$b from them, there are <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ possibilities.</p>
+<p>	Thus we can compute the number of hands that have exactly $b cards of the same suite, which is <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>Finally we can calculate the probability of such hands, by calculating th ratio of the number of such hands to the number of all hands. This is <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

@@ -1,0 +1,66 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+
+answer1="1-1/n"
+answer2="1-1/n"
+answer3="(1-1/n)^m"
+answer4="1-3/n"
+answer5="1-3/n"
+answer6="(1-3/n)^m"
+</script>
+<p></p>
+<p></p>
+<p>You have \(m\) indistinguishable balls and in front of you is a row of \(n\) bins. You place each ball into a bin chosen at random. What is the chance that the \(i\)th bin is empty? </p>
+<p>We will solve this question in three steps</p>
+<p>1. There are \(m\) balls, and we want every single one of them to miss the \(i\)th bin. The probability that after placing the first ball the \(i\)th bin is empty, is <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>2. Given that the \(i\)th bin is empty after the first ball is placed, what is the probability that it is still empty after the placement of the second ball ? <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>The same answer applies to the third ball, the fourth ball, and so on.</p>
+<p>3. Therefore, after the last ball is placed, what is the probability that the \(i\)th bin is still empty ? <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>---</p>
+<p>Assuming \(n&gt;3\), let us use the similar technique to find the probability that bins 1, 2 and 3 are empty.</p>
+<p>The probability that these bins are empty after placing the first ball is <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>Suppose these bins are empty after the first ball is placed, the probability that these bins are still empty after placing the second ball is <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>Think about these answers for all later balls. What is the probability that the three bins are still empty after the last ball is placed ? <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p></p>
+</problem>

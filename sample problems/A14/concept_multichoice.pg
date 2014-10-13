@@ -1,0 +1,21 @@
+DOCUMENT();
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "parserPopUp.pl",
+  "PGcourse.pl",
+  "parserRadioButtons.pl",
+);
+
+TEXT(beginproblem());
+
+$radio = PopUp(["Just the Law of Large Number is sufficient", "LLN is not enough, we also need Central Limit Theorem to justify this behavior"],"Just the Law of Large Number is sufficient");    
+    
+BEGIN_PGML
+Two students are debating about this diminishing tail probability a consequence of which statistics rule. Student A argues that the Law of Large Number explains this behavior because this is basically what the weak LLN states, while student B argues that CLT explains this behavior because as n gets larger the Gaussian gets more concentrated and the tail gets smaller. Which of the following statements do you think is correct ?
+[____________]{$radio}
+END_PGML
+
+ENDDOCUMENT();

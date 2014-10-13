@@ -1,0 +1,33 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+### Straight : Five cards in sequence, but not all of the same suite ###
+
+1. The ranks of a straight is one of (Ace,2,3,4,5) ... (10,J,Q,K,Ace), so the number of possibilities for the ranks of a straight is [______]{10}.
+
+2. The suits can be anything other than all equal, so the number of possibilities for the suits of a straight is [______]{Compute("4**5 - 4")}.
+
+4. Thus the number of hands that is a straight is [______]{Compute("10*(4**5-4)")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("10*(4**5-4)/C(52,5)")}.
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

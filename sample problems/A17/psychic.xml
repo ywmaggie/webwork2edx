@@ -1,0 +1,64 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+a = 0.05/sqrt(0.16/200)
+q = Q(a)
+
+answer1 = 1.0*a
+answer2 = 1.0*q
+
+</script>
+<p><br/>
+<br/>
+A noted psychic was tested for extrasensory perception. The psychic was presented<br/>
+with 200 cards face down and asked to determine if the card were one of five symbols.<br/>
+The psychic was correct in 50 cases. Let p represent the probability that the psychic<br/>
+correctly identifies the symbol on the card in a random trial. Assume the 200 trials<br/>
+can be treated as a simple random sample.<br/>
+Suppose you wished to see if there were evidence that the psychic is<br/>
+doing better than just guessing. To do this, you test the hypotheses \(H_0 : p = .20\)<br/>
+versus \(H_{alternative} : p &gt; .20\).<br/>
+What is the z-score? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+What is the p-value for the test statistic? (You can use Q function in the answer) <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+Can you reject at the .05 significance level? (answer "yes" or "no") <stringresponse answer="yes" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+Can you reject at the .01 significance level? (answer "yes" or "no") <stringresponse answer="no" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+</p>
+</problem>

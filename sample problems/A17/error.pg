@@ -1,0 +1,74 @@
+##DESCRIPTION
+##KEYWORDS('')
+##
+## tsch tagged and PAID on 3-22-2004 
+
+## DBsubject('Statistics')
+## DBchapter('Hypothesis Testing')
+## DBsection('Elements of a Statistical Test')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Mathematical Statistics')
+## EditionText1('6')
+## AuthorText1('Wackerly, Mendenhall, Scheaffer')
+## Section1('10.2')
+## Problem1('4')
+
+
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+"PGauxiliaryFunctions.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+
+$mc1 = new_multiple_choice();
+$mc1->qa('Increasing \(\alpha\) will: ',
+	'Increase Type I error, decrease type II error'
+);
+$mc1->extra(
+	'Increase Type II error, decrease type I error',
+	'Decrease both.',
+	'Increase both.'
+);
+
+BEGIN_TEXT
+
+$PAR
+Choosing \(\alpha\) is a compromise between two types of errors: $BR
+$BBOLD Type I error $EBOLD: Rejecting the null hypothesis when it is correct $BR
+$BBOLD Type II error $EBOLD: Failing to reject the null hypothesis when it is
+incorrect. 
+
+$PAR
+$BCENTER
+\{ begintable(3) \}
+\{ row( " ", "Null hypothesis true (Seatbelts don't help)", "Null hypothesis false (Seatbelts help)") \}
+\{ row( "Fail to reject", "correct", "Type II" ) \}
+\{ row( "Reject null", "Type I", "correct" ) \}
+\{ endtable() \}
+$ECENTER
+
+$PAR
+\{ $mc1->print_q() \}
+$BR
+\{ $mc1->print_a() \}
+
+$PAR
+Alpha value is an upper bound on the probability of making a type I error (Incorrect rejection). $PAR
+
+END_TEXT
+ANS(radio_cmp($mc1->correct_ans));
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

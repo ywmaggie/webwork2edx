@@ -1,0 +1,91 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+  "contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.01);
+
+$a = Compute("0.05/sqrt(0.16/200)");
+$q = Compute("Q($a)");
+
+BEGIN_PGML
+
+[``\newcommand{\E}{\mathbb{E}}``]
+[``\newcommand{\R}{\mathbb{R}}``]
+[``\newcommand{\bP}{\mathbb{P}}``]
+[``\newcommand{\var}{\mbox{var}}``]
+[``\newcommand{\pr}{\mbox{Pr}}``]
+[``\def\X{{\cal X}}``]
+[``\def\cost{{\mbox{cost}}}``]
+[``\def\U{{\cal U}}``]
+[``\renewcommand{\log}{\mbox{log}_2}``]
+
+#### Answering a query ####
+
+(no question in this section)
+
+The first step in answering a query is to order query terms by importance. The important terms are those that are uncommon. For instance, in
+
+[``\verb|what are treatment options for pneumonia|``]
+
+the most important term is [``\verb|pneumonia|``], since this is the least common. Next comes [``\verb|treatment|``], and then [``\verb|options|``]. The remaining words are so common that they can be ignored.
+
+The next step is to look at the postings list, and get all pages containing the important query term(s). Then, assign each a score based on:
+* the reliability of that page
+* which of the important query terms it contains
+* the number of times each query term appears on that page, divided by the length of the page
+
+
+This yields an ordered list of webpages, starting with the "most relevant". But the list will typically contain way too many pages. So they need to be clustered, and the user can then be presented with one representative page from each cluster, with the option to select "more like this".
+
+For instance, pages about [``\verb|Rome|``] might be clustered into categories based on whether they refer to:
+* Ancient Rome
+* Modern Rome
+* The TV series "Rome"
+* and so on.
+
+END_PGML
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

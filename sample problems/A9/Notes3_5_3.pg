@@ -1,0 +1,73 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "unionTables.pl"
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$bins = random(5,10,1);
+
+######################################################################
+
+BEGIN_PGML
+#### Another property of the variance ####
+
+Here's a cartoon picture of a well-behaved distribution with mean [`\mu`] and 
+standard deviation [`\sigma`] (that is, [`\mu = \mathbb{E}(X)`] and [`\sigma^2 = \mbox{var}(X)`]).
+
+There is a picture 2.png
+
+The standard deviation quantifies the _spread_ of the distribution
+whereas the mean specifies its _location_. If you increase all values of
+[`X`] by 10, then the distribution will shift to the right and the mean will 
+increase by 10. But the spread of the distribution -- and thus the standard
+deviation -- will remain unchanged.
+
+On the other hand, if you double all values of [`X`], then its distribution 
+becomes twice as wide, and thus its standard deviation [`\sigma`] is doubled. 
+Which means that its variance, which is the square of the standard deviation,
+gets multiplied by 4.
+
+In summary, for any constants [`a,b`]:
+
+[$BCENTER]*
+[`` \mbox{var}(aX+b) = a^2 \mbox{var}(X) .``]
+[$ECENTER]*
+
+Contrast this with the mean: [`\mathbb{E}(aX + b) = a \mathbb{E}(X) + b`].
+
+---
+#### Linearity of variance ####
+
+If [`X`] and [`Y`] are independent random variables, then [`\mbox{var}(X+Y) = \mbox{var}(X) + \mbox{var}(Y)`].
+More generally, if [`X_1, \ldots, X_n`] are independent, then
+
+[$BCENTER]*
+[`` \mbox{var}(X_1 + \cdots + X_n)
+\ = \ 
+\mbox{var}(X_1) + \cdots + \mbox{var}(X_n).
+``]
+[$ECENTER]*
+
+In contrast, linearity of expectation ([`\mathbb{E}(X+Y) = \mathbb{E}(X) + \mathbb{E}(Y)`]) holds
+even if the random variables are _not_ independent.
+
+
+Suppose [`X`] and [`Y`] are independent random variables. [`X`] has mean of 1 and variance of 2, [`Y`] has mean of 3 and variance of 2, then for the r.v. [`Z = 3X+4Y+2`], the mean is [_______]{"3*1+4*3+2"} and the variance is [_______]{"3^2*2+4^2*2"}.
+
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

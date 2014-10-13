@@ -1,0 +1,101 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+"PGauxiliaryFunctions.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+sub Qinv {
+   shift; my $x = shift;
+   $xx = (1-2*$x)/2;
+   $b = main::normal_distr($xx, mean=>0, deviation=>1);
+   return $b; 
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1},
+Qinv =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.001);
+
+##Context()->texStrings;
+
+Context()->variables->are(
+      n => ['Real', limits=>[1,100], resolution=>1],
+    );
+
+$k = random(3,5);
+$p = Compute("($k-1)/$k");
+$z = Compute("(0.5-$p)/(sqrt($p*(1-$p)/n))");
+$q = Compute("Qinv(0.05)");
+$n_normal = Compute("($q*sqrt($p*(1-$p))/(0.5-$p))**2");
+
+BEGIN_PGML
+
+You have an algorithm A for testing whether a Boolean formula f is satisfiable or not, but it is only correct with probability [`[$k-1]/[$k]`]. More precisely, you can repeatedly run A on the same formula f, and each time it outputs the correct answer with probability [`[$k-1]/[$k]`].
+
+To reduce the probability of error, you run A(f) [`n`] times, and return the majority answer. What should [`n`] be if you want the probability of error to be less than 0.05?
+
+---
+
+Let [`C_i`] be a binary random variable indicating whether the [`i^{th}`] execution of algorithm A is correct.  Let [`C = (C_1 + C_2 ... C_n)/n`].  
+- What is the minimum value of [`C`] such that our method of returning the majority answer will be correct?  [_____]{"1/2"}
+- What is [`\mathbb{E}(C)`]?  [________]{"$p"}
+- What is [`var(C)`]?  [_________]{(1/n)*$p*(1-$p)} (Use [`n`] as variable in this answer)
+
+---
+_Approach 1_:
+Chebyshev's inequality says for random variable [`Y`] with mean [`\mu`] and for any positive number [`a>0`], $$P(|Y-\\mu| \\geq a) \\leq var(Y)/a^2$$
+- Using Chebyshev's inequality, what is an upper bound on the probability your "majority algorithm" is incorrect?  [_________________]{(1/n)*$p*(1-$p)/(($p-0.5)**2)}  (Use [`n`] as variable in this answer)
+- What is the smallest *integer* value for [`n`] so that the probability that the "majority algorithm" makes an error is  at most 0.05?  [________________]{"ceil(20*$p*(1-$p)/(($p-0.5)**2))"} (Give a numerical answer)
+
+---
+
+_Approach 2_:
+Using Central Limit Theorem, approximate the distribution of [`C`] as a normal. 
+- What is the z-score of [`C=0.5`] [___________]{"$z"} (Use [`n`] as variable in this answer)
+- What is the smallest *integer* value for [`n`] so that the "majority algorithm" makes an error with probability at most 0.05? [_____________________]{"ceil($n_normal)"} (Give a numerical answer. Use [`Q^{-1}(0.05) = 1.6449`], where [`Q^{-1}`] is the inverse of Q function)
+
+---
+
+Notice that [`n`] obtained with Approach 2 is much smaller than that obtained with Approach 1, this is because using the normal approximation and Q function give us a much tighter bound than the Chebyshev bound. (The Q function drops exponentially fast as the value deviates from the mean, while the Chebyshev bound drops only quadratically fast)
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

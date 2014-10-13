@@ -1,0 +1,96 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "unionTables.pl"
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$bins = random(5,10,1);
+
+BEGIN_PGML
+
+## Variance ##
+
+If you need to summarize a probability distribution by a single number, then 
+the mean is a reasonable choice -- although often the _median_ is better 
+advised (more on this later). But neither the mean nor median captures how
+_spread out_ the distribution is.
+
+Look at the following two distributions:
+
+There is a picture 1.png
+
+They both have the same expectation, 100, but one is concentrated near the middle 
+while the other is pretty flat. To distinguish between them, we are interested
+not just in the mean [`\mu = \mathbb{E}(X)`], but also in the typical distance from the
+mean, [`\mathbb{E}(|X - \mu|)`]. It turns out to be mathematically convenient to work with
+the square instead: the _variance_ of [`X`] is defined to be
+
+[$BCENTER]*
+[`` \mbox{var}(X)  \ = \ \mathbb{E}((X - \mu)^2) \ = \ \mathbb{E}((X - E(X))^2) .``]
+[$ECENTER]*
+
+In the above example, which distribution has a higher variance? [________]{1} (Answer 0 for the left, 1 for the right)
+
+---
+#### Properties of the variance ####
+
+In what follows, take [`\mu`] to be [`\mathbb{E}(X)`].
+
+1\. The variance cannot be negative.
+
+    Since each individual value [`(X - \mu)^2`] is [`\geq 0`] (since its squared), the 
+average value [`\mathbb{E}((X - \mu)^2)`] must be [`\geq 0`] as well.
+
+2\. [`\mbox{var}(X) = \mathbb{E}(X^2) - \mu^2`].
+
+    This is because,
+
+[$BCENTER]*
+[`` \begin{eqnarray*}
+\mbox{var}(X)  & = & \mathbb{E}((X - \mu)^2) \\
+         & = & \mathbb{E}(X^2 + \mu^2 - 2\mu X) \\
+         & = & \mathbb{E}(X^2) + \mathbb{E}(\mu^2) + \mathbb{E}(-2 \mu X) \ \ \mbox{(linearity)} \\
+         & = & \mathbb{E}(X^2) + \mu^2 - 2 \mu \mathbb{E}(X) \\
+         & = & \mathbb{E}(X^2) + \mu^2 - 2 \mu^2 \ = \ \mathbb{E}(X^2) - \mu^2.
+\end{eqnarray*}
+``]
+[$ECENTER]*
+
+3\. For any random variable [`X`], it must be the case that [`\mathbb{E}(X^2) \geq (\mathbb{E}(X))^2`].
+
+    This is simply because [`\mbox{var}(X) = \mathbb{E}(X^2) - (\mathbb{E}(X))^2 \geq 0`].
+
+4\. [`\mathbb{E}(|X - \mu|) \leq \sqrt{\mbox{var}(X)}`].
+
+    If you apply the previous property to the random variable [`|X - \mu|`] instead of [`X`],
+you get [`\mathbb{E}(|X - \mu|^2) \geq (\mathbb{E}(|X - \mu|))^2`]. Therefore,
+[`\mathbb{E}(|X - \mu|) \leq \sqrt{\mathbb{E}(|X - \mu|^2)} = \sqrt{\mbox{var}(X)}`]. 
+
+
+The last property tells us that [`\sqrt{\mbox{var}(X)}`] is a good measure of the typical spread of
+[`X`]: how far it typically lies from its mean. We call this the _standard deviation_ of 
+[`X`].
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+### Solution ###
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

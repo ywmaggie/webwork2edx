@@ -1,0 +1,90 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+k = myrandom(3,5)
+p = (k-1)*1.0/k
+z = (0.5-p)*1.0/(sqrt(p*(1-p)/n))
+q = Qinv(0.05)
+n_normal = (q*sqrt(p*(1-p))/(0.5-p))**2
+
+answer1 = 1.0*1/2
+answer2 = 1.0*p
+answer3 = "(1/n)*p*(1-p)"
+answer4 = "(1/n)*p*(1-p)/((p-0.5)**2)"
+answer5 = 1.0*ceil(20*p*(1-p)/((p-0.5)**2))
+answer6 = 1.0*z
+answer7 = 1.0*ceil(n_normal)
+
+</script>
+<p><br/>
+You have an algorithm A for testing whether a Boolean formula f is satisfiable or not, but it is only correct with probability \($k-1/$k\). More precisely, you can repeatedly run A on the same formula f, and each time it outputs the correct answer with probability \($k-1/$k\).<br/>
+To reduce the probability of error, you run A(f) \(n\) times, and return the majority answer. What should \(n\) be if you want the probability of error to be less than 0.05?<br/>
+---<br/>
+Let \(C_i\) be a binary random variable indicating whether the \(i^{th}\) execution of algorithm A is correct.  Let \(C = (C_1 + C_2 ... C_n)/n\).  <br/>
+- What is the minimum value of \(C\) such that our method of returning the majority answer will be correct?  <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- What is \(\mathbb{E}(C)\)?  <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- What is \(var(C)\)?  <formularesponse type="ci" samples="c,n@1,1:20,100#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> (Use \(n\) as variable in this answer)<br/>
+---<br/>
+_Approach 1_:<br/>
+Chebyshev's inequality says for random variable \(Y\) with mean \(\mu\) and for any positive number \(a&gt;0\), $P(|Y-\\mu| \\geq a) \\leq var(Y)/a^2<br/>
+- Using Chebyshev's inequality, what is an upper bound on the probability your "majority algorithm" is incorrect?  <formularesponse type="ci" samples="c,n@1,1:20,100#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  (Use \(n\) as variable in this answer)<br/>
+- What is the smallest <b>integer</b> value for \(n\) so that the probability that the "majority algorithm" makes an error is  at most 0.05?  <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> (Give a numerical answer)<br/>
+---<br/>
+_Approach 2_:<br/>
+Using Central Limit Theorem, approximate the distribution of \(C\) as a normal. <br/>
+- What is the z-score of \(C=0.5\) <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> (Use \(n\) as variable in this answer)<br/>
+- What is the smallest <b>integer</b> value for \(n\) so that the "majority algorithm" makes an error with probability at most 0.05? <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> (Give a numerical answer. Use \(Q^{-1}(0.05) = 1.6449\), where \(Q^{-1}\) is the inverse of Q function)<br/>
+---<br/>
+Notice that \(n\) obtained with Approach 2 is much smaller than that obtained with Approach 1, this is because using the normal approximation and Q function give us a much tighter bound than the Chebyshev bound. (The Q function drops exponentially fast as the value deviates from the mean, while the Chebyshev bound drops only quadratically fast)<br/>
+</p>
+</problem>

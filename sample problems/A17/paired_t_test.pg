@@ -1,0 +1,110 @@
+##DESCRIPTION
+##KEYWORDS('')
+##
+## tsch tagged and PAID on 3-22-2004 
+
+## DBsubject('Statistics')
+## DBchapter('Hypothesis Testing')
+## DBsection('Elements of a Statistical Test')
+## Date('6/3/2002')
+## Author('')
+## Institution('')
+## TitleText1('Mathematical Statistics')
+## EditionText1('6')
+## AuthorText1('Wackerly, Mendenhall, Scheaffer')
+## Section1('10.2')
+## Problem1('4')
+
+
+##ENDDESCRIPTION
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+"PGauxiliaryFunctions.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 0;
+
+$mc1 = new_multiple_choice();
+$mc1->qa('We have two alternatives layouts of the web pages A/B and want to decide which keeps the user on our web site for a longer time. To
+avoid confusing the user with constantly changing design, we use the same layout to the web pages presented to each user whenever they visit the site. which hypothesis test should we use?',
+	'two sample t-test, pooled variance'
+);
+$mc1->makeLast(
+	'1-sided z-value',
+	'One sample t-test',
+        'two sample t-test, pooled variance',
+	'paired t-test'
+);
+
+$mc2 = new_multiple_choice();
+$mc2->qa('If we show both layouts to the same user upon his different visits, which hypothesis test should we use?', 'paired t-test'
+);
+$mc2->makeLast(
+	'1-sided z-value',
+	'One sample t-test',
+	'two sample t-test, pooled variance',
+        'paired t-test'
+);
+
+$mc3 = new_multiple_choice();
+$mc3->qa("Which testing will better help us identify the superior layout? Consider the following scenario. Suppose layout B is generally more attractive than layout A. User John and user Peter both visited the website twice, and are presented with both layouts. With layout B, John's visit time increases from 60 seconds to 61 seconds, and Peter's visit time increases from 90 seconds to 91 seconds. The variance of the $BBOLD sample difference of average time $EBOLD is higher than the variance of the $BBOLD sample average of difference $EBOLD. Different users have varied behavior, but the trend is more clear if we focus on the change of each individual. Pairing data can factor out variations from one user to the next. In other words, compared to two sample t-test, paired t-test",  'lowers probability of Type II error, for the same probability of Type I error'
+);
+$mc3->makeLast(
+        'lowers probability of Type II error, for the same probability of Type I error',
+	'lowers probability of Type I error, for the same probability of Type II error',
+        'does not help. Both types of error still have the same probability'
+);
+
+BEGIN_PGML
+## The Student t-Test ##
+
+The t-test, invented in 1908 by William Sealy Gosset (whose pen-name was "Student") is one of the most commonly used statistical tests.
+
+The basic premise of the test is that we have two populations and we wish to know whether there is a significant difference between their means. For example, we would like to know whether kids that drink at least one glass of milk each day are significantly taller than their peers. The null hypothesis is that the means of both populations are the same.
+
+The two populations are assumed to be normally distributed. Or, invoking the central limit theorm, they are assumed to be the sum or mean of a large number of IID random variables.
+
+There are many variants of the t-test. We list some of the most popular.
+1. *One sample t-test:* We assume that we know the mean of one population and that we have a sample from the other population. Note that this is still different from the Z-test, because we do not a-priori know the variance of the sampled population.
+2. *Two sample t-test, Pooled std:* We have samples from both populations, and we assume that their variances are equal. Therefor we can pool both samples to estimate the variance.
+3. *Two sample t-test, un-Pooled std:* As in 2. but we don't assume that variances of the two populations are equal.
+4. *Paired t-test:* Suppose we want to show that coffee effects the speed with which people can perform calculations. We can test each person before and after drinking coffee and compare the two performances. In this situation we can "pair" the measurements, which here simply means take their difference. The test we then perform is a one-sample t-test in which the null hypothesis is that the mean is zero. We could, of course, use the same samples to perform a two-sample t-test, however, this would be a *weaker* test, i.e. it will have a higher probability of making a type II error (fail to reject the null hypothesis) for the same probability of making a type I error.
+
+----
+END_PGML
+
+BEGIN_TEXT
+$PAR$PAR
+$BBOLD A/B testing of web pages $EBOLD $PAR
+
+Suppose we want people to stay on our web page as long as possible,
+measure time between first and last click-on-site. $BR
+
+\{ $mc1->print_q() \}
+\{ $mc1->print_a() \}
+
+$PAR
+\{ $mc2->print_q() \}
+\{ $mc2->print_a() \}
+
+$PAR
+\{ $mc3->print_q() \}
+\{ $mc3->print_a() \}
+
+END_TEXT
+ANS(radio_cmp($mc1->correct_ans));
+ANS(radio_cmp($mc2->correct_ans));
+ANS(radio_cmp($mc3->correct_ans));
+
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

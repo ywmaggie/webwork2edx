@@ -1,0 +1,48 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+n=myrandom(10,50,1)
+
+k=myrandom(5,n-4,1)
+
+
+
+
+
+answer1=1.0*2**(n)
+answer2=1.0*fact*(n)/(fact*(k)*fact*(n-k))
+answer3=1.0*2**(n)/(fact*(n)/(fact*(k)*fact*(n-k)))
+</script>
+<p></p>
+<p></p>
+<p>In this problem we will continue our work from the previous problem, and find a general solution to getting $k heads while flipping $n coins. </p>
+<p>The total number of possible options of results for flipping $n coins is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>The combinations of $k of the $n locations for the tuple (a0, a1, a2, ... a$k) is</p>
+<p><numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>Therefore, the probability of getting $k heads when flipping $n fair coins is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

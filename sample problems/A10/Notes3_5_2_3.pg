@@ -1,0 +1,85 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$k = random(15,20,1);
+$n = random(1000,10000,1);
+######################################################################
+
+BEGIN_PGML
+Roll a [`k`]-sided die in which each face is equally likely to come up. The outcome space is [`X \in \{1,2,\ldots,k\}`].
+
+The expected outcome is
+
+[$BCENTER]*
+[``
+\mathbb{E}(X) 
+\ = \ 
+\frac{1 + 2 + \cdots + k}{k} 
+\ = \ 
+\frac{\frac{1}{2} k(k+1)}{k}
+\ = \ 
+\frac{k+1}{2},
+``]
+[$ECENTER]*
+using a special formula for the sum of the first [`k`] integers. [`1+2+3+...+k = \frac{k(k+1)}{2}`]
+
+There is also a formula for the sum of the first [`k`] squares, [`\sum_{i=1}^{k}{i^2} = \frac{1}{6}k(k+1)(2k+1)`].  
+Using this formula we can calculate the expected value of [`X^2`]:
+
+[$BCENTER]*
+[``
+\mathbb{E}(X^2) 
+\ = \ 
+\frac{1^2 + 2^2 + \cdots + k^2}{k}
+\ = \ 
+\frac{\frac{1}{6}k(k+1)(2k+1)}{k}
+\ = \ 
+\frac{(k+1)(2k+1)}{6}.
+``]
+[$ECENTER]*
+
+Combining the last two formulas can write an expression for the variance of [`X`]:
+
+[$BCENTER]*
+[``
+\mbox{var}(X)
+\ = \ 
+\mathbb{E}(X^2) - (\mathbb{E}(X))^2
+\ = \ 
+\frac{(k+1)(2k+1)}{6} - \frac{(k+1)^2}{4}
+\ = \ 
+\frac{k^2 - 1}{12}.
+``]
+[$ECENTER]*
+
+The standard deviation for rolling k dice is thus [`\sqrt{\frac{k^2 - 1}{12}} \approx \frac{k}{\sqrt{12}}`].
+----
+*Problems:*
+
+What is [`1^2+2^2+...[$k]^2`]?  [______________]{"$k * ($k+1) * (2 * $k + 1) / 6"}
+
+A [`[$k]`]-sided dice has [$k] faces numbered [`1,...[$k]`]. You roll the dice  [$n] times. After each roll you write down the outcome (a number between 1 and [$k]). You then compute the average of the [$n] numbers you wrote down.  
+Can you give an estimate of the result?  [__________________]{"($k+1)/2"}
+
+What is the standard deviation for rolling a [$k]-sided dice one time? (give the exact answer) [_____________]{"sqrt(($k^2-1)/12)"}
+
+What is the standard deviation of the average value produced by rolling the [$k]-sided dice [$n] times? (give the exact answer) [___________________]{"sqrt(($k^2-1)/(12*$n))"}
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

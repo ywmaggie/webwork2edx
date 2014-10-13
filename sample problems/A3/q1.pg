@@ -1,0 +1,58 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+ "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+$nCards=random(4,9,1);
+$b=random(2,$nCards-1,1);
+$nTotal = Compute("C(52,$nCards)");
+$nFace = Compute("C(12,$b)");
+$nOther = Compute("C(40,$nCards-$b)");
+
+BEGIN_PGML
+
+## Probability of face cards ##
+
+A poker hand consisting of [$nCards] cards is dealt from a standard deck of 52 cards.
+Find the probability that the hand contains exactly [$b] face cards (Jack, Queen or King).
+
+First, we know the number of all possible hands of [$nCards] cards is [_______]{Compute("C(52,$nCards)")}.
+
+Then, we calculate the number of hands that have exactly [$b] face cards.
+
+	The total number of face cards is 12 (Jack, Queen or King of all four suites). To choose [$b] from them we have [_______]{Compute("C(12,$b)")} possibilities.
+
+	The other [$nCards-$b] cards in the hand can be any of the non-face cards. There are a total of 52 - 12 = 40 non-face cards. To choose [$nCards-$b] form them, there are [________]{Compute("C(40,$nCards-$b)")} possibilities.
+
+	Thus we can compute the number of hands that have exactly [$b] face cards, which is [________]{Compute("C(12,$b)*C(40,$nCards-$b)")}.
+
+
+Finally we can calculate the probability of such hands, by calculating the ratio of the number of such hands to the number of all hands. This is [_______]{Compute("C(12,$b)*C(40,$nCards-$b)/C(52,$nCards)")}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+
+First, we know the number of all possible hands of [$nCards] cards is [`\begin{pmatrix} 52 \\ [$nCards] \end{pmatrix} = [$nTotal]`].
+
+Then, we calculate the number of hands that have exactly [$b] face cards.
+
+	The total number of face cards is 12 (Jack, Queen or King of all four suites). To choose [$b] from them we have [`\begin{pmatrix} 12 \\ [$b] \end{pmatrix} = [$nFace]`] possibilities.
+
+	The other [$nCards-$b] cards in the hand can be any of the non-face cards. There are a total of 52 - 12 = 40 non-face cards. To choose [$nCards-$b] form them, there are [`\begin{pmatrix} 40 \\ [$nCards-$b] \end{pmatrix} = [$nOther]`] possibilities.
+
+	Thus we can compute the number of hands that have exactly [$b] face cards, which is [`[$nFace] \times [$nOther]`].
+
+Finally we can calculate the probability of such hands, by calculating th ratio of the number of such hands to the number of all hands. This is [`\frac{[$nFace] \times [$nOther]}{[$nTotal]} = `][$ans]
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

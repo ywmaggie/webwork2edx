@@ -1,0 +1,102 @@
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+from math import e
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+  return 1-Phi(x)
+
+
+
+
+
+p = "(k/(e*n))"
+tk = myrandom(7,13,1)
+
+answer1 = "(1/n)*( (1-(1/n))**(n-1) )"
+answer2 = "exp((1/n)-1)"
+answer3 = 1.0*1/e
+answer4 = "1/(e*n)"
+answer5 = "p"
+answer6 = "p*(1-p)"
+answer7 = "p*(1-p)**(tk-1)"
+answer8 = "1/p"
+answer9 = "e*n*log(n)"
+
+</script>
+<p><br/>
+There are \(n\) processes \(P_1, \ldots, P_n\) that all want access to a single database.<br/>
+The problem is that if more than one process tries to access the database at the same time, <br/>
+none of them will succeed due to a particular locking mechanism. So instead, we use the <br/>
+following randomized protocol:<br/>
+For time \(t = 1, 2, \ldots\):  <br/>
+    Each processor flips a coin with heads probability \(1/n\)  <br/>
+    If heads, it attempts to access the database at time \(t\)<br/>
+Assume for all of the following questions that every process \(P_i\) tries to access the database at every timestep, even when \(P_i\) has previously accessed the database.  <br/>
+1. Fix any time \(t\), and let \(E_{t,i}\) be the event that process \(P_i\) successfully<br/>
+accesses the database at that time. This means that \(P_i\)'s coin flip turns up heads,<br/>
+whereas the coin flip of every other processor turns up tails. What is \(\mbox{Pr}(E_{t,i})\)<br/>
+exactly? <formularesponse type="ci" samples="k,m,n@1,1,1:100,100,100#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+2. Using the fact that \(1-x \sim e^{-x}\), what's an approximation to \((1-\frac{1}{n})^{n-1}\)?  <formularesponse type="ci" samples="k,m,n@1,1,1:100,100,100#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+3. Since \(1-\frac{1}{n} \sim 1\) for large n and the approximation from (2), what number can be used to approximate \((1-\frac{1}{n})^{n-1}\)?  <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  <br/>
+4. Use the result from (3), \(\mbox{Pr}(E_{t,i}) \sim \)<formularesponse type="ci" samples="k,m,n@1,1,1:100,100,100#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  Henceforth pretend that this approximation is exact, <br/>
+and use it in the next two questions.<br/>
+5. Suppose that after processes try to access the database at time \(t\), there are still \(k\) processes that have not yet been able to access the database.  What is the probability one of these \(k\) processes accesses the database at time \(t+1\)?  <formularesponse type="ci" samples="k,m,n@1,1,1:100,100,100#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  Henceforth, we will define a random variable \(T_k = \) "time taken for one of \(k\) specified processes to access the database", so you just calculated \(P(T_k = 1)\).  <br/>
+6. What is the \(P(T_k = 2)\)?  <formularesponse type="ci" samples="k,m,n@1,1,1:100,100,100#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+7. What is the \(P(T_k = $tk)\)?  <formularesponse type="ci" samples="k,m,n@1,1,1:100,100,100#10" answer="$answer7">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+8. What is the expected additional time it takes until one of these \(k\) processes accesses the database?  Use the fact that for \(-1 &lt; x &lt; 1\), \(\sum_{i=1}^{\infty}{i (1-x)^{i-1}} = \frac{1}{x^2}\) <formularesponse type="ci" samples="k,m,n@1,1,1:100,100,100#10" answer="$answer8">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  Note that this is \(\mathbb{E}(T_k)\).  <br/>
+9. Roughly what is the expected time by which _all_ processes will have been able to access the database?  This is \(\sum_{i=1}^{n}{T_k}\).  Use a well-known result for harmonic series: \(\sum_{i=1}^{m}{\frac{1}{i}} \sim ln(m)\).  <formularesponse type="ci" samples="k,m,n@1,1,1:100,100,100#10" answer="$answer9">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  <br/>
+</p>
+</problem>

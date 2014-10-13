@@ -1,0 +1,183 @@
+## DESCRIPTION
+##   Apply the Central Limit Theorem
+## ENDDESCRIPTION
+
+## KEYWORDS('Probability', 'Central Limit Theorem')
+## Tagged by nhamblet
+
+## DBsubject('Probability')
+## DBchapter('Theory')
+## DBsection('The Central Limit Theorem')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.001);
+
+Context()->texStrings;
+
+Context()->variables->are(
+      n => ['Real', limits=>[1,100], resolution=>1],
+    );
+
+$k = random(3,5);
+$p = "(($k-1)/$k)";
+
+BEGIN_PGML
+
+[``\newcommand{\E}{\mathbb{E}}``]
+[``\newcommand{\R}{\mathbb{R}}``]
+[``\newcommand{\bP}{\mathbb{P}}``]
+[``\newcommand{\var}{\mbox{var}}``]
+[``\newcommand{\pr}{\mbox{Pr}}``]
+[``\def\X{{\cal X}}``]
+[``\def\cost{{\mbox{cost}}}``]
+[``\def\U{{\cal U}}``]
+[``\renewcommand{\log}{\mbox{log}_2}``]
+
+#### Average query time ####
+Assume [`n`] items are hashed to [`n`] locations.  
+Suppose query [`q`] is picked at random, so that it is equally likely to hash to
+any of the locations [`1,2,\ldots, n`]. What is the expected query time?
+
+[$BCENTER]*
+[`` \begin{eqnarray*}
+\mbox{Expected query time}
+& =& 
+\sum_{i=1}^n \pr(\mbox{$q$ hashes to location $i$}) \cdot \mbox{(length of list at $T[i]$)} \\
+& =&
+\frac{1}{n} \sum_i  \mbox{(length of list at $T[i]$)} \\ 
+& = & 
+\frac{1}{n} \cdot n \ = \ 1
+\end{eqnarray*}``]
+[$ECENTER]*
+
+So the average query time is constant!
+
+#### Worst case query time, and a balls-in-bins problem ####
+
+
+What is the worst case query time; that is, what is the length of the longest linked list
+in [`T`]? Equivalently, when you throw [`n`] balls in [`n`] bins, what is the size of the 
+largest bin? We'll see that with very high probability, no bin gets [`\geq \log n`]
+balls.
+
+For any bin [`i`], let [`E_i`] be the event that it gets [`\geq \log n`] balls.
+
+[$BCENTER]*
+[`` \pr(E_i) \  \leq \ {n \choose \log n} \left( \frac{1}{n} \right)^{\log n} .``]
+[$ECENTER]*
+
+(Do you see why? Because we want to select [`\log n`] balls to go into bin [`i`], but do not care where the other balls go.) 
+
+To upper bound this probability we use the inequality (see cheat sheet) that
+
+[$BCENTER]*
+[``
+{n \choose k} \leq \left( \frac{ne}{k} \right)^k
+``]
+[$ECENTER]*
+
+Applying this inequality we get:
+
+[$BCENTER]*
+[``
+{n \choose \log n} \left( \frac{1}{n} \right)^{\log n} \leq 
+\left( \frac{ne}{n \log n}  \right)^{\log n} =
+\left( \frac{e}{\log n}  \right)^{\log n} =
+\frac{n^{\log e}}{(\log n)^{\log n}} \leq \frac{1}{n^2}
+``]
+[$ECENTER]*
+
+Where the last inequality can be shown by taking the log of both sides:
+
+[$BCENTER]*
+[``
+\log{\frac{n^{\log e}}{(\log n) ^{\log n}} = \log \left(n^{\log e} \right) - \log \left[(\log n)^{\log n}\right] =
+\log e~\log n - \log n ~\log\log n = \log n~ (\log e - \log\log n) \le -2\log n},
+``]
+[$ECENTER]* 
+
+or equivalently 
+>>[``\log \log n \ge 2+\log e``]<<
+which holds when [`n>2000`].
+
+Having shown that [`\pr(E_i) \leq 1/n^2`], it follows that
+
+[$BCENTER]*
+[`` \pr(\mbox{some bin gets $\geq \log n$ balls})
+\ = \ 
+\pr(E_1 \cup E_2 \cup \cdots \cup E_n)
+\ \leq \ 
+\pr(E_1) + \cdots + \pr(E_n) 
+\ \leq \ 
+\frac{1}{n}.
+``]
+[$ECENTER]*
+
+For instance, if you throw a million balls into a million bins, then the chance that
+there is a bin with [`\geq`][______]{20} (round to integer) balls is at most 1 in a million.
+
+Getting back to hashing, this means that for [`n`] elements, the worst case query time (with probability as high as [`1-1/n`]) is [`O`]([__________]{log(n)}). (answer in terms of [`n`], you can use "log" in the answer, but not "log2" although they are equivalent in big-O notation)
+
+---
+
+Suppose we already hashed [`n`] elements, and bucket 1 gets half of them. 
+
+What is the expected search time for a new element? O([___________]{1})
+
+What is the worst search time? Notice that this scenario is a rare one. O([___________]{n/2}) (answer in terms of [`n`])
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

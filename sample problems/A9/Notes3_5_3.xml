@@ -1,0 +1,66 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+bins = myrandom(5,10,1)
+
+
+
+answer1 = 1.0*3*1+4*3+2
+answer2 = 1.0*3**2*2+4**2*2
+answer3 = 1.0*3*1+4*3+2
+answer4 = 1.0*3**2*2+4**2*2
+</script>
+<p><br/>
+<br/>
+Here's a cartoon picture of a well-behaved distribution with mean \(\mu\) and <br/>
+standard deviation \(\sigma\) (that is, \(\mu = \mathbb{E}(X)\) and \(\sigma^2 = \mbox{var}(X)\)).<br/>
+<image src="/static/2.png" width="800" height="400"/><br/>
+The standard deviation quantifies the _spread_ of the distribution<br/>
+whereas the mean specifies its _location_. If you increase all values of<br/>
+\(X\) by 10, then the distribution will shift to the right and the mean will <br/>
+increase by 10. But the spread of the distribution -- and thus the standard<br/>
+deviation -- will remain unchanged.<br/>
+On the other hand, if you double all values of \(X\), then its distribution <br/>
+becomes twice as wide, and thus its standard deviation \(\sigma\) is doubled. <br/>
+Which means that its variance, which is the square of the standard deviation,<br/>
+gets multiplied by 4.<br/>
+In summary, for any constants \(a,b\):<br/>
+<b><br/>
+\( \mbox{var}(aX+b) = a^2 \mbox{var}(X) .\)<br/>
+</b><br/>
+Contrast this with the mean: \(\mathbb{E}(aX + b) = a \mathbb{E}(X) + b\).<br/>
+---<br/>
+<br/>
+If \(X\) and \(Y\) are independent random variables, then \(\mbox{var}(X+Y) = \mbox{var}(X) + \mbox{var}(Y)\).<br/>
+More generally, if \(X_1, \ldots, X_n\) are independent, then<br/>
+<b><br/>
+\( \mbox{var}(X_1 + \cdots + X_n)<br/>
+\ = \ <br/>
+\mbox{var}(X_1) + \cdots + \mbox{var}(X_n).<br/>
+\)<br/>
+</b><br/>
+In contrast, linearity of expectation (\(\mathbb{E}(X+Y) = \mathbb{E}(X) + \mathbb{E}(Y)\)) holds<br/>
+even if the random variables are _not_ independent.<br/>
+Suppose \(X\) and \(Y\) are independent random variables. \(X\) has mean of 1 and variance of 2, \(Y\) has mean of 3 and variance of 2, then for the r.v. \(Z = 3X+4Y+2\), the mean is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> and the variance is <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

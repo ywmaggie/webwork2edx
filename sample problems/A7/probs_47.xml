@@ -1,0 +1,49 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "1/6*1/3/(1/6*1/3+2/3*2/3)"
+</script>
+<p><br/>
+A scientist discovers a fossil fragment that he believes is either some kind<br/>
+of tiger (with probability \(1/3\)) or mammoth (with probability \(2/3\)). To shed<br/>
+further light on this question, he conducts a test which has the property that<br/>
+for tigers, it will come out positive with probability \(5/6\) whereas for mammoths<br/>
+it will come out positive with probability just \(1/3\). Suppose the test comes <br/>
+out negative. What is the probability, given the outcome of the test, that the <br/>
+fossil comes from a tiger?<br/>
+---<br/>
+What the question asks is the probability \(\textbf{Pr}(\text{tiger} \ | \ \text{negative})\). Using Bayes rule, we convert it into a joint probability:<br/>
+\(\textbf{Pr}(\text{tiger} \ | \ \text{negative}) = \frac{\textbf{Pr}(\text{tiger},\text{negative})}{\textbf{Pr}(\text{negative})}\)<br/>
+Split the probability of negative outcome into two cases: outcome negative and the fossil is a tiger <b>OR</b> outcome negative and the fossil is a mammoth.<br/>
+\(\textbf{Pr}(\text{negative})  = \textbf{Pr}(\text{tiger},\text{negative}) +  \textbf{Pr}(\text{mammoth},\text{negative})\)<br/>
+Then write each joint probability using conditional probabilities that are known. Such conditional probabilities often have an intuitive causal meanings.<br/>
+\(<br/>
+\textbf{Pr}(\text{tiger},\text{negative}) = \textbf{Pr}(\text{negative} \ | \ \text{tiger}) \textbf{Pr}(\text{tiger})<br/>
+\)<br/>
+\(<br/>
+\textbf{Pr}(\text{mammoth},\text{negative}) = \textbf{Pr}(\text{negative} \ | \ \text{mammoth}) \textbf{Pr}(\text{mammoth})<br/>
+\)<br/>
+Now we can write the conditional probability \(\textbf{Pr}(\text{tiger} \ | \ \text{negative})\) in terms of probabilities that we know.<br/>
+The answer is \(\textbf{Pr}(\text{tiger} \ | \ \text{negative}) =\) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

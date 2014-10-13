@@ -1,0 +1,54 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "2/3"
+answer2 = "1/3"
+answer3 = "2/3"
+answer4 = "1/3"
+</script>
+<p><br/>
+<br/>
+This probability puzzle is weakly related to a game on an old TV show called _Let's Make a Deal_, and has been renamed after the host of that show. The host brings the game player to a room with three closed doors. One of the doors leads to a treasure chest while the other two doors each lead to a goat. The player picks a door (at random, presumably), hoping for the best. Now something interesting happens. Instead of opening that door, the host opens one of the other two doors to reveal a goat. The player is then allowed to either stick to his original guess, or to switch to the other unopened door. Which should he do?<br/>
+In surveys, the majority of people feel intuitively that it doesn't make a difference. They reason that there are two unopened doors, and the treasure could be behind either of them, so each has a 50-50 chance of being the lucky door. But this is incorrect. The player should switch to the other door: by doing so, he will double his chances of getting the treasure! A conditional probability calculation shows why:<br/>
+\(<br/>
+\begin{align*}<br/>
+P(\mbox{treasure in other door}) <br/>
+ = <br/>
+P(\mbox{treasure in other door} | \mbox{initial guess correct}) P(\mbox{initial guess correct}) + \\<br/>
+  P(\mbox{treasure in other door} | \mbox{initial guess wrong}) P(\mbox{initial guess wrong}) \\<br/>
+ = <br/>
+0 \cdot \frac{1}{3} + 1 \cdot \frac{2}{3} <br/>
+\ \ = \ \ <br/>
+\frac{2}{3} .<br/>
+\end{align*}<br/>
+\)<br/>
+o What is the probability the first door the contestant picks has a goat behind it?<br/>
+<formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+o What is the probability that switching doors will get you a goat?<br/>
+<formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

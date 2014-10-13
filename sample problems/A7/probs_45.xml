@@ -1,0 +1,29 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+answer1 = "0.5"
+</script>
+<p><br/>
+One coin in a collection of 65 coins has two heads the rest of the coins are<br/>
+fair. If a coin, chosen at random from the lot and then tossed, turns up heads<br/>
+six times in a row, what is the probability that it is the two-headed coin? <formularesponse type="ci" samples="n@1:10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

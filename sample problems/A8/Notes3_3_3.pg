@@ -1,0 +1,56 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$bins = random(5,10,1);
+
+######################################################################
+
+BEGIN_PGML
+You can enter [`\sqrt{n}`] in WebWork as sqrt(n).  Enter [`\sqrt{2}`]: [_____]{sqrt(2)}
+#### Balls in bins, again ####
+
+Toss [`m`] balls in [`n`] bins; what is the expected number of [$BITALIC]* collisions [$EITALIC]*? Let's make
+this more precise. For any [`1 \leq i < j \leq m`], define the random variable [`X_{ij}`] to
+be [`1`] if balls [`i`] and [`j`] land in the same bin, and [`0`] otherwise. Then the
+number of collisions is defined to be
+
+[$BCENTER]*
+[`` X  \ = \ \sum_{1 \leq i < j \leq m} X_{ij} .``]
+[$ECENTER]*
+
+
+Since [`\mathbb{E}(X_{ij}) = 1/n`] (do you see why?), it follows that the expected number of 
+collisions is 
+
+[$BCENTER]*
+[`` \mathbb{E}(X) \ = \ {m \choose 2} \frac{1}{n} \ = \ \frac{m(m-1)}{2n} .``]
+[$ECENTER]*
+
+So if [`m < \sqrt{2n}`], the expected number of collisions is [`< 1`], which means
+every ball goes into a different bin. 
+
+This relates back to the birthday paradox, where [`m`] is close to the threshold [`\sqrt{2n}`].
+
+If there are [`[$bins]`] bins, what is the expected number of collisions between balls [`i`] and [`j`], for some fixed [`i,j`]?  [_____]{1/[$bins]}
+
+What is an upper bound (using the bound we learned above) on the number of balls we can insert into [$bins] bins, with less than 1 expected collision?  [_____]{sqrt(2 * [$bins])}
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

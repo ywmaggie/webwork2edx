@@ -1,0 +1,46 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+p_men = myrandom(6,8,1)
+p_women = myrandom(3,5,1)
+p_male_given_colorblind = p_men/(p_men+p_women)
+
+
+answer1 = "p_men/(p_men+p_women)"
+</script>
+<p><br/>
+Suppose that there are equal numbers of men and women in the world, and that $p_men\ of men <br/>
+are colorblind whereas only $p_women\ of women are colorblind. A person is chosen at random and found <br/>
+to be colorblind. What is the probability that the person is male? <formularesponse type="ci" samples="n@1:10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+Reverse the condition:<br/>
+\(<br/>
+<br/>
+\textbf{Pr}(\text{male} \ | \ \text{colorblind})  = \frac{\textbf{Pr}(\text{male},\text{colorblind})}{\textbf{Pr}(\text{colorblind})} \\<br/>
+ = \frac{\textbf{Pr}(\text{colorblind} \ | \ \text{male}) \textbf{Pr}(\text{male})}{\textbf{Pr}(\text{colorblind})} \\<br/>
+\<br/>
+\)<br/>
+Law of total probability + Bayes rule:<br/>
+\(<br/>
+<br/>
+\textbf{Pr}(\text{colorblind})  = \textbf{Pr}(\text{male},\text{colorblind}) +  \textbf{Pr}(\text{female},\text{colorblind}) \\<br/>
+ = \textbf{Pr}(\text{colorblind} \ | \ \text{male}) \textbf{Pr}(\text{male}) + \textbf{Pr}(\text{colorblind} \ | \ \text{female}) \textbf{Pr}(\text{female})<br/>
+\<br/>
+\)<br/>
+</p>
+</problem>

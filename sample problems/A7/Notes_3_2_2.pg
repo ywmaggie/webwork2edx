@@ -1,0 +1,97 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(p => 'Real');
+######################################################################
+
+BEGIN_PGML
+
+## The mean, or expected value (cont.) ##
+---
+### [$BITALIC]* Roll n die; how many sixes appear? [$EITALIC]* ###
+
+Let [`X`] be the number of [`6`]'s. We've already analyzed the distribution of [`X`], so
+
+[$BCENTER]*
+[`` E(X) 
+\ = \ 
+\sum_{k = 0}^n k \, \mbox{Pr}(X = k)
+\ = \ 
+\sum_{k = 0}^n k {n \choose k} \left(\frac{1}{6} \right)^k \left( \frac{5}{6} \right)^{n-k}
+\ = \ 
+\frac{n}{6}.
+``]
+[$ECENTER]*
+
+The last step is somewhat mysterious; just take our word for it, and we'll get back to it later!
+
+---
+### [$BITALIC]* Toss a fair coin forever; how many tosses to the first heads? [$EITALIC]* ###
+
+Let [`X \in \{1,2,\ldots\}`] be the number of tosses until you first see heads. Then
+
+[$BCENTER]*
+[`` \mbox{Pr}(X = k)
+\ = \ 
+\mbox{Pr}((T,T,T,\ldots,T,H))
+\ = \ 
+\frac{1}{2^k}.
+``]
+[$ECENTER]*
+
+It follows that 
+
+[$BCENTER]*
+[`` \mathbb{E}(X) 
+\ = \ 
+\sum_{k=1}^\infty \frac{k}{2^k} 
+\ = \ ``][______]{2}.
+[$ECENTER]*
+
+To answer this question we need the following formulas for the infinite geometric series: for any  [`0 < r < 1`]
+
+[$BCENTER]*
+[`` r + r^2 + \cdots \ = \ \frac{r}{1-r}.``]
+[$ECENTER]*
+and
+[$BCENTER]*
+[`` r + 2r^2 + 3r^3+\cdots \ = \ \frac{r}{(1-r)^2}.``]
+[$ECENTER]*
+
+You can find these and other useful sums here:
+http://en.wikipedia.org/wiki/List_of_mathematical_series#Low-order_polylogarithms
+
+---
+### [$BITALIC]* Toss a coin with bias [`p`] forever; how many tosses to the first heads? [$EITALIC]* ###
+
+Once again, [`X \in \{1,2,\ldots\}`], but this time the distribution is different:
+
+[$BCENTER]*
+[`` \mbox{Pr}(X = k)
+\ = \ 
+\mbox{Pr}((T,T,T,\ldots,T,H))
+\ = \ 
+(1-p)^{k-1}p.
+``]
+[$ECENTER]*
+
+Using the same technique as before, we get [`\mathbb{E}(X) =`][______]{1/p}.
+
+There's another way to derive this expectation. We always need at least one coin toss.
+If we're lucky (with probability [`p`]), we're done; otherwise (with probability [`1-p`]),
+we start again from scratch. Therefore [`\mathbb{E}(X) = 1 + (1-p) \mathbb{E}(X)`], and we have the same result.
+
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

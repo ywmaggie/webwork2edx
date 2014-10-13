@@ -1,0 +1,40 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "0"
+answer2 = "0"
+</script>
+<p><br/>
+<br/>
+Two events are called _independent_ if the outcome of one (that is, whether or not it occurs) does not affect the probability that the other will occur. For instance, suppose you flip two fair coins. The outcome of either coin does not influence the other therefore the two outcomes are independent.<br/>
+Formally, we say events \(A\) and \(B\) (defined on some sample space \(\Omega\)  are independent if<br/>
+\( P(A \cap B) <br/>
+\ = \ <br/>
+P(A) P(B).\)<br/>
+Can you show that this definition (assuming \(A\), \(B\) are independent) implies the following?<br/>
+\(P(A | B) = P(A)\) <br/>
+\(P(B | A) = P(B)\) <br/>
+\(P(A | B^c) = P(A)\) <br/>
+Assuming \(A\), \(B\) are independent, what is \(P(A \cap B) - P(A)P(B)\)? <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

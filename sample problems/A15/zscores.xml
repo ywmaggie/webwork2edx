@@ -1,0 +1,70 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+p = 0.54
+tosses = myrandom(9000,11000,100)
+heads = p*tosses
+zscore = "(heads - (tosses/2))/sqrt(tosses*(1/2)*(1/2))"
+
+answer1 = 1.0*1/3
+answer2 = 1.0*5/3
+answer3 = 1.0*1/0.1
+answer4 = 1.0*-2/2
+answer5 = 1.0*-2/10
+
+</script>
+<p><br/>
+<b>Definition:</b> The _z-score_ is the common name for what we called in class the "normalized" value. If a distribution under study has mean \(\mu\) and standard deviation \(\sigma\) and the raw value the random variable takes on is \(x\), then the z-score is \(z=\frac{x-\mu}{\sigma}\). The mean of \(z\) is zero and the standard deviation is 1. z-scores are often associated with the normal distribution, and z-score tables describe the cumulative distribution function of \(N(0,1)\), usually called \(\Phi(z)\).  The function \(1 - \Phi(z)\) is usually referred to as \(Q(z)\).  Asking for the z-score of some number \(a\) is the same as asking "how many standard deviations is \(a\) above/below the mean?"<br/>
+Let \(x\) be the raw value for some normally distributed random variable with mean \(\mu\) and standard deviation \(\sigma\).  <br/>
+- For \(\mu = 5\) and \(\sigma = 3\), what is the z-score corresponding to \(x=6\)? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- For \(\mu = 5\) and \(\sigma = 3\), what is the z-score corresponding to \(x=10\)? <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- For \(\mu = 5\) and \(\sigma = 0.1\), what is the z-score corresponding to \(x=6\)? <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- For \(\mu = -1\) and \(\sigma = 2\), what is the z-score corresponding to \(x=-3\)? <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- For \(\mu = -1\) and \(\sigma = 10\), what is the z-score corresponding to \(x=-3\)? <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

@@ -1,0 +1,93 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+answer1 = "10"
+answer2 = "9.9"
+answer3 = "sqrt(10)"
+answer4 = "0.16"
+
+</script>
+<p><br/>
+<br/>
+We want to prove that seat-belts save a significant number of lives. In other words, we want to see if we can reject the null hypothesis that seat-belts do not help.<br/>
+Suppose first that we know that, in general, the probability of a fatality<br/>
+in a car accident is \(q=1%\).<br/>
+We examine \(n=1000\) randomly selected records of accidents where the driver<br/>
+wore a seat velt. We find that \(k=7\) of these accidents were fatal.<br/>
+With what confidence can we conclude that claim is<br/>
+correct?<br/>
+---<br/>
+\(X_i\) = \(i^{th}\) accident was fatal.<br/>
+The null hypothesis is that seat belts make no difference. <br/>
+\(Pr(X_i=1)=q=0.01\). Alternative hypothesis, \(Pr(X_i=1)&lt;q\).<br/>
+The total number of fatal accident under the null hypothesis \(S=\sum_i X_i\).<br/>
+\(E(S)=\)<formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+\(var(S)=\)<formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+\(std(S) = \)<formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+\(k=7\) is approximately one standard deviation smaller than the mean, in other words, the \(z\)-score is roughly -1. Using this approximation, the <b>\(p\)-value</b> associated with \(k=7\) is \(\Phi(-1) = Q(1) = \)<formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> (You  can use www.wolframalpha.com to get the numerical result.) <br/>
+Note that \(p\)-value (answer "is" or "is not") <stringresponse answer="is" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p> a <b>random variable</b>.<br/>
+Is this \(p\)-value small enough? Probably not, but what is small enough?<br/>
+---<br/>
+Suppose that an important decision needs to be made, for example, to<br/>
+increase the fine for not wearing a seat-belt. We need to choose<br/>
+a <b>significance level</b> \(\alpha\). And this choice has to be made before<br/>
+looking at the data. It should <b>NOT</b> be a random variable.<br/>
+If \(p \leq \alpha\) we say that the test rejected the null hypothesis<br/>
+If \(p &gt; \alpha\) we say that the test failed to reject the null<br/>
+hypothesis.<br/>
+If we chose \(\alpha=0.2\), should we reject the null hypothesis (answer "yes" or "no")?<stringresponse answer="yes" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+If we chose \(\alpha=0.05\), should we reject the null hypothesis ? <stringresponse answer="no" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+If we have chosen \(\alpha=0.05\), we did not show that seat-belts save lives. <br/>
+It is tempting to say that we gained evidence that seat-belts do <b>not</b> save lives. However, that is incorrect. A test cannot provide evidence towards the null hypothesis. We did not disprove that belts save lives.<br/>
+</p>
+</problem>

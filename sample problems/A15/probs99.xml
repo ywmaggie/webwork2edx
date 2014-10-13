@@ -1,0 +1,96 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+p = 0.54
+tosses = myrandom(9000,11000,100)
+heads = p*tosses
+zscore = (heads - (tosses/2.0))/sqrt(tosses*(1.0/2)*(1.0/2))
+
+answer1 = 1.0*1/2
+answer2 = 1.0*1/2
+answer3 = 1.0*(1/2)*tosses
+answer4 = 1.0*sqrt(tosses*(1.0/2)*(1.0/2))
+answer5 = "zscore"
+answer6 = 1.0*Q(zscore)
+answer7 = 1.0*heads-(tosses/2.0)
+answer8 = 1.0*2*Q(zscore)
+answer9 = 1.0*1
+
+</script>
+<p><br/>
+Suppose we flip a coin $tosses times, and the coin comes up heads $heads times.  Should we conclude that the coin is biased?  Ie \(P(H) \neq 1/2\).  <br/>
+To show that the coin is biased, we want to show that an unbiased coin is very unlikely to have produced a sequence with as many heads.  <br/>
+Let \(X_i\) be a random variable which is 1 if the i'th unbiased coin toss is heads and 0 otherwise. The random variable \(X=\sum_{i=1}^{$tosses} X_i\) is the random variable which corresponds to the total number of heads. <br/>
+Calculate the following quantities.     <br/>
+1. \(\mathbb{E}(X_i) = \) <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+2. \(std(X_i) = \) <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+3. \(\mathbb{E}(X) = \) <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+4. \(std(X) = \) <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+5. Using the values \(\mathbb{E}(X)\), \(\mathbb{\sigma}(X)\) you computed above, calculate the z-score corresponding to the value $heads?  <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+6. Assuming a fair coin is tossed $tosses times, what is the probability at least $heads heads come up?  <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  Hint: Q(z) is \(Pr(X &gt;= z)\) for X the standard normal density.  <br/>
+7. What is the absolute difference between the number of heads we see ($heads), and the expected number of heads from flipping an unbiased coin, \(\mathbb{E}(X)\)?  <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> Call this deviation \(\delta\).  <br/>
+8. What is \(Pr(|X - \mathbb{E}(X)| \geq \delta)\)?  <numericalresponse answer="$answer8">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  Hint: your answer from (6) is helpful here.  In (6) you were considering one tail, now you need to consider two.  <br/>
+9. Do you have reason to believe the coin being tossed is not fair (0=no,1=yes)? <numericalresponse answer="$answer9">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

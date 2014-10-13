@@ -1,0 +1,90 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+k=myrandom(5,20,1)
+
+
+
+answer1 = "1/(n-1)"
+answer2 = "1/(n(n-1))"
+answer3 = "1/(n(n-1))"
+answer4 = 1.0*1/(k-1**2)
+answer5 = "1/n"
+answer6 = "n(n-1)"
+answer7 = "1/(n-1)"
+answer8 = "1/(n(n-1))"
+answer9 = "1/(n(n-1))"
+answer10 = 1.0*1/(k-1**2)
+answer11 = "1/n"
+answer12 = "n(n-1)"
+</script>
+<p><br/>
+\(X\) is the number of fixed points of a random permutation of \((1,2,\ldots,n)\).<br/>
+Proceeding as before, let \(X_i\) be 1 if \(i\) is a fixed point of the permutation, and<br/>
+0 otherwise. Then \(\mathbb{E}(X_i) = 1/n\). For \(i \neq j\), the product \(X_i X_j\) is 1 only <br/>
+if both \(i\) and \(j\) are fixed points.  <br/>
+Given that \(i\) is a fixed point, what is the probability that \(j\), where \(j \neq i\) is also a fixed point?  <formularesponse type="ci" samples="n,i,k,x@1,1,1,1:10,10,10,10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+Fix two indices \(i \neq j\), what is the probability that both \(i\) and \(j\) are fixed points? <formularesponse type="ci" samples="n,i,k,x@1,1,1,1:10,10,10,10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+Thus \(\mathbb{E}(X_i X_j) = \) <formularesponse type="ci" samples="n,i,k,x@1,1,1,1:10,10,10,10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> <br/>
+Since \(X\) is the sum of the individual \(X_i\), we have \(\mathbb{E}(X) = 1\) and<br/>
+<b><br/>
+\( <br/>
+\mathbb{E}(X^2)  = <br/>
+\mathbb{E}((X_1 + \cdots + X_n)^2) \\<br/>
+ =  <br/>
+\mathbb{E} \left(\sum_{i=1}^n X_i^2 + \sum_{i \neq j} X_i X_j \right) \\<br/>
+ =  <br/>
+\sum_i \mathbb{E}(X_i^2) + \sum_{i \neq j} \mathbb{E}(X_iX_j) \\<br/>
+ =  <br/>
+n \cdot \frac{1}{n} + n(n-1) \cdot \frac{1}{n(n-1)}<br/>
+\ = \ <br/>
+2.<br/>
+\)<br/>
+</b><br/>
+Thus \(\mbox{var}(X) = \mathbb{E}(X^2) - (\mathbb{E}(X)^2) = 1\). This means that the number of fixed points<br/>
+has mean 1 and variance 1: in short, it is quite unlikely to be very much larger than 1.<br/>
+Use Chebyshev's inequality to upper bound the probability that \(X&gt;$k\):  <br/>
+\(P(X&gt;$k)\leq\)<numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+----<br/>
+<b>Problems:</b><br/>
+What is \(\mathbb{E}(X_1^2)\)?  <formularesponse type="ci" samples="n,i,k,x@1,1,1,1:10,10,10,10#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+What is \(\sum_{i \neq j}{1}\)? <formularesponse type="ci" samples="n,i,k,x@1,1,1,1:10,10,10,10#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  <br/>
+<b>Hint:</b> this is a sum of 1's. To compute it you need to find out how many terms are in the sum.<br/>
+</p>
+</problem>

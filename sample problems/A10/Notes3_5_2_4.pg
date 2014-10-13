@@ -1,0 +1,70 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$k=random(5,20,1);
+
+######################################################################
+
+BEGIN_PGML
+[`X`] is the number of fixed points of a random permutation of [`(1,2,\ldots,n)`].
+
+Proceeding as before, let [`X_i`] be 1 if [`i`] is a fixed point of the permutation, and
+0 otherwise. Then [`\mathbb{E}(X_i) = 1/n`]. For [`i \neq j`], the product [`X_i X_j`] is 1 only 
+if both [`i`] and [`j`] are fixed points.  
+
+Given that [`i`] is a fixed point, what is the probability that [`j`], where [`j \neq i`] is also a fixed point?  [____]{1/(n-1)}
+
+Fix two indices [`i \neq j`], what is the probability that both [`i`] and [`j`] are fixed points? [__________]{1/(n(n-1))}
+
+Thus [`\mathbb{E}(X_i X_j) = `] [__________]{1/(n(n-1))}. 
+
+Since [`X`] is the sum of the individual [`X_i`], we have [`\mathbb{E}(X) = 1`] and
+
+[$BCENTER]*
+[`` \begin{eqnarray*}
+\mathbb{E}(X^2) & = &
+\mathbb{E}((X_1 + \cdots + X_n)^2) \\
+& = & 
+\mathbb{E} \left(\sum_{i=1}^n X_i^2 + \sum_{i \neq j} X_i X_j \right) \\
+& = & 
+\sum_i \mathbb{E}(X_i^2) + \sum_{i \neq j} \mathbb{E}(X_iX_j) \\
+& = & 
+n \cdot \frac{1}{n} + n(n-1) \cdot \frac{1}{n(n-1)}
+\ = \ 
+2.
+\end{eqnarray*}``]
+[$ECENTER]*
+
+Thus [`\mbox{var}(X) = \mathbb{E}(X^2) - (\mathbb{E}(X)^2) = 1`]. This means that the number of fixed points
+has mean 1 and variance 1: in short, it is quite unlikely to be very much larger than 1.
+
+Use Chebyshev's inequality to upper bound the probability that [`X>[$k]`]:  
+[`P(X>[$k])\leq`][_________]{"1/([$k-1]^2)"}
+
+----
+*Problems:*
+
+What is [`\mathbb{E}(X_1^2)`]?  [_____]{1/n}
+
+What is [`\sum_{i \neq j}{1}`]? [____]{n(n-1)}  
+*Hint:* this is a sum of 1's. To compute it you need to find out how many terms are in the sum.
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

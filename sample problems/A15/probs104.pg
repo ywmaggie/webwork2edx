@@ -1,0 +1,48 @@
+## DESCRIPTION
+##   Apply the Central Limit Theorem
+## ENDDESCRIPTION
+
+## KEYWORDS('Probability', 'Central Limit Theorem')
+## Tagged by nhamblet
+
+## DBsubject('Probability')
+## DBchapter('Theory')
+## DBsection('The Central Limit Theorem')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+
+BEGIN_PGML
+A lake contains an unknown number of fish. 1000 of them are caught, marked with red spots, and then
+returned to the water. Later, a random subset of 100 fish are caught from the lake, and it is found
+that z of them have red spots.
+1. In terms of [`z`], what estimate would you give for the number of fish in the lake?  [_______]{1000*100/z}
+2. Let n be the true number of fish in the lake. Then distribution of the random variable Z (the number of fish in your second sample of size 100), follows a Binomial distribution with what parameters?  [`\mathbb{E}(Z) = `][______]{100*1000/n} and [`\mbox{var}(Z) = `][______]{100*(1000/n)*(1-1000/n)}  Give your answers in terms of [`n`].
+3. For standard normal random variable [`S`], what is [`P(-1.96 < S < 1.96)`]?  [_________]{1-2*0.025}
+3. If you had to give a 95% confidence interval for the number of fish in the lake in terms of [`n`], what would it be?  [`\mathbb{E}(Z) \pm`][_______]{1.96*sqrt(100*(1000/n)*(1-1000/n))}
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

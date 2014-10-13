@@ -1,0 +1,71 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+## Three Prisoner's Paradox ##
+As another example, let's look at the Three Prisoner's Paradox, which is actually just a reformulation of the Monty Hall problem. The story goes that there are three prisoners [`A,B,C`] in a jail, and one of them is to be declared guilty and executed the following morning. As the night progresses, prisoner [`A`] is wracked with worry, and calls the prison guard over. He wants to know whether he is the unlucky one. The guard replies, ``I am not allowed to tell you whether you will be declared guilty. But I can say that prisoner [`B`] will be declared innocent.'' Prisoner [`A`] thinks about this for a little while and then starts worrying even more. Before he asked the question, it seemed like his chances of dying were one-in-three. But after his innocuous question, the chance seems to have risen to one-in-two!
+o  How many prisoner's are there? [____]{3}
+o  How many prisoner's will be declared innocent? [____]{2}
+
+Actually, Prisoner [`A`] s chances are still one in three. The two events of interest are:
+
+[``
+G_A = \{\mbox{$A$ will be declared guilty} \}
+``]
+
+[``
+I_B = \{\mbox{the guard, when prompted, will declare $B$ to be innocent} \}
+``]
+
+Lacking in any additional information we assume that the probability that A is guilty is [`P(G_A) = 1/3`].
+
+Consider [`P(I_B | G_A)`], in this case the guard can reveal the innocence of either B or C. Assuming that he is impartial, the probability that he will declare B to be innocent is 1/2.
+
+Similarly consider [`P(I_B | G_A^c)`]. In this case either B or C is guilty and the other is innocent. Again the probability that the innocent one is B is 1/2. In this case the guard has only one option. 
+
+Using the summation rule,
+[`` 
+P(I_B) 
+\ = \ 
+P(I_B | G_A) P(G_A) + P(I_B | G_A^c) P(G_A^c) 
+\ = \ 
+\frac{1}{2} \cdot \frac{1}{3} + \frac{1}{2} \cdot \frac{2}{3}
+\ = \ 
+\frac{1}{2}.
+``]
+
+Therefore, by Bayes' rule,
+[``
+P(G_A | I_B) 
+\ = \ 
+\frac{P(I_B | G_A) P(G_A)}{P(I_B)}
+\ = \ 
+``]
+[____]{1/3}
+
+Why is the result here different than the one we have in the Monty Hall Problem? There the player could switch the door they chose, here prisoner A cannot exchange his fate with that of another prisoner.
+
+And, think about it, the guard, who knows the outcome, can *always* point to 
+another prisoner that is innocent, regardless of whether A is innocent or not, therefor what the guard is saying does not provide A with any information.
+END_PGML
+
+BEGIN_PGML_SOLUTION
+### Solution ###
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

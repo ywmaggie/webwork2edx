@@ -1,0 +1,41 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+answer1 = "1-(k-1)/n"
+answer2 = "fact(n)/(fact(n-m)*n^m)"
+answer3 = "e^(-m(m-1)/(2n))"
+</script>
+<p></p>
+<p></p>
+<p>Suppose there are \(m\) balls and \(n\) bins. What is the probability that some bin gets two or more balls? Clearly, keeping \(n\) fixed and increasing \(m\) will increase this probability. We are interested in characterizing the rate are which \(m\) should increase as a function of \(n\) so as to guarantee that , with high probability, as \(n\) increases to infinity, there is a bin with 2 or more balls.</p>
+<p>First, let's choose an notation to represent the outcomes. The notation we will use here is an m-tuple \((b_1,b_2,\ldots,b_m)\), where \(b_i\) is the number of the bin into which the \(i\)'th ball has landed. (why use this rather than some other notation? Because it works, it gives us an upper bound. Other notations might not work, and there is no general rule, you have to try different approaches until you find one that works, or, more likely, have sufficient experience to make an intelligent guess.</p>
+<p>Using this notation, the event whose probability we wish to lower-bound is<br/>\( A= \left\{ (b_1,\ldots,b_m) | \forall 1\leq i&lt;j\leq m, 1\leq b_i \leq n, b_i \neq b_j \right\} \) </p>
+<p>We want to show that the probability of the event is close to one. As we are better equipped to show that a probability is close to zero we use the complement of the event. In other words, the probability that all bins have z or 1 balls. We know the probability that placing the \(k\)th ball lands in an empty bin, given that the previous \(k-1\) balls landed in different bins, is</p>
+<p><b>(A)</b> <formularesponse type="ci" samples="n,m,k@1,1,1:20,20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>As the events associated with different balls are independent. We need to take the product of expression <b>(A)</b> for \(k=1,...,m\) to calculate the probability that <b>ALL</b> \(m\) balls fall in different bins. Calculating this product we get<br/>\(\prod_{i=1}^m \left(1-\frac{i-1}{n} \right)\) find a way to express this quantity without using an explicit product, and instead using only exponentiation: \(i^j\) or the factorial \(i!\) to get:</p>
+<p><b>(B)</b> <formularesponse type="ci" samples="n,m,k@1,1,1:20,20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>Although this is exact, it is hard to calculate from it the rate at which \(m\) can increase so as to make this probability go to zero as \(n,m \to \infty\), and so let's use an upper bound. Using the inequality \(1+x \leq e^x\) we can bound <b>(A)</b> by \(1-(k-1)/n\leq \exp(-(k-1)/n)\). Taking the product over \(i=1\ldots,m\), this gives us a bound on <b>(B)</b>, which is <formularesponse type="ci" samples="n,m,k@1,1,1:20,20,20#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>This is an excellent approximation when \(m \ll n\). It tells us that if \(m \geq c \sqrt{n}\) (for some small constant \(c\)), then this probability is at most 1/2. To be exact, \(c = \sqrt{\frac{2}{ln(2)}}\). In other words, if you throw \(\sqrt{\frac{2}{ln(2)}}\sqrt{n} \approx 1.7 \sqrt{n}\) (or more) balls into \(n\) bins, then chances are that some bin will get two or more balls. If you want the probability to go to zero as \(n \to \infty\), you need to make</p>
+<p></p>
+</problem>

@@ -1,0 +1,82 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+$n = random(50,100);
+$k = random(20,30);
+
+Context("Numeric");
+######################################################################
+
+BEGIN_PGML
+
+# Useful Facts 
+
+[`\sum_{i=1}^{\infty}{\frac{1}{i}} = \infty`]
+
+Use the following approximations:
+
+[`\sum_{i=1}^{\infty}{\frac{1}{i^2}} \approx 1.645`]
+
+[`\sum_{i=1}^{\infty}{\frac{1}{i^3}} \approx 1.202`]
+
+[`\sum_{i=1}^{\infty}{\frac{1}{i^4}} \approx 1.082`]
+
+In WebWork, you can use 
+    inf 
+
+in an answer box to denote infinity
+
+
+# Properties of Random Variable X 
+
+Let X be a random variable over the integers [`\mathbb{Z} = \{...-2,-1,0,1,2,...\}`].  
+
+Let [`P(X=0)=0`] and for [`i \neq 0`] let [`P(X=i) = \frac{1}{|i|^\alpha}`].  
+
+For [`\alpha=2`]:
+* What is [`E[X]`]?  [__________]{0}
+* What is [`var[X]`]?  [__________]{inf}
+* What is [`std[X]`]?  [__________]{inf}
+
+For [`\alpha=3`]:
+* What is [`E[X]`]?  [__________]{0}
+* What is [`var[X]`]?  [__________]{inf}
+* What is [`std[X]`]?  [__________]{inf}
+
+For [`\alpha=4`]:
+* What is [`E[X]`]?  [__________]{0}
+* What is [`var[X]`]?  [__________]{1.645/1.082}
+* What is [`std[X]`]?  [__________]{sqrt(1.645/1.082)}
+
+Hint: To compute both the expected value and variances above, split the infinite
+summation [`\sum_{i=-\infty}^{\infty}{...}`] into three parts: 
+* [`\sum_{i=-\infty}^{1}{...}`]
+* [`0`]
+* [`\sum_{i=1}^{\infty}{...}`]
+
+# Sums of iid samples from X
+
+For this part, let [`X`] be defined as above for [`\alpha=4`].  
+
+Define the random variable [`Y_{[$n]} = \sum_{i=1}^{[$n]}{X_i}`], [`X_i`] independent identically distributed according to [`X`].
+
+Using linearity of expectation, what is [`E[Y_{[$n]}]`]?  [_______]{0}
+
+Using the fact that the [`X_i`] random variables are independent and identically
+distributed, what is [`var[Y_{[$n]}]`]?  [_____________________]{Compute("$n*1.645/1.082")}
+
+What about the the standard deviation [`std[Y_{[$n]}]`]?  [____________________]{Compute("sqrt($n*1.645/1.082)")}
+
+Using Chebyshev's inequality, what is a bound on the [`P(|Y_{[$n]}|) > [$k]`]?  [____________________________]{Compute("$n*1.645/1.082/$k^2")}
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

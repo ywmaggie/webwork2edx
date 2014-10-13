@@ -1,0 +1,58 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+answer1=1.0*13
+answer2=1.0*C(4,2)
+answer3=1.0*C(12,3)
+answer4=1.0*4**3
+answer5=1.0*13*C(4,2)*C(12,3)*(4**3)
+answer6=1.0*13*C(4,2)*C(12,3)*(4**3)/C(52,5)
+</script>
+<p></p>
+<p></p>
+<p>1. The number of possibilities for the ranks of the pair is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>2. The number of possibilities for the suits of the pair is <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>3. The three other cards have three ranks different from the pair, the number of possibilities for their ranks is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>4. And they can have any suit, thus the number of possibilities of their suites is <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+.</p>
+<p>5. Thus the number of hands with exactly one pair is <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>6. The ratio of this number to the number of all hands <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

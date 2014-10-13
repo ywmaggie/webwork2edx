@@ -1,0 +1,93 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl",
+  "contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.01);
+
+$a = Compute("0.05/sqrt(0.16/200)");
+$q = Compute("Q($a)");
+
+BEGIN_PGML
+## Apple's Special Day ##
+
+You know that on a "normal day", 10% of articles on reddit:technology relate to Apple (I made this up).  You decide to use this fact to decide whether today is a special (not normal) day for Apple.  
+
+You choose 40 articles at random, and 8 of these articles are about Apple.  How confident are you that today is not a normal day?  
+
+Let [`p`] be the actual proportion of r/tech articles today that are about Apple.  
+
+The null hypothesis is H0: [`p = `][_____]{"0.1"}
+The alternative hypothesis is H1: [`p > 0.1`]
+
+What is the value of the large-sample z-score? [________]{"0.1/sqrt(0.1*0.9/40)"}
+
+What is the p-value for the test statistic? (You can use Q function in the answer) [_________]{"Q(0.1/sqrt(0.1*0.9/40))"}  Let's say we only are testing whether _more_ Apple-related articles have been linked to than normal.  
+
+
+
+
+Can you reject at the .05 signiﬁcance level? (answer "yes" or "no") [_______]{"yes"}
+
+Can you reject at the .01 signiﬁcance level? (answer "yes" or "no") [_______]{"no"}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+## Solution ##
+
+The sample size is [`n = 200`]. The estimated probability that the psychic correctly identiﬁes the symbol on the card in a random trial is [`\hat{p} = 50/200 = 0.25`]. The null hypothesis is the psychic just random guesses, which corresponds to [`p = 0.20`]. So the z-value is 
+[`` z = \frac{\hat{p}-p}{\sqrt{p(1-p)/n}} = \frac{0.05}{\sqrt{0.16/200}} = 1.7678``].
+
+The P−value for the test statistic is P(Z > 1.7678) = Q(1.7678) = 0.039. The
+P−value is greater than 0.01 but less than 0.05. So the null hypothesis that
+p = 0.20 can be rejected at the 0.05 signiﬁcance level. But cannot be rejected at
+the 0.01 signiﬁcance level.
+
+END_PGML_SOLUTION
+
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

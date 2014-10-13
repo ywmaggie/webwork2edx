@@ -1,0 +1,62 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+nHearts=myrandom(1,4,1)
+nCards=myrandom(nHearts+1,9,1)
+nTotal=C(52,nCards)
+nRanks=C(13,nHearts)
+nOther=nCards-nHearts
+nNonHeart=C(39,nOther)
+nEvent=nRanks*nNonHeart
+ans=nEvent/nTotal
+
+
+answer1=1.0*nTotal
+answer2=1.0*nRanks
+answer3=1.0*nNonHeart
+answer4=1.0*nEvent
+answer5=1.0*ans
+</script>
+<p></p>
+<p></p>
+<p>A poker hand, consisting of $nCards cards, is dealt from a standard deck of 52 cards.</p>
+<p>Find the probability that the hand contains exactly $nHearts hearts.</p>
+<p>1. First consider the number of all possible hands, which is to choose $nCards from 52 cards, <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ </p>
+<p>2. Then we compute the number of possibilities for a hand that contains $nHearts hearts. </p>
+<p>	We need to get the number of possible set of ranks of the $nHearts hearts. This is to choose $nHearts from all 13 possible ranks, thus <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>	The other $nOther non-heart cards can be any of the non-heart cards in the deck. The total number of non-heart cards is the total number of cards, minus the heart cards, which is 52 - 13 = 39. Thus the number of possibilities for the $nOther non-heart cards in the hand is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>	Thus we know that the number of hands that contain exactly $nHearts hearts is <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>3. Finally we can calculate the probability of such hands, by calculating th ratio of the number of such hands to the number of all hands. This is <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

@@ -1,0 +1,58 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+
+## More Independence ##
+In the following examples, are events [`A`] and [`B`] independent or not (0 = dependent, 1 = independent)?
+1.  You have two children. [`A = \{\mbox{first child is a boy}\}`]  [`B = \{\mbox{second child is a girl}\}`] [_]{1}
+2.  You throw two dice. [`A = \{\mbox{first is a}\ 6\}`]  [`B = \{\mbox{sum} > 10\}`] [_]{0}
+3.  You get dealt two cards at random from a deck of 52. [`A = \{\mbox{first is a heart}\}`]  [`B = \{\mbox{second is a club}\}`] [_]{0}
+4.  Same sample space. [`A = \{\mbox{first is a heart}\}`]  [`B = \{\mbox{second is a}\ 10\}`] [_]{1}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+### Solution ###
+
+An easy way to check for dependence of the two events [`A`] and [`B`] is to compute the probabilities [`P(A),P(B),P(A \cap B)`] and check whether [`P(A\cap B)=P(A)P(B)`]. Here the outcome spaces are discrete and the distribution over them is uniform, so we can use the formula [`P(A)=|A|/|\Omega|`]
+
+1.  You have two children. [`A = \{\mbox{first child is a boy}\}`]  [`B = \{\mbox{second child is a girl}\}`]  
+The sample space here is [`\Omega=\{(g,g),(g,b),(b,g),(b,b)\}`]. The event "the first child is a boy" is the set [`A=\{(b,g),(b,b)\}`] whose probability is [`2/4=1/2`]. The event "the second child is a girl" is the set [`B=\{(g,g),(b,g)\}`] whose probability is also [`2/4=1/2`]. Finally the intersection of the two events is [`A\cap B = \{(b,g)\}`] and it's probability is [`1/4`]. Therefor [`P(A\cap B)=P(A)P(B)`] and the events are independent.
+
+2.  You throw two dice. [`A = \{\mbox{first is a}\ 6\}`]  [`B = \{\mbox{sum} > 10\}`]  
+The sample space in this case is [`\Omega=\{1,2,3,4,5,6\}^2`]. The first event is [`A=\{6\}\times\{1,2,3,4,5,6\}`] whose probability is [`P(A)=6/36=1/6`]. The second event is [`B=\{(5,6),(6,5),(6,6)\}`] whose probability is [`P(B)=3/36=1/12`]. Finally the intersection of the two events is [`A \cap B = \{(6,5),(6,6)\}`] and it's probability is [`P(A\cap B)=2/36=1/18`]. Therefor, the two events are dependent, because [`1/18 > (1/6)(1/12)`]. This is intuitively obvious, because knowing that the first coin flip is a 6 increases the probability that the sum is larger than 10 from [`P(B)=1/12`] to [`P(B|A)=1/3`]
+
+3. You get dealt two cards at random from a deck of 52. [`A = \{\mbox{first is a heart}\}`]  [`B = \{\mbox{second is a club}\}`]  
+A deck consists of all combinations of the four suites: Club, Spade, Heart, Diamond, and 13 ranks: Ace,2-10,Jack,Queen, King. To simplify notation we will define the Deck to be [`D=\{C,S,H,D\}\times \{1,2,\ldots,13\}`], clearly [`|D|=52`].  
+We define the sample space [`\Omega`] to be the set of all pairs from [`D`] where order *is* significant (we talk about a first card and a second card). Clearly, the size of the sample space is [`|\Omega|=52*51`].  
+The event [`A`] restricts the choices of the first card to the 13 heart cards. Therefore the size of the set is [`|A|=13*51`] and its probability is [`P(A)=(13*51)/(52*51) = 1/4`].  
+To calculate the size of the second set we observe that it would make no difference if the second card (which has to be a club) is chosen first and the first card chosen second. Using that we get that [`|B|=51*13`] and [`P(B)=(51*13)/(52*51) = 1/4`].  
+Finally, we want to calculate the size of the set [`A \cap B`]. This is the set of pairs such that the first is a  heart and the second is a club. Clearly, there are 13 possibilities for the first card. The second card also has 13 possibilities, because it is of a different suite than the first card, so the choice of the first card does not restrict the choice of the other. We therefor get that [`|A \cap B| = 13*13`] and therefore [`P(A \cap B)=(13*13)/(52*51)>(13*13)/(52*52)=(1/4)(1/4)=P(A)P(B)`] which means that A and B are dependent. The probability of the intersection is slightly larger than the product of the probabilities because if the first card is a heart, the probability that the second card is a club is slightly increased. That is because there are now 51 cards which include all 13 clubs.
+
+4.  Same sample space. [`A = \{\mbox{first is a heart}\}`]  [`B = \{\mbox{second is a}\ 10\}`]  
+This problem is very similar to the last problem (problem 3.) Following the same line of argument we get that [`P(A)=1/4`] and [`P(B)=1/13`]. The difference is in the calculation of the size of the intersection [`C=A \cap B`].  
+We what to calculate how many combinations of two cards there are so that the cards are not the same, the first is a heart and the second is a 10. To do that we partition the set [`C`] into two: [`C=C_1 \cup C_2`] (note, both [`C_1`] and [`C_2`] are sets of card *pairs*). The first set [`C_1`] consists of all card pairs where the first card is a 10 of hearts and the second is a 10. Clearly,
+[`C_1=\{(10H,10S),(10H,10C),(10H,10D)\}`] so the size of [`C_1`] is 3. The set [`C_2`] consists of all pairs such that the suite of the first card is heart and it's rank is anything but 10, which the rank of the second card is 10. In this case the first card does not restrict the possibilities of the second card and therefor [`|C_2|=12*4`]. The probability of [`C`] is therefor 
+[``P(C)=P(C_1 \cup C_2) = \frac{3+12*4}{52*51} = \frac{51}{52*51}=\frac{1}{52} = P(A)P(B)``]
+Therefor in this case the two event are independent.  
+In this case making an intuitive argument is fragile, but one can argue as follows: The choice of the first card can only effect the rank of the second card. As the fraction of rank 10 cards in the whole deck (1/13) is equal to fraction of rank 10 cards in each suite (also 1/13) the suite of the first card does not impact the probability that the second card is a 10.
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

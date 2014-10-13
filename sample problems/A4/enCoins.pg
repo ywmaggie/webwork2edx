@@ -1,0 +1,36 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+
+$n = random (15, 20, 1);
+
+$k = random (5, $n-4, 1);
+
+######################################################################
+
+BEGIN_PGML
+## Flipping N Coins ##
+
+In this problem we will continue our work from the previous problem, and find a general solution to getting [$k] heads while flipping [$n] coins. 
+
+The number of sequences of [$n] coin flips is [_________________]{"2^$n"}.
+
+The number of coin flip sequences where [$k] of the [$n] flips are heads is
+[__________]{"$n!/($k!*($n-$k)!)"}.
+
+Therefore, the probability of getting exactly [$k] heads when flipping [$n] fair coins is [_____________]{"$n!/($k!*($n-$k)!)/2^$n"}.
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

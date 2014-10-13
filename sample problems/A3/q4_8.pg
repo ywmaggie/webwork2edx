@@ -1,0 +1,33 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+### Straight Flush = straight + flush: all same suite and in order ###
+
+1. The number of possibilities for the suites of a straight flush is [______]{4}.
+
+2. The number of possibilities for the ranks of a straight flush is [______]{10}.
+
+4. Thus the number of hands that is a four-of-a-kind is [______]{40}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("40/C(52,5)")}.
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

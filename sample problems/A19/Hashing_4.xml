@@ -1,0 +1,97 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+answer1 = "2"
+answer2 = "1"
+answer3 = "1"
+answer4 = "1"
+
+answer6 = "2"
+
+</script>
+<p><br/>
+<br/>
+When you go to Google and enter a query, like<br/>
+what are treatment options for pneumonia<br/>
+or<br/>
+new song by radiohead<br/>
+you immediately get back a list of highly suitable pages. It's as if the search engine<br/>
+were instantaneously able to look through the tens of billions of pages on the web and<br/>
+find the relevant ones. How does it pull this off? The answer is, by a combination of<br/>
+clever preprocessing, statistics, hashing, and clustering.<br/>
+In fact, these basic techniques apply not just to web search but to any system for<br/>
+_information retrieval_: answering unstructured queries about a large collection<br/>
+of documents.<br/>
+<br/>
+There are at five crucial preprocessing steps for a search engine.<br/>
+1\. Give each webpage a _reliability score_.<br/>
+Most of the "information" on the web is grossly unreliable: spam, ignorant ravings, unfounded conjectures, and idle gossip. But we'll see (a bit later in the course) that it is possible to assess the reliability or authoritativeness of individual webpages --- by analyzing the statistics of linkage patterns.<br/>
+2\. Ignore _near-duplicates_ of webpages.<br/>
+More on this very shortly.<br/>
+3\. Discover the set of _terms_.<br/>
+A _term_ is an individual word, or a sequence of words that should be considered together, such as Katy Perry or Rage Against the Machine. Terms can be discovered by analyzing co-occurrence patterns. If a sequence of \(k\) words keeps occurring together, they should be designated a term.<br/>
+4\. Create the _postings list_.<br/>
+This is a hash table in which each term is associated with a linked list of the pages containing it.<br/>
+image("postings_list.png", width=&gt;860, height=&gt;400)<br/>
+Each linked list is arranged in decreasing order of "priority" (some notion that takes into account reliability scores), and is usually truncated at a certain point.<br/>
+5\. Compute _term frequencies_.<br/>
+How common is each term?<br/>
+---<br/>
+For an example, consider the following two documents:<br/>
+A: Thanksgiving may be the perfect day to give thanks, but what about giving thanks to a delicious and flawless turkey?<br/>
+B: Pick the perfect centerpiece for your Thanksgiving or holiday meal from our ultimate collection of roast turkey recipes.<br/>
+After removing the stop words (http://en.wikipedia.org/wiki/Stop_words) and stemming (unify reflections and singular/plural forms of the same word), <br/>
+document A becomes the <b>list</b> Thanksgiving, perfect, day, give, thank, give, thank, delicious, flawless, turkey, and<br/>
+document B becomes the <b>list</b> pick, perfect, centerpiece, Thanksgiving, holiday, meal, ultimate, collection, roast, turkey, recipe <br/>
+Complete the postings list entries below:<br/>
+\"Thanksgiving", <formularesponse type="ci" samples="n@1:100#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>\ \(\rightarrow\) \A, <formularesponse type="ci" samples="n@1:100#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>, 10\  \(\rightarrow\)  \B, <formularesponse type="ci" samples="n@1:100#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>, 11\<br/>
+\"thank", <formularesponse type="ci" samples="n@1:100#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>\  \(\rightarrow\) \<stringresponse answer="A" type="ci" >
+  <textline size="20"/>
+</stringresponse>
+</p><p> (A or B), <formularesponse type="ci" samples="n@1:100#10" answer="$answer6">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>, 10\<br/>
+</p>
+</problem>

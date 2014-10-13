@@ -1,0 +1,72 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+
+## Balls in Bins Problems ##
+
+You have [`m`] indistinguishable balls and in front of you is a row of [`n`] bins. You place each ball into a bin chosen at random. What is the chance that the [`i`]th bin is empty? 
+
+We will solve this question in three steps
+
+1. There are [`m`] balls, and we want every single one of them to miss the [`i`]th bin. The probability that after placing the first ball the [`i`]th bin is empty, is [__________________]{1-1/n}.
+
+2. Given that the [`i`]th bin is empty after the first ball is placed, what is the probability that it is still empty after the placement of the second ball ? [___________________]{1-1/n}.
+The same answer applies to the third ball, the fourth ball, and so on.
+
+3. Therefore, after the last ball is placed, what is the probability that the [`i`]th bin is still empty ? [________________]{(1-1/n)**m}.
+
+---
+
+Assuming [`n>3`], let us use the similar technique to find the probability that bins 1, 2 and 3 are empty.
+
+The probability that these bins are empty after placing the first ball is [_______]{1-3/n}.
+
+Suppose these bins are empty after the first ball is placed, the probability that these bins are still empty after placing the second ball is [_______]{1-3/n}.
+
+Think about these answers for all later balls. What is the probability that the three bins are still empty after the last ball is placed ? [________________]{(1-3/n)**m}.
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+
+---
+### Solution ###
+
+Suppose there are [`m`] balls and [`n`] bins. We want every ball to miss the [`i`] th bin. The probability that the first ball misses this bin is [`(n-1)/n = 1 - 1/n`]. The probability that the second ball misses is also [`1- 1/n`]  as with the third, and fourth, and so on. Therefore,
+[`` \textbf{Pr}(\mbox{i'th bin empty}) 
+\ = \ 
+\left( 1 - \frac{1}{n} \right)^m
+\ \leq \ 
+(e^{-1/n})^m 
+\ = \ 
+e^{-m/n},
+``]
+
+where we've used the formula [`e^x \geq 1+x`] that we discussed earlier.
+
+---
+
+The probability that these bins are empty after placing the each ball is [`1-3/n`].
+
+Suppose these bins are empty after the first ball is placed, the probability that these bins are still empty after placing the second ball is [`1-3/n`].
+
+This answer applies to all balls. So multiplying all these probabilities, we obtain the probability that the three bins are still empty after the last ball is placed ? [`(1-3/n)^m`].
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

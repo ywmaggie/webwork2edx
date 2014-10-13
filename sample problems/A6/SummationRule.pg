@@ -1,0 +1,46 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+## The summation rule ##
+
+In the last example, we implicitly used a summation rule. Suppose [`A_1, \ldots, A_k \subset \Omega`] are disjoint events whose union is [`\Omega`] (that is, exactly one of them will occur). Then for any event [`E \subset \Omega`] 
+[`` P(E) 
+\ = \ 
+\sum_{i=1}^k P(E \cap A_i) 
+\ = \ 
+\sum_{i=1}^k P(E | A_i) P(A_i).
+``]
+(If the [`A_i`] are not disjoint, simply replace the first equality with a [`\leq`] ) We will often write [`P(E \cap A_i)`] as [`P(E,A_i)`] 
+
+Let events [`X, Y, Z, W`] satisfy:
+o  [`X \cap Y \cap Z = \emptyset`]
+o  [`X \cup Y \cup Z = \Omega = `] outcome space
+o  [`P(X \cap W) = 0.1`]
+o  [`P(Y \cap W) = 0.2`]
+o  [`P(W | Z) = 0.3`]
+o  [`P(Z) = 0.1`]
+o  [`P(W) = `]? [____]{0.33}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+### Solution ###
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

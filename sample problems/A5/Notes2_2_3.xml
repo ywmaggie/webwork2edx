@@ -1,0 +1,43 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+answer1 = "1/n"
+answer2 = "1"
+answer3 = "0"
+</script>
+<p></p>
+<p></p>
+<p>Suppose there are \(m\) balls and \(n\) bins. What is the chance that there is an empty bin if \(m = 2n\ln n\) ?</p>
+<p>Remember when \(m=n\), it is almost certain that there is an empty bin. When \(m\) is increased from \(n\) to \(2n \ln n\)  the chance of an empty bin drops from \(\approx 1\) to \(\approx 0\). To see this, let \(A_i\) be the event that the \(i\) h bin is empty. </p>
+<p>We proved in the previous question that <br/>\(\textbf{Pr}(A_i) \leq \exp(-m/n) = \exp(-2\ln n) = 1/n^2\). </p>
+<p>Therefore,<br/>\(\textbf{Pr}(\mbox{some bin is empty}) <br/>\ = \ <br/>\textbf{Pr}(A_1 \cup \cdots \cup A_n) <br/>\ \leq \ <br/>\textbf{Pr}(A_1) + \cdots + \textbf{Pr}(A_n)<br/>\ \leq \ <br/>n \cdot \frac{1}{n^2}<br/>\ = \ <br/>\frac{1}{n}\).</p>
+<p>Recognize that the first inequality is the union bound. Thus with high probability (at least \(1-1/n\)) , every bin gets at least one ball.</p>
+<p>---</p>
+<p></p>
+<p>What is the chance that there is an empty bin if \(m = n\ln n\) ? </p>
+<p>The probability that the \(i\)th bin is empty is bounded by <formularesponse type="ci" samples="n,m,k@1,1,1:20,20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>The probability that some bin is empty is bounded by <formularesponse type="ci" samples="n,m,k@1,1,1:20,20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p>
+<p>Does this bound still shrink to 0 as \(n\) approaches \(\infty\) ? <formularesponse type="ci" samples="n,m,k@1,1,1:20,20,20#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+ (1 for yes, 0 for no)</p>
+<p></p>
+</problem>

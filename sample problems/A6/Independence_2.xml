@@ -1,0 +1,53 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "1"
+answer2 = "0"
+answer3 = "0"
+answer4 = "1"
+answer5 = "1"
+answer6 = "0"
+answer7 = "0"
+answer8 = "1"
+</script>
+<p><br/>
+<br/>
+In the following examples, are events \(A\) and \(B\) independent or not (0 = dependent, 1 = independent)?<br/>
+1.  You have two children. \(A = \{\mbox{first child is a boy}\}\)  \(B = \{\mbox{second child is a girl}\}\) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+2.  You throw two dice. \(A = \{\mbox{first is a}\ 6\}\)  \(B = \{\mbox{sum} &gt; 10\}\) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+3.  You get dealt two cards at random from a deck of 52. \(A = \{\mbox{first is a heart}\}\)  \(B = \{\mbox{second is a club}\}\) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+4.  Same sample space. \(A = \{\mbox{first is a heart}\}\)  \(B = \{\mbox{second is a}\ 10\}\) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

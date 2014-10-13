@@ -1,0 +1,87 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextArbitraryString.pl",
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+package my::Function::numeric;
+our @ISA = ('Parser::Function::numeric');
+
+sub Q {
+   shift; my $x = shift;
+   return main::normal_prob($x, 'infty', mean=>0, deviation=>1);
+}
+
+sub Phi {
+   shift; my $x = shift;
+   return main::normal_prob('-infty', $x, mean=>0, deviation=>1);
+}
+
+sub erf {
+   shift; my $x = shift;
+   $phi = main::normal_prob('-infty', $x*sqrt(2), mean=>0, deviation=>1);
+   $a = 2*$phi-1;
+   return $a;
+}
+
+package main;
+
+Context("Numeric");
+Context()->functions->add(
+erf =>{class=>"my::Function::numeric", nocomplex=>1},
+Q =>{class=>"my::Function::numeric", nocomplex=>1}, 
+Phi =>{class=>"my::Function::numeric", nocomplex=>1}
+);
+Context()->flags->set(tolerance=>0.01);
+
+BEGIN_PGML
+## Flight Test ##
+
+A simple random sample of 100 ﬂights for United Airlines and a simple random sample of 100 ﬂights for American Airlines was obtained. Let [`p_1`] be the true proportion of all
+ﬂights that are on time for United Airlines and let [`p_2`] be the true proportion of all ﬂights
+that are on time for American Airlines. Let [`\hat{p_1}`] and [`\hat{p_2}`] be the sample proportions of on time ﬂights for United
+Airlines and American Airlines, respectively. Based on the sample proportions, the 90% conﬁdence interval for
+the difference in the on-time rates for the two airlines, [`p_1 − p_2`], was calculated to be
+(−0.259, −0.055).
+
+
+
+---
+Based on the 90% conﬁdence interval given above, answer each of
+the following questions with _true_, _false_, or _can't tell_.
+
+1. The true difference in the on-time rate for the two airlines lies in the
+90% conﬁdence interval (−0.259, −0.055).[_________]{"can't tell"}
+
+2.  The probability that [`\hat{p_1} − \hat{p_2}`] lies in
+the 90% conﬁdence interval (−0.259, −0.055) is 1.[__________]{"true"}
+
+3. The probability that the true difference in the on-time rate for the two
+airlines lies in the 90% conﬁdence interval (−0.259, −0.055) is equal to 0.90.[_________]{"false"}
+
+*In this question, try to carefully identify which quantities are deterministic, and which are random.*
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+---
+## Solution ##
+
+
+1. Can't tell. Since the true diﬀerence in the on time rate for the two airlines is unknown.
+
+2. True. Since [`\hat{p_1} −\hat{p_2}`] is the center of the conﬁdence interval (−0.259,−0.055), it is always contained in this range.
+
+3. False. Both [`p_1 − p_2`] and the interval (−0.259, −0.055) are not random. Thus, the probability is either 1 or 0.
+
+END_PGML_SOLUTION
+
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

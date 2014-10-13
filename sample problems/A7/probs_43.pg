@@ -1,0 +1,61 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+Context()->variables->add(m => ['Real', limits=>[1,20], resolution=>1]);
+######################################################################
+
+BEGIN_PGML
+
+Suppose that there are equal numbers of men and women in the world, and that 5\% of men 
+are colorblind whereas only 1\% of women are colorblind. A person is chosen at random and found 
+to be colorblind. What is the probability that the person is male? [_______________]{0.05*0.5/(0.05*0.5+0.01*0.5)}
+
+Reverse the condition:
+
+[``
+\begin{align*}
+\textbf{Pr}(\text{male} \ | \ \text{colorblind}) & = \frac{\textbf{Pr}(\text{male},\text{colorblind})}{\textbf{Pr}(\text{colorblind})} \\
+& = \frac{\textbf{Pr}(\text{colorblind} \ | \ \text{male}) \textbf{Pr}(\text{male})}{\textbf{Pr}(\text{colorblind})} \\
+\end{align*}
+``]
+
+Law of total probability + Bayes rule:
+
+[``
+\begin{align*}
+\textbf{Pr}(\text{colorblind}) & = \textbf{Pr}(\text{male},\text{colorblind}) +  \textbf{Pr}(\text{female},\text{colorblind}) \\
+& = \textbf{Pr}(\text{colorblind} \ | \ \text{male}) \textbf{Pr}(\text{male}) + \textbf{Pr}(\text{colorblind} \ | \ \text{female}) \textbf{Pr}(\text{female})
+\end{align*}
+``]
+
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+
+### Solution ###
+
+[``
+\begin{align*}
+\textbf{Pr}(\text{male} \ | \ \text{colorblind}) & = \frac{\textbf{Pr}(\text{male},\text{colorblind})}{\textbf{Pr}(\text{colorblind})} \\
+&= \frac{\textbf{Pr}(\text{colorblind} \ | \ \text{male}) \textbf{Pr}(\text{male})}
+{\textbf{Pr}(\text{colorblind} \ | \ \text{male}) \textbf{Pr}(\text{male}) + 
+\textbf{Pr}(\text{colorblind} \ | \ \text{female}) \textbf{Pr}(\text{female})}
+&= \frac{0.05*0.5}{0.05*0.5+0.01*0.5} = 0.833
+\end{align*}
+``]
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

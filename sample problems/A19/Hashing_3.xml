@@ -1,0 +1,59 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+answer1 = "6"
+answer2 = "6"
+</script>
+<p><br/>
+
+<br/>
+Here's a variant on the balls and bins setup. As usual, you have before you a <br/>
+row of \(n\) bins, along with a collection of \(n\) identical balls. But now, <br/>
+when throwing each ball, _you pick two bins at random and you put the<br/>
+ball in whichever of them is less full_.<br/>
+It turns out, using an analysis that is too complicated to get into here, that<br/>
+under this small change, the maximum bin size will be just \(O(\log \log n)\) <br/>
+instead of \(O(\log n)\).<br/>
+This inspires an alternative hashing scheme:<br/>
+1\. Pick _two_ completely random functions \(h_1, h_2: \U \rightarrow \{1,2,\ldots, n\}\). <br/>
+2\. Create a table \(T\) of size \(n\), each of whose entries is a pointer to a <br/>
+linked list, initialized to null. <br/>
+3\. For each \(x_i\), store it in either the linked list at \(Th_1(x_i)\) or \(Th_2(x_i)\),<br/>
+whichever is shorter.<br/>
+4\. Given a query \(q\), look through _both_ the linked list at \(Th_1(q)\) and<br/>
+at \(Th_2(q)\) to see if it's there.<br/>
+The storage requirement is still \(O(n)\), the average query time is still \(O(1)\), but now<br/>
+the worst case query time drops to \(O(\log \log n)\).<br/>
+---<br/>
+What is the worst case query time for \(n = 2^{64}\) ? O(<formularesponse type="ci" samples="n@1:100#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>)<br/>
+</p>
+</problem>

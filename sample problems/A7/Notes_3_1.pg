@@ -1,0 +1,91 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->add(n => ['Real', limits=>[1,20], resolution=>1]);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+BEGIN_PGML
+---
+*IMPORTANT: For correct rendering of equations, please choose "MathJax" from the "Display Options" on the left panel.*
+
+---
+
+## Random variables ##
+
+A [$BITALIC]* random variable [$EITALIC]* (r.v.) is defined on a probability space [`(\Omega, \mbox{Pr})`] and 
+is a mapping from [`\Omega`] to [`\mathbb{R}`]. 
+
+The value of the random variable is fully determined by the outcome [`\omega \in \Omega`].
+Thus the underlying probability space (probabilities [`\mbox{Pr}(\omega)`]) induces a probability
+distribution over the random variable. Let's look at some examples.
+---
+1.
+
+Suppose the outcome space [`\Omega`] is a finite set of cats and the distribution is uniform. In other words, each outcome [`\omega \in \Omega`] is a particular cat, in all it's glorious complexity. One random variable [`W`] is the _weight_ of the cat. In math-speak [`W`] is a mapping (or a function) from [`\Omega`], the set of cats to [`\mathbb{R}^+`] the positive real numbers, a fact which is expressed as [`W:\Omega \to \mathbb{R}^+`]. The weight of the cat [`\omega`] is denoted [`W(\omega)`] and often we shorten this notation to [`W`] as [`\omega`] is assumed from the context.
+ 
+---
+2.
+
+Suppose you roll a fair die. The sample space is [`\Omega = \{1,2,3,4,5,6\}`], all outcomes 
+being equally likely. On this space we can then define a random variable
+
+[$BCENTER]*
+[`` X = \left\{ \begin{array}{ll}
+               1 & \mbox{if die is $\geq 3$} \\
+               0 & \mbox{otherwise}
+               \end{array} \right.``]
+[$ECENTER]*
+
+In other words, the outcomes [`\omega = 1,2`] map to [`X = 0`], while the outcomes 
+[`\omega = 3,4,5,6`] map to [`X = 1`]. The r.v. [`X`] takes on values [`\{0,1\}`], with 
+probabilities [`\mbox{Pr}(X = 0) = `][________]{"1/3"} and [`\mbox{Pr}(X=1) = `][_____________]{"2/3"}.
+
+---
+3.
+
+Or say you roll this same die [`n`] times, so that the sample space is 
+[`\Omega = \{1,2,3,4,5,6\}^n`]. Examples of random variables on this larger space are
+
+[$BCENTER]*
+[`` \begin{eqnarray*}
+X & = & \mbox{the number of 6's rolled,} \\
+Y & = & \mbox{the number of 1's seen before the first 6.}
+\end{eqnarray*} ``]
+[$ECENTER]*
+
+The sample point [`\omega = (1,1,1,1,\ldots,1,6)`], for instance, would map to 
+[`X = 1, Y = n-1`]. The variable [`X`] takes values in [`\{0,1,2,\ldots,n\}`],
+with probabilities
+
+[$BCENTER]*
+[`` \mbox{Pr}(X = k) 
+\ = \ 
+{n \choose k} \left(\frac{1}{6} \right)^k \left( \frac{5}{6} \right)^{n-k} ``]
+[$ECENTER]*
+
+(do you see why?).
+
+Answer [`\textbf{Pr}(X=3) =`][_________________________]{Formula("n!/(3!*(n-3)!)*(1/6)^3*(5/6)^(n-3)")}
+
+---
+4.
+
+As a fourth example, suppose you throw a dart at a dartboard of radius [`1`], and that it
+lands at a random location on the board. Define random variable [`X`] to be the distance
+of the dart from the center of the board. Now [`X`] takes values in [`[0,1]`], and for 
+any [`x`] in this range, [`\mbox{Pr}(X \leq x) = `][_________]{Formula("x^2")} (write an expression in [`x`]).
+
+Henceforth, we'll follow the convention of using capital letters for r.v.'s.
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

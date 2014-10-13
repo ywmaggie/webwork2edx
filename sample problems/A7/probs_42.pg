@@ -1,0 +1,64 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+Context("Numeric");
+
+BEGIN_PGML
+
+A particular car manufacturer has three factories [`F_1`], [`F_2`], [`F_3`] making 25\%, 35\%, 
+and 40\%, respectively, of its cars. Of their output, 5\%, 4\%, and 2\%, respectively, are 
+defective. A car is chosen at random from the manufacturer's supply.
+
+---
+[`1.`] What is the probability that the car is defective? [________________]{0.25*0.05+0.35*0.04+0.4*0.02}
+
+The event that the car is defective can be split into three disjoint cases:
+being defective and made by each of the three factories. 
+
+Using the law of total probability, we can write this as:
+
+[``\begin{align*}
+\textbf{Pr}(\text{defective}) & = \textbf{Pr}(\text{defective}, F_1) + \textbf{Pr}(\text{defective}, F_2) + \textbf{Pr}(\text{defective}, F_3)\\
+& = \textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1) + \textbf{Pr}(\text{defective}|F_2)\textbf{Pr}(F_2) + \textbf{Pr}(\text{defective}|F_3)\textbf{Pr}(F_3) \\
+\end{align*}
+``]
+
+---
+[`2.`] Given that the car is defective, what is the probability that it came from factory [`F_1`]?[________________]{0.25*0.05/(0.25*0.05+0.35*0.04+0.4*0.02)}
+
+The description literally tells us what probability we should solve for: [`\textbf{Pr}(F_1|\text{defective})`]. 
+
+Using Bayes rule, convert this conditional probability into a joint probability:
+
+[``\textbf{Pr}(F_1|\text{defective}) = \frac{\textbf{Pr}(F_1, \text{defective})}{\textbf{Pr}(\text{defective})}
+``]
+
+Again using Bayes rule, convert the joint probability into conditional probability that are known.
+
+[``\textbf{Pr}(F_1, \text{defective}) = \frac{\textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1)}{\textbf{Pr}(\text{defective})}``]
+---
+*Notice* that by applying Bayes rule twice, we reverse the condition, and we are able to write [`\textbf{Pr}(F_1 | \text{defective})`] in terms of [`\textbf{Pr}(\text{defective} | F_1)`] along with some scaling factors. This, is an instance of one of the most important formulae in Bayesian statistics: [``\textbf{Pr}(A|B) = \frac{\textbf{Pr}(B|A)\textbf{Pr}(A)}{\textbf{Pr}(B)}.``]
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+
+---
+### Solution ###
+
+[``\textbf{Pr}(\text{defective}) = \textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1) + \textbf{Pr}(\text{defective}|F_2)\textbf{Pr}(F_2) + \textbf{Pr}(\text{defective}|F_3)\textbf{Pr}(F_3) = 0.0345``]
+
+[``\textbf{Pr}(F_1, \text{defective}) = \frac{\textbf{Pr}(\text{defective}|F_1) \textbf{Pr}(F_1)}{\textbf{Pr}(\text{defective})} = \frac{0.25 \times 0.05}{0.0345} = 0.362``]
+
+END_PGML_SOLUTION
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

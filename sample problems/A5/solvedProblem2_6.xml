@@ -1,0 +1,42 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+a_complement_den = 3;
+b_den = myrandom(3,6,1);
+intersect_den = 2 * b_den;
+p_a = 1-1/a_complement_den;
+p_b = 1/b_den;
+p_intersect = 1/intersect_den;
+
+answer1 = 1.0*p_a
+answer2 = 1.0*p_a+p_b-p_intersect
+</script>
+<p></p>
+<p>Let \(A\) and \(B\) be events defined on a sample space \(\Omega\) such that</p>
+<p>    \(P(A \cap B) = 1/$intersect_den\),  \(P(A^c) = 1/$a_complement_den\), and \(P(B) = 1/$b_den\).  </p>
+<p>Here \(A^c = \Omega \setminus A\) is the event that \(A\) _doesn't_ happen. </p>
+<p>We want to find \(P(A \cup B)\)</p>
+<p>o  \(P(A) = \) <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>As can be seen in the attached diagram: \(P(A \cup B) = P(A)+P(B)-P(A \cap<br/>B)\)  </p>
+<p>o  Applying this to our case we get \(P(A \cup B) = \) <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+ </p>
+<p></p>
+</problem>

@@ -1,0 +1,64 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+answer1 = "1000*100.0/z"
+answer2 = "100*1000.0/n"
+answer3 = "1.0*100*(1000.0/n)*(1-1000.0/n)"
+answer4 = "1-2*0.025"
+answer5 = "1.96*sqrt(100*(1000.0/n)*(1-1000.0/n))"
+
+</script>
+<p><br/>
+A lake contains an unknown number of fish. 1000 of them are caught, marked with red spots, and then<br/>
+returned to the water. Later, a random subset of 100 fish are caught from the lake, and it is found<br/>
+that z of them have red spots.<br/>
+1. In terms of \(z\), what estimate would you give for the number of fish in the lake?  <formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+2. Let n be the true number of fish in the lake. Then distribution of the random variable Z (the number of fish in your second sample of size 100), follows a Binomial distribution with what parameters?  \(\mathbb{E}(Z) = \)<formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> and \(\mbox{var}(Z) = \)<formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  Give your answers in terms of \(n\).<br/>
+3. For standard normal random variable \(S\), what is \(P(-1.96 &lt; S &lt; 1.96)\)?  <formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+3. If you had to give a 95% confidence interval for the number of fish in the lake in terms of \(n\), what would it be?  \(\mathbb{E}(Z) \pm\)<formularesponse type="ci" samples="z,n@0,0:100,10000#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+</p>
+</problem>

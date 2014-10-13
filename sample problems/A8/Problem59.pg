@@ -1,0 +1,44 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$sunny_den = random(5,7,1);
+$sunny_num = $sunny_den-1;
+$dinner_den = random(2,4,1);
+$early_den = random(8,10,1);
+
+######################################################################
+
+BEGIN_PGML
+On any given day, the probability it will be sunny is [`[$sunny_num]/[$sunny_den]`], the probability you 
+will have a nice dinner is [`1/[$dinner_den]`], and the probability that you will get to bed
+early is [`1/[$early_den]`]. Assume these three events are independent. 
+
+Denote by [`S(i)`] be the event that the [`i`]'th day is sunny. Similarly, define [`D[i],B(i)`] to be the events that that you have a good dinner on day [`i`] and that you go to bed early on day [`i`] respectively.
+
+On a particular day, what is the probability all three of these independent events will happen together?  [_______]{( [$sunny_num] ) / ( [$sunny_den] * [$dinner_den] * [$early_den] )}
+
+*Hint:* recall that if three events [`A,B,C`] are independent, then [`P(A \cap B \cap C) = P(A)P(B)P(C)`].
+
+What is the expected number of days before all three of them happen together?  [_______]{[$sunny_den] * [$dinner_den] * [$early_den] / ([$sunny_num])}
+
+*Hint:* Consider the techniques used in problem 2.  
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

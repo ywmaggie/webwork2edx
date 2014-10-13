@@ -1,0 +1,65 @@
+## DESCRIPTION
+##   Apply the Central Limit Theorem
+## ENDDESCRIPTION
+
+## KEYWORDS('Probability', 'Central Limit Theorem')
+## Tagged by nhamblet
+
+## DBsubject('Probability')
+## DBchapter('Theory')
+## DBsection('The Central Limit Theorem')
+## Date('')
+## Author('')
+## Institution('Rochester')
+## TitleText1('')
+## EditionText1('')
+## AuthorText1('')
+## Section1('')
+## Problem1('')
+
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+"PG.pl",
+"PGML.pl",
+"MathObjects.pl",
+"PGbasicmacros.pl",
+"PGchoicemacros.pl",
+"PGanswermacros.pl",
+"PGgraphmacros.pl",
+"PGnumericalmacros.pl",
+"PGstatisticsmacros.pl"
+);
+
+TEXT(beginproblem());
+$showPartialCorrectAnswers = 1;
+
+
+
+$p = 0.54;
+$tosses = random(9000,11000,100);
+$heads = $p*$tosses;
+$zscore = ($heads - ($tosses/2))/sqrt($tosses*(1/2)*(1/2));
+
+BEGIN_PGML
+
+Suppose we flip a coin [$tosses] times, and the coin comes up heads [$heads] times.  Should we conclude that the coin is biased?  Ie [`P(H) \neq 1/2`].  
+
+To show that the coin is biased, we want to show that an unbiased coin is very unlikely to have produced a sequence with as many heads.  
+
+Let [`X_i`] be a random variable which is 1 if the i'th unbiased coin toss is heads and 0 otherwise. The random variable [`X=\sum_{i=1}^{[$tosses]} X_i`] is the random variable which corresponds to the total number of heads. 
+
+Calculate the following quantities.     
+1. [`\mathbb{E}(X_i) = `] [_______]{"1/2"}
+2. [`std(X_i) = `] [______]{"1/2"}
+3. [`\mathbb{E}(X) = `] [_______]{"(1/2)*$tosses"}
+4. [`std(X) = `] [______]{"sqrt($tosses*(1/2)*(1/2))"}
+5. Using the values [`\mathbb{E}(X)`], [`\mathbb{\sigma}(X)`] you computed above, calculate the z-score corresponding to the value [$heads]?  [_____]{$zscore}
+6. Assuming a fair coin is tossed [$tosses] times, what is the probability at least [$heads] heads come up?  [______]{"Q($zscore)"}  Hint: Q(z) is [`Pr(X >= z)`] for X the standard normal density.  
+7. What is the absolute difference between the number of heads we see ([$heads]), and the expected number of heads from flipping an unbiased coin, [`\mathbb{E}(X)`]?  [_____]{"$heads-($tosses/2)"} Call this deviation [`\delta`].  
+8. What is [`Pr(|X - \mathbb{E}(X)| \geq \delta)`]?  [_______]{"2*Q($zscore)"}  Hint: your answer from (6) is helpful here.  In (6) you were considering one tail, now you need to consider two.  
+9. Do you have reason to believe the coin being tossed is not fair (0=no,1=yes)? [___]{"1"}
+
+END_PGML
+
+ENDDOCUMENT();       # This should be the last executable line in the problem.

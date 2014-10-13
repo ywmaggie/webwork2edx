@@ -1,0 +1,73 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+n = myrandom(5,10,1)
+m = n + 4
+
+
+
+answer1 = 1.0*1/n
+answer2 = 1.0*(n-1)/(n**2)
+answer3 = 1.0*((n - 1) / n) ** m
+answer4 = 1.0*(m/n)*((n-1)/n)**(m-1)
+answer5 = 1.0*m/n
+answer6 = 1.0*m*(n-1)/(n**2)
+answer7 = 1.0*1/n
+answer8 = 1.0*(n-1)/(n**2)
+answer9 = 1.0*((n - 1) / n) ** m
+answer10 = 1.0*(m/n)*((n-1)/n)**(m-1)
+answer11 = 1.0*m/n
+answer12 = 1.0*m*(n-1)/(n**2)
+</script>
+<p><br/>
+Suppose you throw \(m=\)$m balls into \(n=\)$n bins. <br/>
+Let \(X_i\) be the number of balls that fall into bin \(i\).  <br/>
+Let \(T_{i,j}\) Be a random variable that is 1 if the \(j\)'th ball falls in the \(i\)'th bin.  <br/>
+Clearly \(T_{i,j},T_{i,k}\) are independent for \(1 \leq j &lt; k \leq m\), and \(X_i = \sum_{j=1}^{m} T_{i,j}\).<br/>
+Using these facts, answer the following questions:<br/>
+1. What is \(\mathbb{E}(T_{i,j})\)? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+2. What is \(var(T_{i,j})\)? <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+1. What is \(Pr(X_i=0)\) (i.e. there are no balls in bin \(i\)) ?  <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+2. What is \(Pr(X_i = 1)\) (i.e. there is exactly one ball in bin \(i\)) ?  <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+3. What is \(\mathbb{E}(X_i)\)? <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  <br/>
+   <b>Hint:</b> Recall linearity of expectations:\(E(\sum_{i=1}^n T_{i,j})=\sum_{i=1}^n E(T_{i,j})\)<br/>
+4. What is \(var(X_i)\)? <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  <br/>
+<b>Hint:</b> The variance of the sum of _independent_ random variables is equal to the sum of the variances.<br/>
+</p>
+</problem>

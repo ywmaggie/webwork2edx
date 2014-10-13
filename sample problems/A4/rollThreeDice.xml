@@ -1,0 +1,54 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+ans8=40/C(52,5)
+ans8Real=ans8
+ans9=4/C(52,5)
+ans9Real=ans9
+
+
+
+
+
+answer1=1.0*6
+answer2=1.0*6**3
+answer3=1.0*1
+answer4=1.0*1/(6**3)
+</script>
+<p></p>
+<p></p>
+<p>A Six-Sided Die has six faces, numbered 1, 2, 3, 4, 5, and 6.  We are going to do some computation about the sum of rolling three of these dice and adding the faces that turn up.</p>
+<p>First, the number of all possible results from rolling one die is <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>The result of rolling the dice three time can be represented as a tuple of length 3: (roll1,roll2,roll3). Therefor the number of possible outcomes of this experiment (or the size of the sample space) is:<numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>The total number of tuples (roll1, roll2, roll3) that sum to 3 is <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p>Therefore, the probability of rolling a sum of 3 while rolling three dice is <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p>
+<p></p>
+</problem>

@@ -1,0 +1,58 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+bins = myrandom(5,10,1)
+
+
+
+answer1 = "1"
+answer2 = "0"
+answer3 = "1"
+answer4 = "1"
+answer5 = "0"
+answer6 = "1"
+</script>
+<p><br/>
+<br/>
+Random variables \(X\) and \(Y\) are <b> independent </b> if<br/>
+<b><br/>
+\( \mbox{Pr}(X=x, Y=y) \ = \ \mbox{Pr}(X=x) \mbox{Pr}(Y=y) \)<br/>
+</b><br/>
+for all \(x,y\). In words, the joint distribution of \((X,Y)\) factors into the product<br/>
+of the individual distributions. This also implies, for instance, that<br/>
+<b><br/>
+\( \mbox{Pr}(X = x | Y = y) \ = \ \mbox{Pr}(X=x) .\)<br/>
+</b><br/>
+Are the following pairs \((X,Y)\) independent?Answer 1 for yes, 0 for no<br/>
+	1. Pick a random card out of a standard deck. Define \(X\) to be \(1\) if it is a heart<br/>
+ and \(0\) otherwise. Define \(Y\) to be 1 if it is a jack, queen, or king and \(0\) otherwise. <formularesponse type="ci" samples="n@1:10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+	2. Toss a fair coin \(n\) times, and define \(X\) to be the number of heads, and \(Y\) to <br/>
+be \(1\) if the last toss is heads (and \(0\) otherwise).<formularesponse type="ci" samples="n@1:10#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+	3. \(X\) and \(Y\) take values in \(\{-1,0,1\}\), and their joint distribution is given by <br/>
+the following table of probabilities. <formularesponse type="ci" samples="n@1:10#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+<br/>
+</p>
+</problem>

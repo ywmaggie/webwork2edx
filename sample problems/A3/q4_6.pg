@@ -1,0 +1,37 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+### Full House: 2 of one rank and 3 of another rank ###
+
+1. The number of possibilities for the rank of the triple is [______]{13}.
+
+2. Given the rank of the triple, the number of possibilities for the rank of the pair is [______]{12}.
+
+2. The number of possibilities for the suite of the triple is [_____]{Compute("C(4,3)")}.
+
+3. The number of possibilities for the suite of the pair is [_____]{Compute("C(4,2)")}.
+
+4. Thus the number of hands that is a full house is [______]{Compute("13*12*C(4,3)*C(4,2)")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("13*12*C(4,3)*C(4,2)/C(52,5)")}.
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

@@ -1,0 +1,63 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+answer1 = 1.0*0.1
+answer2 = 1.0*0.1/sqrt(0.1*0.9/40)
+answer3 = 1.0*Q(0.1/sqrt(0.1*0.9/40))
+
+</script>
+<p><br/>
+<br/>
+You know that on a "normal day", 10% of articles on reddit:technology relate to Apple (I made this up).  You decide to use this fact to decide whether today is a special (not normal) day for Apple.  <br/>
+You choose 40 articles at random, and 8 of these articles are about Apple.  How confident are you that today is not a normal day?  <br/>
+Let \(p\) be the actual proportion of r/tech articles today that are about Apple.  <br/>
+The null hypothesis is H0: \(p = \)<numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+The alternative hypothesis is H1: \(p &gt; 0.1\)<br/>
+What is the value of the large-sample z-score? <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+What is the p-value for the test statistic? (You can use Q function in the answer) <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  Let's say we only are testing whether _more_ Apple-related articles have been linked to than normal.  <br/>
+Can you reject at the .05 signicance level? (answer "yes" or "no") <stringresponse answer="yes" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+Can you reject at the .01 signicance level? (answer "yes" or "no") <stringresponse answer="no" type="ci" >
+  <textline  size="20"/>
+</stringresponse>
+</p><p><br/>
+</p>
+</problem>

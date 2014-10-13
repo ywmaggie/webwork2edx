@@ -1,0 +1,38 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+### Two Pairs ###
+
+1. The number of possibilities for the ranks of the two pairs is [______]{Compute("C(13,2)")}.
+
+2. The number of possibilities for the rank of the single is [______]{11}.
+
+2. The number of possibilities for the suites of the two pairs is [_____]{Compute("C(4,2)**2")}.
+
+3. The number of possibilities for the suite of the single is [______]{4}.
+
+4. Thus the number of hands with exactly two pairs is [______]{Compute("C(13,2)*11*C(4,2)**2*4")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("C(13,2)*11*C(4,2)**2*4/C(52,5)")}.
+
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

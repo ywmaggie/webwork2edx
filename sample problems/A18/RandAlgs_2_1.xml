@@ -1,0 +1,68 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+answer1 = "1/2+1/2*n"
+answer2 = "1/c"
+answer3 = 1.0*20
+answer4 = 1.0*20
+
+</script>
+<p><br/>
+<b>(Extra Credit)</b>  <br/>
+Suppose you have an algorithm A for your problem that always returns the correct answer, but takes different amounts of time each time it runs.  Let \(X_n\) be the random variable giving the time algorithm A takes to complete for input of size \(n\).  Time can't be negative, so \(X \geq 0\).  <br/>
+We call A a _Las Vegas Algorithm_ if for any input size \(n\) there is a \(T(n)\) so that \(\mathbb{E}(X_n) = T(n)\).  <br/>
+- Side note: it isn't always the case that a random variable has finite expectation, even the values it can take on are finite.  The assumption that there is some \(T(n)\) for any \(n\) is a non-trivial assumption.  <br/>
+Let's say we have algorithm that determines whether any integer is prime.  For an integer input that takes up \(n\) bits, the algorithm takes \(n\) seconds to run with probability \(1/2\).  With probability \(1/2\) the algorithm takes 1 second to run.  What is \(T(n)\), in seconds?  <formularesponse type="ci" samples="c,n@1,1:20,100#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  <br/>
+Let's say you have some Las Vegas algorithm A that runs in _expected time_ \(T(n)\) for problem size \(n\).  What you would prefer, however, is an algorithm that _always_ finishes in time \(O(T(n))\), but may have up to a 5% probability of returning the wrong answer.  We will construct an algorithm A' from A that satisfies these properties.  <br/>
+Recall Markov's inequality: for some random variable \(Y \geq 0\), \(P(Y &gt;= a) \leq \mathbb{E}(Y)/a\).  <br/>
+Fixing some \(n\), apply Markov's inequality to get an upper bound on \(P(X_n &gt;= cT(n))\): <formularesponse type="ci" samples="c,n@1,1:20,100#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  <br/>
+What is \(c\) such that \(P(X_n &gt;= cT(n)) &lt;= 0.05\)?  <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+Thus an algorithm A' is as follows:<br/>
+<b> Run A until time <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>T(n).  If A has completed, return the correct value.  <br/>
+</b> Else, return a random value.  <br/>
+This type of algorithm we have, where the algorithm completes in deterministic time \(Q(n)\) but is correct with some probability is called a _Monte Carlo Algorithm_.  <br/>
+_Recap_:<br/>
+- For "Las Vegas" algorithms, uncertainty is in the algorithm _runtime_.  The algorithm is always correct.  <br/>
+- For "Monte Carlo" algorithms, uncertainty is in the algorithm _correctness_.  The algorithm completes in deterministic time \(T(n)\).  <br/>
+</p>
+</problem>

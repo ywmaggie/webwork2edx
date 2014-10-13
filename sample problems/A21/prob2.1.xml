@@ -1,0 +1,91 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+from math import e
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+k = myrandom(2,5,1)
+n = myrandom(5,10,1)
+red = myrandom(2,3,1)
+red2 = myrandom(4,5,1)
+m = n*red
+kopt = log(2)*red2
+
+answer1 = 1.0*1-1/m
+answer2 = 1.0*(1-1/m)**(k*n)
+answer3 = 1.0*1-(1-1/m)**(k*n)
+answer4 = 1.0*(1-(1-1/m)**(k*n))**k
+answer5 = 1.0*(1-e**(-k/red2))**k
+answer6 = 1.0*(1-e**(-kopt/red2))**kopt
+answer7 = -n*log(0.05)/(log(2)**2)
+
+</script>
+<p><br/>
+<br/>
+In class we talked about the importance of the _number_ of hash functions used by a Bloom filter, which we denote by \(k\). In a previous assignment, we have described how to compute the false positive rate given \(k\). Now we work through a concrete example. <br/>
+Suppose \(k=$k\). Say we have already observed \(n=$n\) words, and each word has been hashed to $k of the \(m=$m\) bits that are determined by the $k hash functions. Each of the $m bits is equally likely to be chosen. For a new "unseen" word, we have a false positive if this new word happens to be hashed to $k bits that are exactly the same $k bits associated with a previous different word. What is the chance of this happening?<br/>
+Notice that all the bits are independent, so this probability should be a product of the probability that each of the $k bits is set. Without loss of generality, assume this new word hashes to bits 1 to $k.<br/>
+To find the probability that bit 1 is set, it is easier to find the complement: bit 1 is not set.<br/>
+Let's first consider one of the $n observed words, say, "hello", and a single hash function, say, \(h_1\). What is the probability that \(h_1\) does not hash "hello" to bit 1? <numericalresponse answer="$answer1">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> Remember there are a total of $m bits to choose from, and the hash function is random.<br/>
+There are all together $k hash functions that may hash this "hello" to bit 1, and there are a total of $n such words, what is the probability that bit 1 survives (i.e. not set to 1) after all these hashes?<numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+Back to the original statement, what is the probability of bit 1 being set? <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+What is the probability that all $k bits are set? <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> This is the false positive rate for \(k=$k\).<br/>
+In the notes we have an approximation formula for this probability, \((1-e^{-kn/m})^k\). Note that it is not the value of \(m\) or \(n\), but their ratio that affects the false positive rate. The ratio \(m/n\) is called the redundancy.<br/>
+---<br/>
+For the same \(k=$k\), if we increase the redundancy so that \(m=$n*$red2\), what is the false positive rate? <numericalresponse answer="$answer5">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> (Use the approximation formula.)<br/>
+---<br/>
+Fix this redundancy, we change the number of hash functions to be the optimal value, \(k = \ln 2\times \text{redundancy}\), what is the false positive rate then? <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+---<br/>
+Suppose the optimal \(k\) is used, if we want to have a false positive rate of 0.05, what is the number of bits \(m\) that we need to use? <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p> (do not round to integer)<br/>
+---<br/>
+</p>
+</problem>

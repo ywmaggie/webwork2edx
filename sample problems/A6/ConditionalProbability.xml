@@ -1,0 +1,38 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+
+
+
+
+
+
+answer1 = "0.35"
+answer2 = "0.35"
+</script>
+<p><br/>
+<br/>
+You meet a stranger, a random citizen of the United States. What's the chance that he (or, equally likely, she) votes for the Democratic party? Who knows, but it's probably close to \(50%\).<br/>
+\( \Omega = \{\mbox{citizens of the US}\}, \ \ E = \{\omega \in \Omega: \mbox{votes Dem}\}.\)<br/>
+Now what if you find out a little bit more information: this stranger likes spicy food.<br/>
+\( F = \{\omega \in \Omega: \mbox{likes spicy food}\}.\)<br/>
+How does change the odds? What is \(P(E|F)\) (probability of \(E\) given \(F\) ')? Again, it's hard to say, but for illustrative purposes here is a (definitely incorrect) set of probabilities:<br/>
+\( P(E) = 0.5, \ \ \ \ P(F) = 0.2, \ \ \ \ P(E \cap F) = 0.15.\)<br/>
+What is \(P(E \setminus F)?\) <formularesponse type="ci" samples="n,m@1,1:20,20#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+ \(E \setminus F\) means the set of elements that are in \(E\) but not in \(F\).<br/>
+The Venn diagram for this scenario is:<br/>
+</p>
+</problem>

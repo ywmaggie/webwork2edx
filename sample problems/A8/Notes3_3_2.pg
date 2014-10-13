@@ -1,0 +1,70 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+);
+
+Context("Numeric");
+Context()->variables->are(
+      k => ['Real', limits=>[1,10], resolution=>1],
+      n => ['Real', limits=>[1,10], resolution=>1],
+      x => ['Real']
+    );
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+$k = random(8,10,1);
+
+######################################################################
+
+BEGIN_PGML
+#### Coupon collector, again ####
+
+You can enter natural logarithms as you would imagine: ln(...).  
+Enter [`ln([$k])`]: [____]{ln([$k])}
+
+Recall the setting: each cereal box holds one of [`k`] action figures (chosen at random), and
+you want to collect all the figures. What is the expected number of cereal boxes you need
+to buy?
+
+Suppose you keep buying boxes until you get all the figures. Let [`X_i`] be the number of 
+boxes you buy to get from [`i-1`] distinct figures to [`i`] distinct figures. Therefore
+[`X = X_1 + X_2 + \cdots + X_k`], and of course [`X_1 = 1`].
+
+What is [`\mathbb{E}(X_i)`]? Well, you already have [`i-1`] of the figures, so the chance of getting
+a new figure in a cereal box is [`(k-(i-1))/k`]. Call this [`p`]. Therefore, the expected amount 
+of time you have to wait to get a new figure is [`1/p`]: just like waiting for a coin with
+bias [`p`] to turn up heads. That is,
+
+[$BCENTER]*
+[`` \mathbb{E}(X_i) \ = \ \frac{k}{k-i+1} .``]
+[$ECENTER]*
+
+
+Invoking linearity of expectation,
+
+[$BCENTER]*
+[`` \begin{eqnarray*}
+\mathbb{E}(X) & = & \mathbb{E}(X_1) + \cdots + \mathbb{E}(X_k) \\
+      & = & \frac{k}{k} + \frac{k}{k-1} + \frac{k}{k-2} + \cdots + \frac{k}{1} \\
+      & = & k \left( 1 + \frac{1}{2} + \cdots + \frac{1}{k} \right) \\
+      & \approx & k \ln k.
+\end{eqnarray*} ``]
+[$ECENTER]*
+
+This confirms our earlier observations about the coupon collector problem: you need
+to buy about [`k \ln k`] boxes.
+
+After collecting 3 action figures out of [$k]:
+1. What is the probability your next cereal box will contain a new action figure? [______]{([$k]-3)/[$k]}
+2. In expectation, how many more cereal boxes would you need to collect to get the next action figure?  [______]{[$k]/([$k]-3)}
+
+What is the expected number of cereal boxes you would have to collect (starting without any action figures) to collect every action figure?  [_____]{[$k]*log([$k])}
+
+END_PGML
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

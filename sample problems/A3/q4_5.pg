@@ -1,0 +1,34 @@
+DOCUMENT();        # This should be the first executable line in the problem.
+
+loadMacros(
+  "PGstandard.pl",
+  "PGML.pl",
+  "MathObjects.pl",
+  "PGcourse.pl",
+  "contextIntegerFunctions.pl"
+);
+
+
+TEXT(beginproblem);
+$showPartialCorrectAnswers = 1;
+
+######################################################################
+
+BEGIN_PGML
+
+### Flush: Cards of the same suite, but not in order ###
+
+1. The number of possibilities for the suit is [______]{4}.
+
+2. The ranks can be anything except those that are in order. The number of all possible ranks for a hand of the same suit is [______]{Compute("C(13,5)")}. Among these, the number of hands whose ranks are in order is [______]{10}. So the number of possible ranks of a flush is [______]{Compute("C(13,5)-10")}.
+
+4. Thus the number of hands that is a flush is [______]{Compute("4*(C(13,5)-10)")}.
+
+5. The ratio of this number to the number of all hands [______]{Compute("4*(C(13,5)-10)/C(52,5)")}.
+
+
+END_PGML
+
+######################################################################
+
+ENDDOCUMENT();        # This should be the last executable line in the problem.

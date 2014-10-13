@@ -1,0 +1,108 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+
+p = 0.54
+tosses = myrandom(9000,11000,100)
+heads = p*tosses
+zscore = "(heads - (tosses/2))/sqrt(tosses*(1/2)*(1/2))"
+
+answer1 = "p"
+answer2 = "p * (1-p)"
+answer3 = "sqrt(p * (1-p))"
+answer4 = "1/2"
+answer5 = "1/2"
+answer6 = 1.0*1-2*Q(2.575)
+answer7 = 1.0*2.575
+answer8 = "(1/2)/sqrt(n)"
+answer9 = "2.575*(1/2)/sqrt(n)"
+answer10 = "2.575*(1/2)/sqrt(n)"
+answer11 = 1.0*(2.575/(2*0.01))**2
+
+</script>
+<p><br/>
+A sample is taken to find the fraction of females in a certain population. Find a sample size so that this fraction is estimated within 0.01 with confidence at least 99%.<br/>
+We will consider a worst-case situation: no matter what the underlying population proportion \(p\) of females is, the sample size we've taken will be sufficient.  <br/>
+Let \(X_i\) be a binary random variable: 1 if the i'th person selected is a female, 0 if male.  <br/>
+- In terms of \(p\), \(\mathbb{E}(X_i) = \)<formularesponse type="ci" samples="p,k,n@0,100,2000:1,1000,10000#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+- In terms of \(p\), \(var(X_i) = \)<formularesponse type="ci" samples="p,k,n@0,100,2000:1,1000,10000#10" answer="$answer2">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> and \(std(X_i) = \)<formularesponse type="ci" samples="p,k,n@0,100,2000:1,1000,10000#10" answer="$answer3">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+- What value of \(p\) maximizes \(var(X_i)\)?  <formularesponse type="ci" samples="p,k,n@0,100,2000:1,1000,10000#10" answer="$answer4">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+- Using this fact, what is an upper bound on \(std(X_i)\)?  <formularesponse type="ci" samples="p,k,n@0,100,2000:1,1000,10000#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+- For \(Y\) distributed according the standard normal distribution, what is \(P(-2.575 &lt;= Y &lt;= 2.575)\)? <numericalresponse answer="$answer6">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p>  <br/>
+- What is the Z score associated with a 99% confidence interval?  Hint: you may find the previous part helpful.  <numericalresponse answer="$answer7">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- Let \(X = 1/n(X_1 + ...X_n)\).  What is \(std(X)\)?  <formularesponse type="ci" samples="p,k,n@0,100,2000:1,1000,10000#10" answer="$answer8">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+- Suppose \(k\) out of \(n\) people in the sample are female.  What is a worst-case (for the choice of \(p\)) 99% confidence interval for the fraction of the population that is female?  \(k/n \pm\)<formularesponse type="ci" samples="p,k,n@0,100,2000:1,1000,10000#10" answer="$answer9">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p>  This is often called the _empirical confidence interval_.  <br/>
+- Consider a related question.  Suppose we know that the fraction of females is 50%.  Then what is the smallest interval such that the fraction of females in our sample is in this interval with 99% probability \(1/2 \pm \)<formularesponse type="ci" samples="p,k,n@0,100,2000:1,1000,10000#10" answer="$answer10">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p> This is sometimes called the _theoretical confidence interval_.  <br/>
+Finally, the answer to the original question:   <br/>
+- What is the smallest sample size \(n\) so that the sample proportion of females is estimated within 1% with 99% confidence?  \(n = \)<numericalresponse answer="$answer11">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+</p>
+</problem>

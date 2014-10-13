@@ -1,0 +1,108 @@
+
+<problem>
+    <script>
+from math import factorial as f
+from math import ceil
+from math import sqrt
+from math import exp
+from math import log
+from math import erf
+import random
+
+def C(n,m):
+    return f(n)/f(m)/f(n-m)
+
+def myrandom(start,stop,step=1):
+    return random.randint(0, int((stop - start) / step)) * step + start
+
+def Phi(x):
+    #Cumulative distribution function for the standard normal distribution
+    return (1.0 + erf(x / sqrt(2.0))) / 2.0
+
+def Q(x):
+	return 1-Phi(x)
+
+
+
+
+
+n = myrandom(20,30,1)
+nc = myrandom(4,6,1)
+p = 1.0/nc
+mean = n*p
+low = int(mean + 4)
+high = int(mean + 8)
+corr = myrandom(low, high, 1)
+
+std = sqrt( n *1.0 / nc * (1-1/ nc))
+
+
+ans = Q((corr-mean)*1.0/std)
+
+
+def BinomDistTail(n,p,c):
+  a = 0
+  count = c
+  while count >= 0:
+    a = a + C(n,count)*(p**count)*((1-p)**(n-count))
+    count -= 1
+  return a
+
+
+ans1 = BinomDistTail(n,p,corr)
+
+answer1 = "ans1"
+answer2 = 1.0*n*p
+answer3 = 1.0*sqrt(n*p*(1-p))
+answer4 = 1.0*(corr-mean)/std
+answer5 = "ans"
+
+</script>
+<p><br/>
+<br/>
+The <b>standard</b> normal distribution \(\mathcal{N}(0,1)\) is a special normal distribution with mean \(\mu=0\) and standard deviation \(\sigma=1\). <br/>
+- The CDF of the standard normal distribution is denoted \(\Phi\):<br/>
+&gt;&gt;\(\Phi(z) = P(Z\leq z)\). &lt;&lt;<br/>
+- The complement of the CDF is called the <b>Q-function</b>:<br/>
+&gt;&gt;\(Q(z) = P(Z&gt;z) = 1-\Phi(z)\).&lt;&lt;<br/>
+While \(\Phi(z)\) measures the probability mass of a "head" of the standard normal, \(Q(z)\) measures the "tail". The values of Q are often tabulated for commonly used \(z\). One such table is _http://goo.gl/Szofn1_. One can also use _http://wolframalpha.com_ to find numeric values for Q function.<br/>
+- An alternative representation of the head probability is the <b>error function</b>, denoted \(erf\). It is related to \(\Phi\) by:<br/>
+&gt;&gt;\(\Phi(x) = \frac{1}{2} + \frac{1}{2}erf(\frac{x}{\sqrt{2}})\)&lt;&lt;<br/>
+<b>For this set of assignment, you can use "Phi", "Q" or "erf" as functions in your answer.</b> <br/>
+---<br/>
+<br/>
+Suppose a monkey is given a test that consists of $n multiple-choice questions each with $nc choices. By random guessing, what is the <b>exact</b> probability that the monkey gets at least $corr correct ?<br/>
+<formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer1">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+---<br/>
+<br/>
+We know that the number of questions the monkey guesses correctly follows a binomial distribution, and we have computed the <b>exact</b> probability of a tail of this distribution, by summing up all cases in the tail.<br/>
+Now, we assume the number of questions is large enough so that by <b>central limit theorem</b> we can use a normal distribution to approximate the binomial distribution. This makes computing the probability of a certain part of the distribution much easier. <br/>
+---<br/>
+Again, suppose the monkey is taking a multiple-choice test that consists of $n questions each with $nc possible answers, let us estimate the probability that it gets at least $corr questions correct, this time using an <b>approximated normal distribution</b>. <br/>
+Suppose \(X\) is the number of correct answers.<br/>
+- What is the mean of \(X\) ? <numericalresponse answer="$answer2">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- What is the standard deviation of \(X\) ? <numericalresponse answer="$answer3">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- What is the z-score of \(X=$corr\)? <numericalresponse answer="$answer4">
+                    <responseparam type="tolerance" default="1%" />
+                    <formulaequationinput />
+                </numericalresponse>
+</p><p><br/>
+- What is the estimated probability that \(X \ge $corr\) ? <formularesponse type="ci" samples="m,n,i,k,x,y,z@1,1,1,1,1,1,1:10,10,10,10,10,10,10,10#10" answer="$answer5">
+                    <responseparam type="tolerance" default="0.00001"/>
+                    <formulaequationinput />
+                </formularesponse>
+</p><p><br/>
+</p>
+</problem>
